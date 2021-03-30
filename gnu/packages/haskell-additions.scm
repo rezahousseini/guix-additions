@@ -540,6 +540,7 @@ string types into values of other string types.")
               ("ghc-text" ,ghc-text)
               ("ghc-transformers" ,ghc-transformers)
               ("ghc-unix" ,ghc-unix)
+              ("ghc-c2hs" ,ghc-c2hs)
               ; ("openssl" ,openssl)
               ; ("zlib" ,zlib)
               ; ("net-tools" ,net-tools)
@@ -555,4 +556,30 @@ Features include:
 * Keyed and keyless messages producing/consuming
 * Batch producing messages")
     (license license:expat)))
+
+(define-public ghc-c2hs
+  (package
+    (name "ghc-c2hs")
+    (version "0.28.7")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (string-append
+               "https://hackage.haskell.org/package/c2hs/c2hs-"
+               version
+               ".tar.gz"))
+        (sha256
+          (base32
+            "0ib7ayfn37krsnm710x4gxd2i88xv3djnqa737gbw93b0206l571"))))
+    (build-system haskell-build-system)
+    (inputs
+      `(("ghc-language-c" ,ghc-language-c)
+        ("ghc-dlist" ,ghc-dlist)))
+    (arguments `(#:tests? #f))
+    (home-page "https://github.com/haskell/c2hs")
+    (synopsis
+      "C->Haskell FFI tool that gives some cross-language type safety")
+    (description
+      "C->Haskell assists in the development of Haskell bindings to C libraries. It extracts interface information from C header files and generates Haskell code with foreign imports and marshaling. Unlike writing foreign imports by hand (or using hsc2hs), this ensures that C functions are imported with the correct Haskell types.")
+    (license license:gpl2)))
 
