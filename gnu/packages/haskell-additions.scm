@@ -420,3 +420,4 @@ tight dependency constraints.")
       "Provides a simple type class for converting values of different
 string types into values of other string types.")
     (license license:bsd-3)))
+
