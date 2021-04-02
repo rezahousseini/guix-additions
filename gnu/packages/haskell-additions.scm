@@ -26,6 +26,7 @@
   #:use-module (gnu packages xml)
   #:use-module (gnu packages xorg)
   #:use-module (gnu packages networking)
+  #:use-module (guix build-system gnu)
   #:use-module (guix build-system haskell)
   #:use-module (guix download)
   #:use-module (guix git-download)
