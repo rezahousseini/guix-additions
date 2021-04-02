@@ -585,7 +585,7 @@ Features include:
 
 (define-public librdkafka-openssl
   (package
-    (name "librdkafka")
+    (name "librdkafka-openssl")
     (version "1.4.2")
     (source (origin
               (method git-fetch)
