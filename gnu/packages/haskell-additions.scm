@@ -21,6 +21,7 @@
   #:use-module (gnu packages ncurses)
   #:use-module (gnu packages pcre)
   #:use-module (gnu packages pkg-config)
+  #:use-module (gnu packages python)
   #:use-module (gnu packages sdl)
   #:use-module (gnu packages web)
   #:use-module (gnu packages xml)
