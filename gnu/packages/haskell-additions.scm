@@ -580,3 +580,40 @@ Features include:
       "C->Haskell assists in the development of Haskell bindings to C libraries. It extracts interface information from C header files and generates Haskell code with foreign imports and marshaling. Unlike writing foreign imports by hand (or using hsc2hs), this ensures that C functions are imported with the correct Haskell types.")
     (license license:gpl2)))
 
+(define-public librdkafka-openssl
+  (package
+    (name "librdkafka")
+    (version "1.4.2")
+    (source (origin
+              (method git-fetch)
+              (uri (git-reference
+                    (url "https://github.com/edenhill/librdkafka")
+                    (commit (string-append "v" version))))
+              (file-name (git-file-name name version))
+              (sha256
+               (base32
+                "05mgrdzacn9kdpr68r5j0cvsvl54s52glnsc1ww9rcxx6p7hq1ly"))))
+    (build-system gnu-build-system)
+    (arguments
+     '(#:phases
+       (modify-phases %standard-phases
+         (replace 'configure
+           ;; its custom configure script doesn't understand 'CONFIG_SHELL'.
+           (lambda* (#:key outputs #:allow-other-keys)
+             (let ((out (assoc-ref outputs "out")))
+               ;; librdkafka++.so lacks RUNPATH for librdkafka.so
+               (setenv "LDFLAGS"
+                       (string-append "-Wl,-rpath=" out "/lib"))
+               (invoke "./configure"
+                       (string-append "--prefix=" out))))))))
+    (native-inputs
+     `(("python" ,python-wrapper)
+       ("openssl" ,openssl)))
+    (propagated-inputs
+     `(("zlib" ,zlib))) ; in the Libs.private field of rdkafka.pc
+    (home-page "https://github.com/edenhill/librdkafka")
+    (synopsis "Apache Kafka C/C++ client library")
+    (description
+     "librdkafka is a C library implementation of the Apache Kafka protocol,
+containing both Producer and Consumer support.")
+    (license license:bsd-2)))
