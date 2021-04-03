@@ -545,7 +545,7 @@ string types into values of other string types.")
               ("ghc-unix" ,ghc-unix)
               ("ghc-c2hs" ,ghc-c2hs)
               ("ghc-semigroups" ,ghc-semigroups)
-              ("librdkafka" ,librdkafka)))
+              ("librdkafka-openssl" ,librdkafka-openssl)))
     (arguments `(#:tests? #f))
     (home-page
       "https://github.com/haskell-works/hw-kafka-client")
