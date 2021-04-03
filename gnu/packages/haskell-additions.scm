@@ -1,6 +1,7 @@
 (define-module (gnu packages haskell-additions)
   #:use-module (gnu packages)
   #:use-module (gnu packages curl)
+  #:use-module (gnu packages cyrus-sasl)
   #:use-module (gnu packages haskell)
   #:use-module (gnu packages haskell-check)
   #:use-module (gnu packages haskell-crypto)
@@ -10,7 +11,6 @@
   #:use-module (gnu packages emacs)
   #:use-module (gnu packages gl)
   #:use-module (gnu packages graphviz)
-  #:use-module (gnu packages gsasl)
   #:use-module (gnu packages gtk)
   #:use-module (gnu packages haskell-apps)
   #:use-module (gnu packages haskell-web)
@@ -613,7 +613,7 @@ Features include:
     (native-inputs
      `(("python" ,python-wrapper)
        ("openssl" ,openssl)
-       ("gsasl" ,gsasl)))
+       ("cyrus-sasl" ,cyrus-sasl)))
     (propagated-inputs
      `(("zlib" ,zlib))) ; in the Libs.private field of rdkafka.pc
     (home-page "https://github.com/edenhill/librdkafka")
