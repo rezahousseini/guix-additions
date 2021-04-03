@@ -10,6 +10,7 @@
   #:use-module (gnu packages emacs)
   #:use-module (gnu packages gl)
   #:use-module (gnu packages graphviz)
+  #:use-module (gnu packages gsasl)
   #:use-module (gnu packages gtk)
   #:use-module (gnu packages haskell-apps)
   #:use-module (gnu packages haskell-web)
@@ -611,7 +612,8 @@ Features include:
                        (string-append "--prefix=" out))))))))
     (native-inputs
      `(("python" ,python-wrapper)
-       ("openssl" ,openssl)))
+       ("openssl" ,openssl)
+       ("gsasl" ,gsasl)))
     (propagated-inputs
      `(("zlib" ,zlib))) ; in the Libs.private field of rdkafka.pc
     (home-page "https://github.com/edenhill/librdkafka")
