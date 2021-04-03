@@ -546,7 +546,12 @@ string types into values of other string types.")
               ("ghc-c2hs" ,ghc-c2hs)
               ("ghc-semigroups" ,ghc-semigroups)
               ("librdkafka-openssl" ,librdkafka-openssl)))
-    (arguments `(#:tests? #f))
+    (arguments 
+     `(#:tests? #f
+       #:configure-flags
+       `(,(string-append "-optl-Wl,-rpath,"
+                         (assoc-ref %build-inputs "librdkafka-openssl")
+                         "/lib"))))
     (home-page
       "https://github.com/haskell-works/hw-kafka-client")
     (synopsis "Kafka bindings for Haskell")
@@ -611,9 +616,10 @@ Features include:
                (invoke "./configure"
                        (string-append "--prefix=" out))))))))
     (native-inputs
-     `(("python" ,python-wrapper)
+     `(("cyrus-sasl" ,cyrus-sasl)
        ("openssl" ,openssl)
-       ("cyrus-sasl" ,cyrus-sasl)))
+       ("python" ,python-wrapper)
+       ("zstd" ,zstd)))
     (propagated-inputs
      `(("zlib" ,zlib))) ; in the Libs.private field of rdkafka.pc
     (home-page "https://github.com/edenhill/librdkafka")
