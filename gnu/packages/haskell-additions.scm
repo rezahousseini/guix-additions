@@ -549,7 +549,7 @@ string types into values of other string types.")
     (arguments 
      `(#:tests? #f
        #:configure-flags
-       `(,(string-append "-optl-Wl,-rpath,"
+       `(,(string-append "--ghc-option=-optl-Wl,-rpath,"
                          (assoc-ref %build-inputs "librdkafka-openssl")
                          "/lib"))))
     (home-page
