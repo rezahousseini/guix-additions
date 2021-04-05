@@ -550,12 +550,7 @@ string types into values of other string types.")
      `(#:tests? #f
        #:configure-flags
        (let* ((librdkafka (assoc-ref %build-inputs "librdkafka-openssl")))
-         (list "--ghc-option=-lrdkafka"
-               (string-append "--extra-lib-dirs=" librdkafka "/lib")
-               (string-append "--ghc-option=-L" librdkafka "/lib")
-               (string-append "--ghc-option=-optl=-Wl,-rpath="
-                              librdkafka
-                              "/lib")))))
+         (list (string-append "--extra-lib-dirs=" librdkafka "/lib")))))
     (home-page
       "https://github.com/haskell-works/hw-kafka-client")
     (synopsis "Kafka bindings for Haskell")
