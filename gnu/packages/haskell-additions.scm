@@ -551,6 +551,7 @@ string types into values of other string types.")
        #:configure-flags
        (let* ((librdkafka (assoc-ref %build-inputs "librdkafka-openssl")))
          (list "--ghc-option=-lrdkafka"
+               (string-append "--extra-include-dirs=" librdkafka "/lib")
                (string-append "--ghc-option=-L" librdkafka "/lib")
                (string-append "--ghc-option=-optl=-Wl,-rpath="
                               librdkafka
