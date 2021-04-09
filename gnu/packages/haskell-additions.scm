@@ -426,76 +426,6 @@ tight dependency constraints.")
 string types into values of other string types.")
     (license license:bsd-3)))
 
-(define-public ghc-containers
-  (package
-    (name "ghc-containers")
-    (version "0.6.4.1")
-    (source
-      (origin
-        (method url-fetch)
-        (uri (string-append
-               "https://hackage.haskell.org/package/containers/containers-"
-               version
-               ".tar.gz"))
-        (sha256
-          (base32
-            "0vn43a7bf49pih9b65b359xf3658d96dpm9j35i8x8j61vlrcsid"))))
-    (build-system haskell-build-system)
-    (arguments `(#:tests? #f))
-    (home-page
-      "http://hackage.haskell.org/package/containers")
-    (synopsis "Assorted concrete container types")
-    (description
-      ". This package contains efficient general-purpose implementations of various immutable container types including sets, maps, sequences, trees, and graphs. . For a walkthrough of what this package provides with examples of common operations see the [containers introduction](https://haskell-containers.readthedocs.io). . The declared cost of each operation is either worst-case or amortized, but remains valid even if structures are shared.")
-    (license license:bsd-3)))
-
-(define-public ghc-bytestring
-  (package
-    (name "ghc-bytestring")
-    (version "0.11.1.0")
-    (source
-      (origin
-        (method url-fetch)
-        (uri (string-append
-               "https://hackage.haskell.org/package/bytestring/bytestring-"
-               version
-               ".tar.gz"))
-        (sha256
-          (base32
-            "1a29kwczd1hcpir691x936i9c5ys9d7m1lyby48djs9w54ksy1jw"))))
-    (build-system haskell-build-system)
-    (arguments `(#:tests? #f))
-    (home-page
-      "https://github.com/haskell/bytestring")
-    (synopsis
-      "Fast, compact, strict and lazy byte strings with a list interface")
-    (description
-      "An efficient compact, immutable byte string type (both strict and lazy) suitable for binary or 8-bit character data. . The 'ByteString' type represents sequences of bytes or 8-bit characters. It is suitable for high performance use, both in terms of large data quantities, or high speed requirements. The 'ByteString' functions follow the same style as Haskell\\'s ordinary lists, so it is easy to convert code from using 'String' to 'ByteString'. . Two 'ByteString' variants are provided: . * Strict 'ByteString's keep the string as a single large array. This makes them convenient for passing data between C and Haskell. . * Lazy 'ByteString's use a lazy list of strict chunks which makes it suitable for I\\/O streaming tasks. . The @Char8@ modules provide a character-based view of the same underlying 'ByteString' types. This makes it convenient to handle mixed binary and 8-bit character content (which is common in many file formats and network protocols). . The 'Builder' module provides an efficient way to build up 'ByteString's in an ad-hoc way by repeated concatenation. This is ideal for fast serialisation or pretty printing. . There is also a 'ShortByteString' type which has a lower memory overhead and can can be converted to or from a 'ByteString', but supports very few other operations. It is suitable for keeping many short strings in memory. . 'ByteString's are not designed for Unicode. For Unicode strings you should use the 'Text' type from the @text@ package. . These modules are intended to be imported qualified, to avoid name clashes with \"Prelude\" functions, e.g. . > import qualified Data.ByteString as BS")
-    (license license:bsd-3)))
-
-(define-public ghc-text
-  (package
-    (name "ghc-text")
-    (version "1.2.4.1")
-    (source
-      (origin
-        (method url-fetch)
-        (uri (string-append
-               "https://hackage.haskell.org/package/text/text-"
-               version
-               ".tar.gz"))
-        (sha256
-          (base32
-            "0bnb4g5lpranra58zpwqh14hvwdh6zc4nz3hwppzrpdahi10s7hv"))))
-    (build-system haskell-build-system)
-    (arguments `(#:tests? #f))
-    (home-page "https://github.com/haskell/text")
-    (synopsis
-      "An efficient packed Unicode text type.")
-    (description
-      ". An efficient packed, immutable Unicode text type (both strict and lazy), with a powerful loop fusion optimization framework. . The 'Text' type represents Unicode character strings, in a time and space-efficient manner. This package provides text processing capabilities that are optimized for performance critical use, both in terms of large data quantities and high speed. . The 'Text' type provides character-encoding, type-safe case conversion via whole-string case conversion functions (see \"Data.Text\"). It also provides a range of functions for converting 'Text' values to and from 'ByteStrings', using several standard encodings (see \"Data.Text.Encoding\"). . Efficient locale-sensitive support for text IO is also supported (see \"Data.Text.IO\"). . These modules are intended to be imported qualified, to avoid name clashes with Prelude functions, e.g. . > import qualified Data.Text as T . == ICU Support . To use an extended and very rich family of functions for working with Unicode text (including normalization, regular expressions, non-standard encodings, text breaking, and locales), see the [text-icu package](https://hackage.haskell.org/package/text-icu) based on the well-respected and liberally licensed [ICU library](http://site.icu-project.org/). . == Internal Representation: UTF-16 vs. UTF-8 . Currently the @text@ library uses UTF-16 as its internal representation which is [neither a fixed-width nor always the most dense representation](http://utf8everywhere.org/) for Unicode text. We're currently investigating the feasibility of [changing Text's internal representation to UTF-8](https://github.com/text-utf8) and if you need such a 'Text' type right now you might be interested in using the spin-off packages <https://hackage.haskell.org/package/text-utf8 text-utf8> and <https://hackage.haskell.org/package/text-short text-short>.")
-    (license license:bsd-2)))
-
 (define-public ghc-unix
   (package
     (name "ghc-unix")
@@ -539,8 +469,6 @@ string types into values of other string types.")
             "1s3wj5ih9mc7vp0w9rymw22w1yxp8z3qi7qmza9qw00aail8c5dg"))))
     (build-system haskell-build-system)
     (inputs `(("ghc-bifunctors" ,ghc-bifunctors)
-              ("ghc-bytestring" ,ghc-bytestring)
-              ("ghc-containers" ,ghc-containers)
               ("ghc-transformers" ,ghc-transformers)
               ("ghc-unix" ,ghc-unix)
               ("ghc-c2hs" ,ghc-c2hs)
