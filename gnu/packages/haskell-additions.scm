@@ -555,3 +555,33 @@ Features include:
      "librdkafka is a C library implementation of the Apache Kafka protocol,
 containing both Producer and Consumer support.")
     (license license:bsd-2)))
+
+(define-public ghc-plotlyhs
+  (package
+    (name "ghc-plotlyhs")
+    (version "0.2.1")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (string-append
+               "https://hackage.haskell.org/package/plotlyhs/plotlyhs-"
+               version
+               ".tar.gz"))
+        (sha256
+          (base32
+            "1d7cqy22myp6r0x0b00amn64fra0lklb9jy2hd8ic9lxg0nd8pn9"))))
+    (build-system haskell-build-system)
+    (inputs
+      `(("ghc-aeson" ,ghc-aeson)
+        ("ghc-lucid" ,ghc-lucid)
+        ("ghc-blaze-html" ,ghc-blaze-html)
+        ("ghc-blaze-markup" ,ghc-blaze-markup)
+        ("ghc-microlens-th" ,ghc-microlens-th)
+        ("ghc-microlens" ,ghc-microlens)))
+    (home-page
+      "https://github.com/diffusionkinetics/open/plotlyhs")
+    (synopsis "Haskell bindings to Plotly.js")
+    (description
+      "Generate web-based plots with the Plotly.js library. For examples, see <https://glutamate.github.io/plotlyhs/>")
+    (license license:expat)))
+
