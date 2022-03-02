@@ -119,6 +119,11 @@
         (sha256
           (base32 "0mbpqgl8klq68vfcddr8ancxwpqg3zvjksw7gyf5zhbh04x0j2pk"))))
     (build-system python-build-system)
+    (arguments
+      (list #:tests? #f
+            #:phases
+            #~(modify-phases %standard-phases
+                (delete 'sanity-check))))
     (home-page "UNKNOWN")
     (synopsis "Generate pseudorandom numbers by using algebra")
     (description "Generate pseudorandom numbers by using algebra")
