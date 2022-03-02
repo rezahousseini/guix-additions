@@ -135,6 +135,7 @@
         (sha256
           (base32 "0hbi85l9jw3f3ic476qhmc0v4r42jsx40ndgs0k23a2npa1z1q0d"))))
     (build-system python-build-system)
+    (native-inputs (list python-cython))
     (home-page "https://github.com/tkluck/accumulation_tree")
     (synopsis
       "Red/black tree with support for fast accumulation of values in a key range")
