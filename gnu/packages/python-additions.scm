@@ -105,7 +105,7 @@
   #:use-module (guix build-system python)
   #:use-module (guix build-system trivial)
   #:use-module (srfi srfi-1)
-  #:use-module (srfi srfi-26)
+  #:use-module (srfi srfi-26))
 
 (define-public python-pyudorandom
   (package
@@ -196,4 +196,4 @@
       "Sphinx autodoc extension for documenting YAML files from comments")
     (description
       "Sphinx autodoc extension for documenting YAML files from comments")
-    (license license:expat))))
+    (license license:expat)))
