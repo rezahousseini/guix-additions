@@ -196,5 +196,4 @@
       "Sphinx autodoc extension for documenting YAML files from comments")
     (description
       "Sphinx autodoc extension for documenting YAML files from comments")
-    (license license:expat)))
-
+    (license license:expat))))
