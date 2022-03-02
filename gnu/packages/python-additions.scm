@@ -191,6 +191,7 @@
         (sha256
           (base32 "1ghwyjl4414sn7d4z8bqfjy526d54hb1zfvlrgbfrnml61rcb3ri"))))
     (build-system python-build-system)
+    (arguments '(#:tests? #f))
     (propagated-inputs (list python-ruamel.yaml python-sphinx))
     (home-page "https://github.com/Jakski/sphinxcontrib-autoyaml")
     (synopsis
