@@ -209,3 +209,41 @@
     (description
       "Sphinx autodoc extension for documenting YAML files from comments")
     (license license:expat)))
+
+(define-public python-tefw-ml
+  (let ((commit "19a09946bb65ff9f6ccc09c3e9744951900de857")
+        (revision "0")) ;Guix package revision
+    (package
+      (name "python-tefw-ml")
+      (version (git-version "0.0.0" revision commit))
+      (source (origin
+		(method git-fetch)
+		(uri (git-reference
+                      (url "ssh://git@gitlab.ost.ch:45022/sciceg/hitachiinovazosen/tefw-ml.git")
+                      (commit version)))
+		(file-name (git-file-name name version))
+		(sha256
+		 (base32
+                  "0i8zi228pk8wkyjxdjihdaw0x7zzsdsijiylgzhys51l02fls2jq"))))
+      (build-system python-build-system)
+      (arguments
+       (list #:tests? #f
+             #:phases
+             #~(modify-phases %standard-phases
+                 (delete 'sanity-check))))
+      (propagated-inputs (list
+			  python-numpy
+			  python-scipy
+			  python-scikit-learn
+			  python-pandas
+			  python-matplotlib
+			  python-pyaml
+			  python-tdigest
+			  python-ttictoc
+			  python-seaborn))
+      (home-page "https://gitlab.ost.ch/sciceg/hitachiinovazosen/tefw-ml")
+      (synopsis
+       "Library for the data-driven modelling and monitoring of boiler signals")
+      (description
+       "Library for the data-driven modelling and monitoring of boiler signals")
+      (license license:expat))))
