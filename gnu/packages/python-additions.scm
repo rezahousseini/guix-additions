@@ -160,12 +160,13 @@
         (sha256
           (base32 "03jd6skj12063w2kwclhss6014bc7d749na3dxw62iq2mj5zrvwd"))))
     (build-system python-build-system)
-    (propagated-inputs (list python-accumulation-tree python-pyudorandom))
     (native-inputs
       (list python-numpy
             python-pytest
             python-pytest-cov
-            python-pytest-timeout))
+            python-pytest-timeout
+	    python-accumulation-tree
+	    python-pyudorandom))
     (home-page "https://github.com/CamDavidsonPilon/tdigest")
     (synopsis "T-Digest data structure")
     (description "T-Digest data structure")
@@ -203,13 +204,55 @@
             #:phases
             #~(modify-phases %standard-phases
                 (delete 'sanity-check))))
-    (propagated-inputs (list python-ruamel.yaml python-sphinx))
+    (native-inputs (list python-ruamel.yaml python-sphinx))
     (home-page "https://github.com/Jakski/sphinxcontrib-autoyaml")
     (synopsis
       "Sphinx autodoc extension for documenting YAML files from comments")
     (description
       "Sphinx autodoc extension for documenting YAML files from comments")
     (license license:expat)))
+
+(define-public python-iapws
+  (package
+    (name "python-iapws")
+    (version "1.5.2")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (pypi-uri "iapws" version))
+        (sha256
+          (base32 "0ls1prmm4d9zxpjr196chvs1gjppmf531aklq1r9vx6zmsn8a4kq"))))
+    (build-system python-build-system)
+    (native-inputs (list python-scipy))
+    (home-page "https://github.com/jjgomera/iapws")
+    (synopsis
+      "Python implementation of standards from The InternationalAssociation for the Properties of Water and Steam")
+    (description
+      "Python implementation of standards from The InternationalAssociation for the
+Properties of Water and Steam")
+    (license #f)))
+
+(define-public python-pint
+  (package
+    (name "python-pint")
+    (version "0.18")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (pypi-uri "Pint" version))
+        (sha256
+          (base32 "00d8icpj59z86ahkvj5bck3w00w4s6zrvimbnzz534169j4cwjwc"))))
+    (build-system python-build-system)
+    (arguments
+       (list #:tests? #f
+             #:phases
+             #~(modify-phases %standard-phases
+                 (delete 'sanity-check))))
+    (native-inputs (list python-importlib-metadata python-packaging))
+    (home-page "https://github.com/hgrecco/pint")
+    (synopsis "Physical quantities module")
+    (description "Physical quantities module")
+    (license license:bsd-3)))
 
 (define-public python-tefw-ml
   (let ((commit "19a09946bb65ff9f6ccc09c3e9744951900de857")
@@ -232,16 +275,16 @@
              #:phases
              #~(modify-phases %standard-phases
                  (delete 'sanity-check))))
-      (propagated-inputs (list
-			  python-numpy
-			  python-scipy
-			  python-scikit-learn
-			  python-pandas
-			  python-matplotlib
-			  python-pyaml
-			  python-tdigest
-			  python-ttictoc
-			  python-seaborn))
+      (native-inputs (list
+		      python-numpy
+		      python-scipy
+		      python-scikit-learn
+		      python-pandas
+		      python-matplotlib
+		      python-pyaml
+		      python-tdigest
+		      python-ttictoc
+		      python-seaborn))
       (home-page "https://gitlab.ost.ch/sciceg/hitachiinovazosen/tefw-ml")
       (synopsis
        "Library for the data-driven modelling and monitoring of boiler signals")
