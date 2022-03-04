@@ -259,15 +259,19 @@ Properties of Water and Steam")
     (package
       (name "python-tefw-ml")
       (version (git-version "0.0.0" revision commit))
-      (source (origin
-		(method git-fetch)
-		(uri (git-reference
-                      (url "ssh://git@gitlab.ost.ch:45022/sciceg/hitachiinovazosen/tefw-ml.git")
-                      (commit version)))
-		(file-name (git-file-name name version))
-		(sha256
-		 (base32
-                  "0i8zi228pk8wkyjxdjihdaw0x7zzsdsijiylgzhys51l02fls2jq"))))
+      (source
+       (git-checkout
+	(url "git@gitlab.ost.ch:45022/sciceg/hitachiinovazosen/tefw-ml.git")
+	(commit commit)))
+      ;(source (origin
+      ;		(method git-fetch)
+      ;		(uri (git-reference
+      ;                (url "ssh://git@gitlab.ost.ch:45022/sciceg/hitachiinovazosen/tefw-ml.git")
+      ;                (commit version)))
+      ;		(file-name (git-file-name name version))
+      ;		(sha256
+      ;		 (base32
+      ;            "0i8zi228pk8wkyjxdjihdaw0x7zzsdsijiylgzhys51l02fls2jq"))))
       (build-system python-build-system)
       (arguments
        (list #:tests? #f
