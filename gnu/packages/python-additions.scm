@@ -160,13 +160,12 @@
         (sha256
           (base32 "03jd6skj12063w2kwclhss6014bc7d749na3dxw62iq2mj5zrvwd"))))
     (build-system python-build-system)
+    (propagated-inputs (list python-accumulation-tree python-pyudorandom))
     (native-inputs
       (list python-numpy
             python-pytest
             python-pytest-cov
-            python-pytest-timeout
-	    python-accumulation-tree
-	    python-pyudorandom))
+            python-pytest-timeout))
     (home-page "https://github.com/CamDavidsonPilon/tdigest")
     (synopsis "T-Digest data structure")
     (description "T-Digest data structure")
