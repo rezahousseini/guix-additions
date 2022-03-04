@@ -248,7 +248,7 @@ Properties of Water and Steam")
              #:phases
              #~(modify-phases %standard-phases
                  (delete 'sanity-check))))
-    (native-inputs (list python-importlib-metadata python-packaging))
+    (native-inputs (list python-setuptools-scm))
     (home-page "https://github.com/hgrecco/pint")
     (synopsis "Physical quantities module")
     (description "Physical quantities module")
