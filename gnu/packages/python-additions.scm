@@ -107,7 +107,8 @@
   #:use-module (guix build-system python)
   #:use-module (guix build-system trivial)
   #:use-module (srfi srfi-1)
-  #:use-module (srfi srfi-26))
+  #:use-module (srfi srfi-26)
+  #:autoload   (guix git) (git-checkout))
 
 (define-public python-pyudorandom
   (package
