@@ -264,15 +264,15 @@ Properties of Water and Steam")
        (git-checkout
 	(url "git@gitlab.ost.ch:45022/sciceg/hitachiinovazosen/tefw-ml.git")
 	(commit commit)))
-      ;(source (origin
-      ;		(method git-fetch)
-      ;		(uri (git-reference
-      ;                (url "ssh://git@gitlab.ost.ch:45022/sciceg/hitachiinovazosen/tefw-ml.git")
-      ;                (commit version)))
-      ;		(file-name (git-file-name name version))
-      ;		(sha256
-      ;		 (base32
-      ;            "0i8zi228pk8wkyjxdjihdaw0x7zzsdsijiylgzhys51l02fls2jq"))))
+					;(source (origin
+					;		(method git-fetch)
+					;		(uri (git-reference
+					;                (url "ssh://git@gitlab.ost.ch:45022/sciceg/hitachiinovazosen/tefw-ml.git")
+					;                (commit version)))
+					;		(file-name (git-file-name name version))
+					;		(sha256
+					;		 (base32
+					;            "0i8zi228pk8wkyjxdjihdaw0x7zzsdsijiylgzhys51l02fls2jq"))))
       (build-system python-build-system)
       (arguments
        (list #:tests? #f
@@ -295,3 +295,30 @@ Properties of Water and Steam")
       (description
        "Library for the data-driven modelling and monitoring of boiler signals")
       (license license:expat))))
+
+(define-public python-sphinx-autodoc-defaultargs
+  (package
+    (name "python-sphinx-autodoc-defaultargs")
+    (version "0.1.2")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (pypi-uri "sphinx-autodoc-defaultargs" version))
+       (sha256
+	(base32 "1qsvpv9xrx47k6vprrmr5jyf5fz6f2ink51zk8g1y32i8fndj75i"))))
+    (build-system python-build-system)
+    (propagated-inputs (list python-sphinx))
+    (native-inputs
+     (list
+      python-setuptools-scm
+      python-dataclasses
+      python-pytest
+      python-sphinx
+      python-sphobjinv
+      python-typing-extensions))
+    (home-page "https://github.com/zwang123/sphinx-autodoc-defaultargs")
+    (synopsis
+     "Automatic generation of default arguments for the Sphinx autodoc extension.")
+    (description
+     "Automatic generation of default arguments for the Sphinx autodoc extension.")
+    (license license:expat)))
