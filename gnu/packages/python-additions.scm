@@ -322,3 +322,94 @@ Properties of Water and Steam")
     (description
      "Automatic generation of default arguments for the Sphinx autodoc extension.")
     (license license:expat)))
+
+(define-public python-typing
+  (package
+   (name "python-typing")
+   (version "3.10.0.0")
+   (source
+    (origin
+     (method url-fetch)
+     (uri (pypi-uri "typing" version))
+     (sha256
+      (base32 "0c5il4d68fd4qrm5k3dps70j0xz0n5krj6lhwn9vzpal3whsvd0k"))))
+   (build-system python-build-system)
+   (home-page "https://docs.python.org/3/library/typing.html")
+   (synopsis "Type Hints for Python")
+   (description "Type Hints for Python")
+   (license #f)))
+
+(define-public python-pockets
+  (package
+   (name "python-pockets")
+   (version "0.9.1")
+   (source
+    (origin
+     (method url-fetch)
+     (uri (pypi-uri "pockets" version))
+     (sha256
+      (base32 "1cwjgsghxr0qsvl5l0j90bbkqdgkpj1z4wdmwczi7agpqsiz284k"))))
+   (build-system python-build-system)
+   (propagated-inputs (list python-six))
+   (home-page "http://pockets.readthedocs.org")
+   (synopsis "A collection of helpful Python tools!")
+   (description "This package provides a collection of helpful Python tools!")
+   (license license:bsd-3)))
+
+(define-public python-sphinxcontrib-napoleon
+  (package
+   (name "python-sphinxcontrib-napoleon")
+   (version "0.7")
+   (source
+    (origin
+     (method url-fetch)
+     (uri (pypi-uri "sphinxcontrib-napoleon" version))
+     (sha256
+      (base32 "1y7wrfml0pw6mhqs5qd10j9735fsmzbglhrhgwnryvirxnz84ws0"))))
+   (build-system python-build-system)
+   (native-inputs (list python-sphinx python-nose python-mock python-flake8 python-coverage))
+   (propagated-inputs (list python-pockets python-six))
+   (home-page "https://sphinxcontrib-napoleon.readthedocs.io")
+   (synopsis "Sphinx \"napoleon\" extension.")
+   (description "Sphinx \"napoleon\" extension.")
+   (license license:bsd-3)))
+
+(define-public python-sphinx-testing
+  (package
+   (name "python-sphinx-testing")
+   (version "1.0.1")
+   (source
+    (origin
+     (method url-fetch)
+     (uri (pypi-uri "sphinx-testing" version))
+     (sha256
+      (base32 "02advbqzsnh05jzk8i7vlhvmdlqp8c82khkzyq07nbbjnmsifrpg"))))
+   (build-system python-build-system)
+   (propagated-inputs (list python-six python-sphinx))
+   (home-page "https://github.com/sphinx-doc/sphinx-testing")
+   (synopsis "testing utility classes and functions for Sphinx extensions")
+   (description "testing utility classes and functions for Sphinx extensions")
+   (license #f)))
+
+(define-public python-sphinx-autodoc-napoleon-typehints
+  (package
+   (name "python-sphinx-autodoc-napoleon-typehints")
+   (version "2.1.6")
+   (source
+    (origin
+     (method url-fetch)
+     (uri (pypi-uri "sphinx-autodoc-napoleon-typehints" version))
+     (sha256
+      (base32 "1sfsw64zjmyv5h8xyj1nlxhpb2pxhqx3pls1bjwjldh35p16vqv7"))))
+   (build-system python-build-system)
+   (native-inputs (list python-setuptools-scm python-pytest-runner python-sphinx-testing))
+   (propagated-inputs
+    (list python-sphinx python-sphinxcontrib-napoleon python-typing))
+   (home-page
+    "https://github.com/daviskirk/sphinx-autodoc-napoleon-typehints")
+   (synopsis "Type hints (PEP 484) support for the Sphinx autodoc extension")
+   (description
+    "Type hints (PEP 484) support for the Sphinx autodoc extension")
+   (license license:expat)))
+
+python-sphinx-testing
