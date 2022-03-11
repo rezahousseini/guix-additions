@@ -234,63 +234,36 @@ Properties of Water and Steam")
 
 (define-public python-pint
   (package
-   (name "python-pint")
-   (version "0.18")
-   (source
-    (origin
-     (method url-fetch)
-     (uri (pypi-uri "Pint" version))
-     (sha256
-      (base32 "00d8icpj59z86ahkvj5bck3w00w4s6zrvimbnzz534169j4cwjwc"))))
-   (build-system python-build-system)
-   (arguments
-    (list #:tests? #f
-          #:phases
-          #~(modify-phases %standard-phases
-			   (delete 'sanity-check))))
-   (native-inputs (list python-setuptools-scm))
-   (home-page "https://github.com/hgrecco/pint")
-   (synopsis "Physical quantities module")
-   (description "Physical quantities module")
-   (license license:bsd-3)))
-
-(define-public python-sphinx-autodoc-defaultargs
-  (package
-   (name "python-sphinx-autodoc-defaultargs")
-   (version "0.1.2")
-   (source
-    (origin
-     (method url-fetch)
-     (uri (pypi-uri "sphinx-autodoc-defaultargs" version))
-     (sha256
-      (base32 "1qsvpv9xrx47k6vprrmr5jyf5fz6f2ink51zk8g1y32i8fndj75i"))))
-   (build-system python-build-system)
-   (propagated-inputs (list python-sphinx))
-   (native-inputs
-    (list
-     python-setuptools-scm
-     python-dataclasses
-     python-pytest
-     python-sphinx
-     python-sphobjinv
-     python-typing-extensions))
-   (home-page "https://github.com/zwang123/sphinx-autodoc-defaultargs")
-   (synopsis
-    "Automatic generation of default arguments for the Sphinx autodoc extension.")
-   (description
-    "Automatic generation of default arguments for the Sphinx autodoc extension.")
-   (license license:expat)))
+    (name "python-pint")
+    (version "0.18")
+    (source
+      (origin
+        (method url-fetch)
+        (uri (pypi-uri "Pint" version))
+        (sha256
+          (base32 "00d8icpj59z86ahkvj5bck3w00w4s6zrvimbnzz534169j4cwjwc"))))
+    (build-system python-build-system)
+    (arguments
+       (list #:tests? #f
+             #:phases
+             #~(modify-phases %standard-phases
+                 (delete 'sanity-check))))
+    (native-inputs (list python-setuptools-scm))
+    (home-page "https://github.com/hgrecco/pint")
+    (synopsis "Physical quantities module")
+    (description "Physical quantities module")
+    (license license:bsd-3)))
 
 (define-public python-tefw-ml
   (let ((commit "19a09946bb65ff9f6ccc09c3e9744951900de857")
         (revision "0")) ;Guix package revision
     (package
-     (name "python-tefw-ml")
-     (version (git-version "0.0.0" revision commit))
-     (source
-      (git-checkout
-       (url "git@gitlab.ost.ch:45022/sciceg/hitachiinovazosen/tefw-ml.git")
-       (commit commit)))
+      (name "python-tefw-ml")
+      (version (git-version "0.0.0" revision commit))
+      (source
+       (git-checkout
+	(url "git@gitlab.ost.ch:45022/sciceg/hitachiinovazosen/tefw-ml.git")
+	(commit commit)))
 					;(source (origin
 					;		(method git-fetch)
 					;		(uri (git-reference
@@ -300,25 +273,148 @@ Properties of Water and Steam")
 					;		(sha256
 					;		 (base32
 					;            "0i8zi228pk8wkyjxdjihdaw0x7zzsdsijiylgzhys51l02fls2jq"))))
-     (build-system python-build-system)
-     (arguments
-      (list #:tests? #f
-            #:phases
-            #~(modify-phases %standard-phases
-			     (delete 'sanity-check))))
-     (native-inputs (list
-		     python-numpy
-		     python-scipy
-		     python-scikit-learn
-		     python-pandas
-		     python-matplotlib
-		     python-pyaml
-		     python-tdigest
-		     python-ttictoc
-		     python-seaborn))
-     (home-page "https://gitlab.ost.ch/sciceg/hitachiinovazosen/tefw-ml")
-     (synopsis
-      "Library for the data-driven modelling and monitoring of boiler signals")
-     (description
-      "Library for the data-driven modelling and monitoring of boiler signals")
-     (license license:expat))))
+      (build-system python-build-system)
+      (arguments
+       (list #:tests? #f
+             #:phases
+             #~(modify-phases %standard-phases
+                 (delete 'sanity-check))))
+      (native-inputs (list
+		      python-numpy
+		      python-scipy
+		      python-scikit-learn
+		      python-pandas
+		      python-matplotlib
+		      python-pyaml
+		      python-tdigest
+		      python-ttictoc
+		      python-seaborn))
+      (home-page "https://gitlab.ost.ch/sciceg/hitachiinovazosen/tefw-ml")
+      (synopsis
+       "Library for the data-driven modelling and monitoring of boiler signals")
+      (description
+       "Library for the data-driven modelling and monitoring of boiler signals")
+      (license license:expat))))
+
+(define-public python-sphinx-autodoc-defaultargs
+  (package
+    (name "python-sphinx-autodoc-defaultargs")
+    (version "0.1.2")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (pypi-uri "sphinx-autodoc-defaultargs" version))
+       (sha256
+	(base32 "1qsvpv9xrx47k6vprrmr5jyf5fz6f2ink51zk8g1y32i8fndj75i"))))
+    (build-system python-build-system)
+    (propagated-inputs (list python-sphinx))
+    (native-inputs
+     (list
+      python-setuptools-scm
+      python-dataclasses
+      python-pytest
+      python-sphinx
+      python-sphobjinv
+      python-typing-extensions))
+    (home-page "https://github.com/zwang123/sphinx-autodoc-defaultargs")
+    (synopsis
+     "Automatic generation of default arguments for the Sphinx autodoc extension.")
+    (description
+     "Automatic generation of default arguments for the Sphinx autodoc extension.")
+    (license license:expat)))
+
+(define-public python-typing
+  (package
+   (name "python-typing")
+   (version "3.10.0.0")
+   (source
+    (origin
+     (method url-fetch)
+     (uri (pypi-uri "typing" version))
+     (sha256
+      (base32 "0c5il4d68fd4qrm5k3dps70j0xz0n5krj6lhwn9vzpal3whsvd0k"))))
+   (build-system python-build-system)
+   (home-page "https://docs.python.org/3/library/typing.html")
+   (synopsis "Type Hints for Python")
+   (description "Type Hints for Python")
+   (license #f)))
+
+(define-public python-pockets
+  (package
+   (name "python-pockets")
+   (version "0.9.1")
+   (source
+    (origin
+     (method url-fetch)
+     (uri (pypi-uri "pockets" version))
+     (sha256
+      (base32 "1cwjgsghxr0qsvl5l0j90bbkqdgkpj1z4wdmwczi7agpqsiz284k"))))
+   (build-system python-build-system)
+   (propagated-inputs (list python-six))
+   (home-page "http://pockets.readthedocs.org")
+   (synopsis "A collection of helpful Python tools!")
+   (description "This package provides a collection of helpful Python tools!")
+   (license license:bsd-3)))
+
+(define-public python-sphinxcontrib-napoleon
+  (package
+   (name "python-sphinxcontrib-napoleon")
+   (version "0.7")
+   (source
+    (origin
+     (method url-fetch)
+     (uri (pypi-uri "sphinxcontrib-napoleon" version))
+     (sha256
+      (base32 "1y7wrfml0pw6mhqs5qd10j9735fsmzbglhrhgwnryvirxnz84ws0"))))
+   (build-system python-build-system)
+   (native-inputs (list python-sphinx python-nose python-mock python-flake8 python-coverage))
+   (propagated-inputs (list python-pockets python-six))
+   (home-page "https://sphinxcontrib-napoleon.readthedocs.io")
+   (synopsis "Sphinx \"napoleon\" extension.")
+   (description "Sphinx \"napoleon\" extension.")
+   (license license:bsd-3)))
+
+(define-public python-sphinx-testing
+  (package
+   (name "python-sphinx-testing")
+   (version "1.0.1")
+   (source
+    (origin
+     (method url-fetch)
+     (uri (pypi-uri "sphinx-testing" version))
+     (sha256
+      (base32 "02advbqzsnh05jzk8i7vlhvmdlqp8c82khkzyq07nbbjnmsifrpg"))))
+   (build-system python-build-system)
+   (propagated-inputs (list python-six python-sphinx))
+   (home-page "https://github.com/sphinx-doc/sphinx-testing")
+   (synopsis "testing utility classes and functions for Sphinx extensions")
+   (description "testing utility classes and functions for Sphinx extensions")
+   (license #f)))
+
+(define-public python-sphinx-autodoc-napoleon-typehints
+  (package
+   (name "python-sphinx-autodoc-napoleon-typehints")
+   (version "2.1.6")
+   (source
+    (origin
+     (method url-fetch)
+     (uri (pypi-uri "sphinx-autodoc-napoleon-typehints" version))
+     (sha256
+      (base32 "1sfsw64zjmyv5h8xyj1nlxhpb2pxhqx3pls1bjwjldh35p16vqv7"))))
+   (build-system python-build-system)
+   (arguments
+    (list #:tests? #f
+          #:phases
+          #~(modify-phases %standard-phases
+			   (delete 'sanity-check))))
+   (native-inputs (list python-setuptools-scm python-pytest-runner python-sphinx-testing python-pytest-cov))
+   (propagated-inputs
+    (list python-sphinx python-sphinxcontrib-napoleon python-typing))
+   (home-page
+    "https://github.com/daviskirk/sphinx-autodoc-napoleon-typehints")
+   (synopsis "Type hints (PEP 484) support for the Sphinx autodoc extension")
+   (description
+    "Type hints (PEP 484) support for the Sphinx autodoc extension")
+   (license license:expat)))
+
+python-sphinx-autodoc-napoleon-typehints
