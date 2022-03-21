@@ -384,7 +384,7 @@ Properties of Water and Steam")
            #:phases
            #~(modify-phases %standard-phases
 	       (delete 'sanity-check))))
-    (native-inputs
+    (propagated-inputs
      (list python-argcomplete
 	   python-colorama
 	   python-decli
