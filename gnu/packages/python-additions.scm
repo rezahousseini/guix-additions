@@ -323,5 +323,3 @@ Properties of Water and Steam")
       (description
        "Library for the data-driven modelling and monitoring of boiler signals")
       (license license:expat))))
-
-python-sphinxcontrib-autoyaml
