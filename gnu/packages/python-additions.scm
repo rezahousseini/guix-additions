@@ -193,23 +193,24 @@
     (name "python-sphinxcontrib-autoyaml")
     (version "0.6.1")
     (source
-      (origin
-        (method url-fetch)
-        (uri (pypi-uri "sphinxcontrib-autoyaml" version))
-        (sha256
-          (base32 "1ghwyjl4414sn7d4z8bqfjy526d54hb1zfvlrgbfrnml61rcb3ri"))))
+     (origin
+       (method url-fetch)
+       (uri (pypi-uri "sphinxcontrib-autoyaml" version))
+       (sha256
+        (base32 "1ghwyjl4414sn7d4z8bqfjy526d54hb1zfvlrgbfrnml61rcb3ri"))))
     (build-system python-build-system)
     (arguments
-      (list #:tests? #f
-            #:phases
-            #~(modify-phases %standard-phases
-                (delete 'sanity-check))))
+     (list #:tests? #f
+           #:phases
+           #~(modify-phases %standard-phases
+               (delete 'sanity-check))))
     (native-inputs (list python-ruamel.yaml python-sphinx))
+    (propagated-inputs (list python-ruamel.yaml))
     (home-page "https://github.com/Jakski/sphinxcontrib-autoyaml")
     (synopsis
-      "Sphinx autodoc extension for documenting YAML files from comments")
+     "Sphinx autodoc extension for documenting YAML files from comments")
     (description
-      "Sphinx autodoc extension for documenting YAML files from comments")
+     "Sphinx autodoc extension for documenting YAML files from comments")
     (license license:expat)))
 
 (define-public python-iapws
@@ -285,12 +286,12 @@ Properties of Water and Steam")
   (let ((commit "19a09946bb65ff9f6ccc09c3e9744951900de857")
         (revision "0")) ;Guix package revision
     (package
-     (name "python-tefw-ml")
-     (version (git-version "0.0.0" revision commit))
-     (source
-      (git-checkout
-       (url "git@gitlab.ost.ch:45022/sciceg/hitachiinovazosen/tefw-ml.git")
-       (commit commit)))
+      (name "python-tefw-ml")
+      (version (git-version "0.0.0" revision commit))
+      (source
+       (git-checkout
+	(url "git@gitlab.ost.ch:45022/sciceg/hitachiinovazosen/tefw-ml.git")
+	(commit commit)))
 					;(source (origin
 					;		(method git-fetch)
 					;		(uri (git-reference
@@ -300,25 +301,27 @@ Properties of Water and Steam")
 					;		(sha256
 					;		 (base32
 					;            "0i8zi228pk8wkyjxdjihdaw0x7zzsdsijiylgzhys51l02fls2jq"))))
-     (build-system python-build-system)
-     (arguments
-      (list #:tests? #f
-            #:phases
-            #~(modify-phases %standard-phases
-			     (delete 'sanity-check))))
-     (native-inputs (list
-		     python-numpy
-		     python-scipy
-		     python-scikit-learn
-		     python-pandas
-		     python-matplotlib
-		     python-pyaml
-		     python-tdigest
-		     python-ttictoc
-		     python-seaborn))
-     (home-page "https://gitlab.ost.ch/sciceg/hitachiinovazosen/tefw-ml")
-     (synopsis
-      "Library for the data-driven modelling and monitoring of boiler signals")
-     (description
-      "Library for the data-driven modelling and monitoring of boiler signals")
-     (license license:expat))))
+      (build-system python-build-system)
+      (arguments
+       (list #:tests? #f
+             #:phases
+             #~(modify-phases %standard-phases
+		 (delete 'sanity-check))))
+      (native-inputs (list
+		      python-numpy
+		      python-scipy
+		      python-scikit-learn
+		      python-pandas
+		      python-matplotlib
+		      python-pyaml
+		      python-tdigest
+		      python-ttictoc
+		      python-seaborn))
+      (home-page "https://gitlab.ost.ch/sciceg/hitachiinovazosen/tefw-ml")
+      (synopsis
+       "Library for the data-driven modelling and monitoring of boiler signals")
+      (description
+       "Library for the data-driven modelling and monitoring of boiler signals")
+      (license license:expat))))
+
+python-sphinxcontrib-autoyaml
