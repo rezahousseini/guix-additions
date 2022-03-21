@@ -390,6 +390,7 @@ Properties of Water and Steam")
 	   python-decli
 	   python-jinja2
 	   python-packaging
+	   python-prompt-toolkit
 	   python-pyyaml
 	   python-questionary
 	   python-termcolor
