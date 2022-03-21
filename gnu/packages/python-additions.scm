@@ -323,3 +323,81 @@ Properties of Water and Steam")
       (description
        "Library for the data-driven modelling and monitoring of boiler signals")
       (license license:expat))))
+
+(define-public python-questionary
+  (package
+    (name "python-questionary")
+    (version "1.10.0")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (pypi-uri "questionary" version))
+       (sha256
+	(base32 "143dji1lyb193vfvcfjcjdzw4jvfnvykdsgfjy6x89nfxkpkl3b0"))))
+    (build-system python-build-system)
+    (arguments
+     (list #:tests? #f
+           #:phases
+           #~(modify-phases %standard-phases
+	       (delete 'sanity-check))))
+    (native-inputs
+     (list python-prompt-toolkit
+	   python-sphinx
+	   python-sphinx-autobuild
+	   python-sphinx-autodoc-typehints
+	   python-sphinx-copybutton
+	   python-sphinx-rtd-theme))
+    (home-page "https://github.com/tmbo/questionary")
+    (synopsis "Python library to build pretty command line user prompts ⭐️")
+    (description "Python library to build pretty command line user prompts ⭐️")
+    (license license:expat)))
+
+(define-public python-decli
+  (package
+    (name "python-decli")
+    (version "0.5.2")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (pypi-uri "decli" version))
+       (sha256
+	(base32 "1bb3simdyr842sci5hj2iicz44n68jl5axhccff82p576i8fbkgj"))))
+    (build-system python-build-system)
+    (home-page "")
+    (synopsis "Minimal, easy-to-use, declarative cli tool")
+    (description "Minimal, easy-to-use, declarative cli tool")
+    (license license:expat)))
+
+(define-public python-commitizen
+  (package
+    (name "python-commitizen")
+    (version "2.21.2")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (pypi-uri "commitizen" version))
+       (sha256
+	(base32 "0z7hqkwmjckpx6z8am0aarrbcbv086v8q0ic8b9d7lkrsvcsizb4"))))
+    (build-system python-build-system)
+    (arguments
+     (list #:tests? #f
+           #:phases
+           #~(modify-phases %standard-phases
+	       (delete 'sanity-check))))
+    (native-inputs
+     (list python-argcomplete
+	   python-colorama
+	   python-decli
+	   python-jinja2
+	   python-packaging
+	   python-pyyaml
+	   python-questionary
+	   python-termcolor
+	   python-tomlkit
+	   python-typing-extensions))
+    (home-page "https://github.com/commitizen-tools/commitizen")
+    (synopsis "Python commitizen client tool")
+    (description "Python commitizen client tool")
+    (license license:expat)))
+
+python-commitizen
