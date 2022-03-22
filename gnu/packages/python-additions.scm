@@ -401,4 +401,22 @@ Properties of Water and Steam")
     (description "Python commitizen client tool")
     (license license:expat)))
 
-python-commitizen
+(define-public python-plac
+  (package
+    (name "python-plac")
+    (version "1.3.4")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (pypi-uri "plac" version))
+       (sha256
+	(base32 "1x9pn6903cawzshxvy7qxbjszl2wl473p0mn2dr7wz66kjglq6n9"))))
+    (build-system python-build-system)
+    (arguments
+     (list #:phases
+	   #~(modify-phases %standard-phases
+	       (delete 'sanity-check))))
+    (home-page "https://github.com/ialbert/plac")
+    (synopsis "The smartest command line arguments parser in the world")
+    (description "The smartest command line arguments parser in the world")
+    (license license:bsd-3)))
