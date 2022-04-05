@@ -322,9 +322,6 @@ Properties of Water and Steam")
 		     python-ttictoc
 		     python-seaborn
 		     python-colorama
- 		     ;; domains
-		     python-iapws
-		     python-pint
 		     ;; testing
 		     python-hypothesis))
      (home-page "https://gitlab.ost.ch/sciceg/hitachiinovazosen/tefw-ml")
