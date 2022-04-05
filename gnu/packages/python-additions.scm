@@ -312,18 +312,19 @@ Properties of Water and Steam")
      (native-inputs (list
 		     python-numpy
 		     python-scipy
-		     python-scikit-learn
-		     python-pandas
-		     python-matplotlib
-		     python-pyaml
-		     python-tdigest
-		     ;; scripts
-		     python-plac
-		     python-ttictoc
-		     python-seaborn
-		     python-colorama
-		     ;; testing
-		     python-hypothesis))
+		     python-matplotlib))
+     (propagated-inputs (list
+			 python-pyaml
+			 python-pandas
+			 python-tdigest
+			 python-scikit-learn
+			 ;; testing
+			 python-hypothesis
+			 ;; scripts
+			 python-ttictoc
+			 python-plac
+			 python-colorama
+			 python-seaborn))
      (home-page "https://gitlab.ost.ch/sciceg/hitachiinovazosen/tefw-ml")
      (synopsis
       "Library for the data-driven modelling and monitoring of boiler signals")
