@@ -95,9 +95,11 @@ copied to their outputs; otherwise the TEXLIVE-BUILD-SYSTEM is used."
               (list "/doc/generic/xstring/"
 		    "/tex/generic/xstring/")
               (base32
-               "0b9rq06c0xm9dpd6yljvgay0p7xpglpddw10vlf5c50wma4xqjda")
+               "1azpq855kq1l4686bjp8haxim5c8wycz1b6lcg5q7x8kb4g9sppn")
               #:trivial? #t))
     (home-page "https://www.ctan.org/pkg/xstring")
     (synopsis "String manipulation for (La)Tex")
     (description "The package provides macros for manipulating strings — testing a string’s contents, extracting substrings, substitution of substrings and providing numbers such as string length, position of, or number of recurrences of, a substring.")
     (license license:public-domain)))
+
+texlive-xstring
