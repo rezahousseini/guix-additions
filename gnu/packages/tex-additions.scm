@@ -98,8 +98,22 @@ copied to their outputs; otherwise the TEXLIVE-BUILD-SYSTEM is used."
                "1azpq855kq1l4686bjp8haxim5c8wycz1b6lcg5q7x8kb4g9sppn")
               #:trivial? #t))
     (home-page "https://www.ctan.org/pkg/xstring")
-    (synopsis "String manipulation for (La)Tex")
+    (synopsis "String manipulation for (La)TeX")
     (description "The package provides macros for manipulating strings — testing a string’s contents, extracting substrings, substitution of substrings and providing numbers such as string length, position of, or number of recurrences of, a substring.")
     (license license:public-domain)))
 
-texlive-xstring
+(define-public texlive-metalogo
+  (package
+    (inherit (simple-texlive-package
+              "texlive-metalogo"
+              (list "doc/latex/metalogo//"
+		    "tex/latex/metalogo/")
+              (base32
+               "02c8ysyr8bc1b643zjgs5qshc704hm7wwz7g1w8izb202hvzsk13")
+              #:trivial? #t))
+    (home-page "https://www.ctan.org/pkg/metalogo")
+    (synopsis "Extended TeX logo macros")
+    (description "This package exposes spacing parameters for various TeX logos to the end user, to optimise the logos for different fonts. Written especially for XeLaTeX users.")
+    (license license:public-domain)))
+
+texlive-metalogo
