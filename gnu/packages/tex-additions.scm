@@ -88,10 +88,10 @@ copied to their outputs; otherwise the TEXLIVE-BUILD-SYSTEM is used."
     (description "The package will create ‘smart’ diagrams from lists of items, for simple documents and for presentations.")
     (license license:public-domain)))
 
-(define-public texlive-xstring
+(define-public texlive-generic-xstring
   (package
     (inherit (simple-texlive-package
-              "texlive-xstring"
+              "texlive-generic-xstring"
               (list "doc/generic/xstring/"
 		    "tex/generic/xstring/")
               (base32
@@ -106,7 +106,7 @@ copied to their outputs; otherwise the TEXLIVE-BUILD-SYSTEM is used."
   (package
     (inherit (simple-texlive-package
               "texlive-metalogo"
-              (list "doc/latex/metalogo//"
+              (list "doc/latex/metalogo/"
 		    "tex/latex/metalogo/")
               (base32
                "02c8ysyr8bc1b643zjgs5qshc704hm7wwz7g1w8izb202hvzsk13")
@@ -116,4 +116,16 @@ copied to their outputs; otherwise the TEXLIVE-BUILD-SYSTEM is used."
     (description "This package exposes spacing parameters for various TeX logos to the end user, to optimise the logos for different fonts. Written especially for XeLaTeX users.")
     (license license:public-domain)))
 
-texlive-metalogo
+(define-public texlive-dtk
+  (package
+    (inherit (simple-texlive-package
+              "texlive-dtk"
+              (list "doc/latex/dtk/"
+		    "tex/latex/dtk/")
+              (base32
+               "1yibr5jfn67780wpks6cvy8phq6fqgji2ay60nvykj3hizjc0nci")
+              #:trivial? #t))
+    (home-page "https://www.ctan.org/pkg/dtk")
+    (synopsis "Document class for the journal of DANTE")
+    (description "The bundle provides a class and style file for typesetting “Die TEXnische Komödie” — the communications of the German TEX Users Group DANTE e.V. The arrangement means that the class may be used by article writers to typeset a single article, as well as to produce the complete journal.")
+    (license license:public-domain)))
