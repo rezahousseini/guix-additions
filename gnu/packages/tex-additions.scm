@@ -78,11 +78,26 @@ copied to their outputs; otherwise the TEXLIVE-BUILD-SYSTEM is used."
   (package
     (inherit (simple-texlive-package
               "texlive-smartdiagram"
-              (list "/tex/latex/smartdiagram/")
+              (list "/doc/latex/smartdiagram/"
+		    "/tex/latex/smartdiagram/")
               (base32
                "0b9rq06c0xm9dpd6yljvgay0p7xpglpddw10vlf5c50wma4xqjda")
               #:trivial? #t))
     (home-page "https://www.ctan.org/pkg/smartdiagram")
     (synopsis "Generate diagrams from lists")
     (description "The package will create ‘smart’ diagrams from lists of items, for simple documents and for presentations.")
+    (license license:public-domain)))
+
+(define-public texlive-xstring
+  (package
+    (inherit (simple-texlive-package
+              "texlive-xstring"
+              (list "/doc/generic/xstring/"
+		    "/tex/generic/xstring/")
+              (base32
+               "0b9rq06c0xm9dpd6yljvgay0p7xpglpddw10vlf5c50wma4xqjda")
+              #:trivial? #t))
+    (home-page "https://www.ctan.org/pkg/xstring")
+    (synopsis "String manipulation for (La)Tex")
+    (description "The package provides macros for manipulating strings — testing a string’s contents, extracting substrings, substitution of substrings and providing numbers such as string length, position of, or number of recurrences of, a substring.")
     (license license:public-domain)))
