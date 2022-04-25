@@ -78,8 +78,8 @@ copied to their outputs; otherwise the TEXLIVE-BUILD-SYSTEM is used."
   (package
     (inherit (simple-texlive-package
               "texlive-smartdiagram"
-              (list "/doc/latex/smartdiagram/"
-		    "/tex/latex/smartdiagram/")
+              (list "doc/latex/smartdiagram/"
+		    "tex/latex/smartdiagram/")
               (base32
                "0b9rq06c0xm9dpd6yljvgay0p7xpglpddw10vlf5c50wma4xqjda")
               #:trivial? #t))
@@ -92,8 +92,8 @@ copied to their outputs; otherwise the TEXLIVE-BUILD-SYSTEM is used."
   (package
     (inherit (simple-texlive-package
               "texlive-xstring"
-              (list "/doc/generic/xstring/"
-		    "/tex/generic/xstring/")
+              (list "doc/generic/xstring/"
+		    "tex/generic/xstring/")
               (base32
                "1azpq855kq1l4686bjp8haxim5c8wycz1b6lcg5q7x8kb4g9sppn")
               #:trivial? #t))
