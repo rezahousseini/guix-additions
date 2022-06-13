@@ -257,74 +257,30 @@ Properties of Water and Steam")
 
 (define-public python-sphinx-autodoc-defaultargs
   (package
-   (name "python-sphinx-autodoc-defaultargs")
-   (version "0.1.2")
-   (source
-    (origin
-     (method url-fetch)
-     (uri (pypi-uri "sphinx-autodoc-defaultargs" version))
-     (sha256
-      (base32 "1qsvpv9xrx47k6vprrmr5jyf5fz6f2ink51zk8g1y32i8fndj75i"))))
-   (build-system python-build-system)
-   (propagated-inputs (list python-sphinx))
-   (native-inputs
-    (list
-     python-setuptools-scm
-     python-dataclasses
-     python-pytest
-     python-sphinx
-     python-sphobjinv
-     python-typing-extensions))
-   (home-page "https://github.com/zwang123/sphinx-autodoc-defaultargs")
-   (synopsis
-    "Automatic generation of default arguments for the Sphinx autodoc extension.")
-   (description
-    "Automatic generation of default arguments for the Sphinx autodoc extension.")
-   (license license:expat)))
-
-(define-public python-tefw-ml
-  (package
-    (name "python-tefw-ml")
-    (version "v0.2.1")
-    (source (origin
-	      (method git-fetch)
-	      (uri (git-reference
-		    (url "https://gitlab+deploy-token-280:wxLe5fs3dhSaxxz2ZYvM@gitlab.ost.ch/sciceg/hitachiinovazosen/tefw-ml.git")
-		    (commit version)))
-	      (file-name (git-file-name name version))
-	      (sha256
-	       (base32
-		"05g6l8bfxym555jjhr7z6v3jqws1q7cf23yf4zhlzfv7nmlp5dgb"))))
+    (name "python-sphinx-autodoc-defaultargs")
+    (version "0.1.2")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (pypi-uri "sphinx-autodoc-defaultargs" version))
+       (sha256
+	(base32 "1qsvpv9xrx47k6vprrmr5jyf5fz6f2ink51zk8g1y32i8fndj75i"))))
     (build-system python-build-system)
-    (arguments
-     `(#:phases
-       (modify-phases %standard-phases
-	 (replace 'check
-	   (lambda* (#:key tests? #:allow-other-keys)
-	     (when tests?
-	       (invoke "python" "-m" "unittest")))))))
-    (native-inputs (list
-		    python-numpy
-		    python-scipy
-		    python-matplotlib))
-    (propagated-inputs (list
-			python-pyaml
-			python-pandas
-			python-tdigest
-			python-scikit-learn
-			;; testing
-			python-hypothesis
-			;; scripts
-			python-ttictoc
-			python-plac
-			python-colorama
-			python-seaborn))
-    (home-page "https://gitlab.ost.ch/sciceg/hitachiinovazosen/tefw-ml")
+    (propagated-inputs (list python-sphinx))
+    (native-inputs
+     (list
+      python-setuptools-scm
+      python-dataclasses
+      python-pytest
+      python-sphinx
+      python-sphobjinv
+      python-typing-extensions))
+    (home-page "https://github.com/zwang123/sphinx-autodoc-defaultargs")
     (synopsis
-     "Library for the data-driven modelling and monitoring of boiler signals")
+     "Automatic generation of default arguments for the Sphinx autodoc extension.")
     (description
-     "Library for the data-driven modelling and monitoring of boiler signals")
-    (license license:gpl3)))
+     "Automatic generation of default arguments for the Sphinx autodoc extension.")
+    (license license:expat)))
 
 (define-public python-questionary
   (package
@@ -423,4 +379,78 @@ Properties of Water and Steam")
     (description "The smartest command line arguments parser in the world")
     (license license:bsd-3)))
 
-python-tefw-ml
+(define-public python-tefw-ml
+  (package
+    (name "python-tefw-ml")
+    (version "bb4af8108d06a70c6501eaf72edbacac22e8c132")
+    (source (origin
+	      (method git-fetch)
+	      (uri (git-reference
+		    (url "https://gitlab+deploy-token-280:wxLe5fs3dhSaxxz2ZYvM@gitlab.ost.ch/sciceg/hitachiinovazosen/tefw-ml.git")
+		    (commit version)))
+	      (file-name (git-file-name name version))
+	      (sha256
+	       (base32
+		"0jbj8lnfygbxv40wzy82fns1l4rdddbj33gg36hanyyjgwb2fi3k"))))
+    (build-system python-build-system)
+    (arguments
+     `(#:phases
+       (modify-phases %standard-phases
+	 (replace 'check
+	   (lambda* (#:key tests? #:allow-other-keys)
+	     (when tests?
+	       (invoke "python" "-m" "unittest")))))))
+    (native-inputs (list
+		    python-numpy
+		    python-scipy
+		    python-matplotlib))
+    (propagated-inputs (list
+			python-pyaml
+			python-pandas
+			python-tdigest
+			python-scikit-learn
+			;; testing
+			python-hypothesis
+			;; scripts
+			python-ttictoc
+			python-plac
+			python-colorama
+			python-seaborn))
+    (home-page "https://gitlab.ost.ch/sciceg/hitachiinovazosen/tefw-ml")
+    (synopsis
+     "Library for the data-driven modelling and monitoring of boiler signals")
+    (description
+     "Library for the data-driven modelling and monitoring of boiler signals")
+    (license license:gpl3)))
+
+(define-public python-tefw-reports
+  (package
+    (name "python-tefw-reports")
+    (version "b1d6cc44634ef38dda7a682feee3c864ba45e389")
+    (source (origin
+	      (method git-fetch)
+	      (uri (git-reference
+		    (url "https://gitlab+deploy-token-282:p8cmadDoE-RBwpz6o5Pz@gitlab.ost.ch/sciceg/hitachiinovazosen/tefw-reports.git")
+		    (commit version)))
+	      (file-name (git-file-name name version))
+	      (sha256
+	       (base32
+		"03cb0m5wpivc8qd4392mm0srva5cah9kbh3kjpdsyn4drfiqvsq3"))))
+    (build-system python-build-system)
+    (arguments
+     `(#:tests? #f
+       #:phases
+       (modify-phases %standard-phases
+	 (replace 'build
+	   (lambda* (#:key inputs #:allow-other-keys)
+	     (invoke "make" "-C" "reports" "html"))))))
+    (native-inputs (list
+		    python-tefw-ml
+		    python-sphinx
+		    python-sphinx-gallery))
+    (home-page "https://gitlab.ost.ch/sciceg/hitachiinovazosen/tefw-reports")
+    (synopsis
+     "Reports of analyses run on plant/line data using the tefwml library")
+    (description
+     "Reports of analyses run on plant/line data using the tefwml library")
+    (license license:gpl3)))
