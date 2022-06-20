@@ -382,7 +382,7 @@ Properties of Water and Steam")
 (define-public python-tefw-ml
   (package
     (name "python-tefw-ml")
-    (version "cf1815897d7842b0185ca44b2483b0cd4c21aacf")
+    (version "104a2b224190119c50574570b00ac314a249792e")
     (source (origin
 	      (method git-fetch)
 	      (uri (git-reference
@@ -391,7 +391,7 @@ Properties of Water and Steam")
 	      (file-name (git-file-name name version))
 	      (sha256
 	       (base32
-		"19wqci7pv7jxlhjddsam015whnkvqnca2dndg5kh7d48licxb7cm"))))
+		"0c536b8agckpcm6bmphymz5g754xbi9hjy26zcxg6fni04gc1d8h"))))
     (build-system python-build-system)
     (arguments
      `(#:phases
@@ -454,3 +454,5 @@ Properties of Water and Steam")
     (description
      "Reports of analyses run on plant/line data using the tefwml library")
     (license license:gpl3)))
+
+;;python-tefw-ml
