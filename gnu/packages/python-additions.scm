@@ -423,36 +423,4 @@ Properties of Water and Steam")
      "Library for the data-driven modelling and monitoring of boiler signals")
     (license license:gpl3)))
 
-(define-public python-tefw-reports
-  (package
-    (name "python-tefw-reports")
-    (version "b1d6cc44634ef38dda7a682feee3c864ba45e389")
-    (source (origin
-	      (method git-fetch)
-	      (uri (git-reference
-		    (url "https://gitlab+deploy-token-282:p8cmadDoE-RBwpz6o5Pz@gitlab.ost.ch/sciceg/hitachiinovazosen/tefw-reports.git")
-		    (commit version)))
-	      (file-name (git-file-name name version))
-	      (sha256
-	       (base32
-		"03cb0m5wpivc8qd4392mm0srva5cah9kbh3kjpdsyn4drfiqvsq3"))))
-    (build-system python-build-system)
-    (arguments
-     `(#:tests? #f
-       #:phases
-       (modify-phases %standard-phases
-	 (replace 'build
-	   (lambda* (#:key inputs #:allow-other-keys)
-	     (invoke "make" "-C" "reports" "html"))))))
-    (native-inputs (list
-		    python-tefw-ml
-		    python-sphinx
-		    python-sphinx-gallery))
-    (home-page "https://gitlab.ost.ch/sciceg/hitachiinovazosen/tefw-reports")
-    (synopsis
-     "Reports of analyses run on plant/line data using the tefwml library")
-    (description
-     "Reports of analyses run on plant/line data using the tefwml library")
-    (license license:gpl3)))
-
 ;;python-tefw-ml
