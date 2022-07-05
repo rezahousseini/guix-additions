@@ -382,7 +382,7 @@ Properties of Water and Steam")
 (define-public python-tefw-ml
   (package
    (name "python-tefw-ml")
-   (version "328077aa08131058d3421df9632f9840441310d3")
+   (version "e7f4aadd2c2e563aedb37b997ac3142a5fa28c9e")
    (source (origin
 	    (method git-fetch)
 	    (uri (git-reference
@@ -391,7 +391,7 @@ Properties of Water and Steam")
 	    (file-name (git-file-name name version))
 	    (sha256
 	     (base32
-	      "14aw15ga5hp4n2bhgwnc3bb3p3k9i1zymqi5klvnzsi4frnn6p40"))))
+	      "1kxdmn8pb1ii9xbgwy62qp22gsy20lr0ds5gph5nfyc8p1bj7n0m"))))
    (build-system python-build-system)
    (arguments
     `(#:phases
@@ -422,5 +422,3 @@ Properties of Water and Steam")
    (description
     "Library for the data-driven modelling and monitoring of boiler signals")
    (license license:gpl3)))
-
-;;python-tefw-ml
