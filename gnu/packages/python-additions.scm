@@ -190,28 +190,28 @@
 
 (define-public python-sphinxcontrib-autoyaml
   (package
-    (name "python-sphinxcontrib-autoyaml")
-    (version "0.6.1")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (pypi-uri "sphinxcontrib-autoyaml" version))
-       (sha256
-        (base32 "1ghwyjl4414sn7d4z8bqfjy526d54hb1zfvlrgbfrnml61rcb3ri"))))
-    (build-system python-build-system)
-    (arguments
-     (list #:tests? #f
-           #:phases
-           #~(modify-phases %standard-phases
-               (delete 'sanity-check))))
-    (native-inputs (list python-ruamel.yaml python-sphinx))
-    (propagated-inputs (list python-ruamel.yaml))
-    (home-page "https://github.com/Jakski/sphinxcontrib-autoyaml")
-    (synopsis
-     "Sphinx autodoc extension for documenting YAML files from comments")
-    (description
-     "Sphinx autodoc extension for documenting YAML files from comments")
-    (license license:expat)))
+   (name "python-sphinxcontrib-autoyaml")
+   (version "0.6.2")
+   (source
+    (origin
+     (method url-fetch)
+     (uri (pypi-uri "sphinxcontrib-autoyaml" version))
+     (sha256
+      (base32 "1il2d1725x5z19yggdspzz1j2d8gxpbxl83x00h7p0g1ybjwxs3v"))))
+   (build-system python-build-system)
+   (arguments
+    (list #:tests? #f
+          #:phases
+          #~(modify-phases %standard-phases
+			   (delete 'sanity-check))))
+   (native-inputs (list python-ruamel.yaml python-sphinx))
+   (propagated-inputs (list python-ruamel.yaml))
+   (home-page "https://github.com/Jakski/sphinxcontrib-autoyaml")
+   (synopsis
+    "Sphinx autodoc extension for documenting YAML files from comments")
+   (description
+    "Sphinx autodoc extension for documenting YAML files from comments")
+   (license license:expat)))
 
 (define-public python-iapws
   (package
