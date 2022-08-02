@@ -402,7 +402,8 @@ Properties of Water and Steam")
 	       (invoke "python" "-m" "unittest")))))))
     (native-inputs (list
 		    python-numpy
-		    python-scipy))
+		    python-scipy
+		    python-matplotlib))
     (propagated-inputs (list
 			python-pyaml
 			python-pandas
@@ -411,7 +412,6 @@ Properties of Water and Steam")
 			;; testing
 			python-hypothesis
 			;; scripts
-			python-matplotlib	
 			python-ttictoc
 			python-plac
 			python-colorama
