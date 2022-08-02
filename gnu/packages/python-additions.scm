@@ -382,7 +382,7 @@ Properties of Water and Steam")
 (define-public python-tefw-ml
   (package
     (name "python-tefw-ml")
-    (version "dd3c54d6ddfda61c9da511c8e7cc11c59a5e8dfe")
+    (version "6593b647d2312e9c9bb2d4f28ffafd7af21951b2")
     (source (origin
 	      (method git-fetch)
 	      (uri (git-reference
@@ -391,7 +391,7 @@ Properties of Water and Steam")
 	      (file-name (git-file-name name version))
 	      (sha256
 	       (base32
-		"0r72j845vm4sxihx1gg3wvfd9mq5wz4lnm253b3nn134hpqhlzpa"))))
+		"0r41cphzdya81svz25f3d9hxbq59rbjj724n3gyx034rrslgh10j"))))
     (build-system python-build-system)
     (arguments
      `(#:phases
