@@ -11,7 +11,6 @@
   #:use-module (guix svn-download)
   #:use-module (gnu packages)
   #:use-module (gnu packages base)
-  #:use-module (gnu packages fonts)
   #:use-module (gnu packages texinfo)
   #:use-module (gnu packages tex)
   #:use-module (ice-9 ftw)
@@ -178,11 +177,11 @@ mathematics typesetting.")
     (inherit (simple-texlive-package
 	      "texlive-libertinus-otf"
               (list "doc/fonts/libertinus-otf/"
-                    "tex/latex/libertinus-otf/")
+                    "tex/latex/libertinus-otf/"
+		    "fonts/opentype/public/libertinus-fonts/")
               (base32
                "021101qxxlvwbic49zb63wasdrhg7vvv95ln3pzbx0800fdi9p7v")
               #:trivial? #t))
-    (propagated-inputs (list font-libertinus))
     (home-page "https://ctan.org/fonts/libertinus-otf")
     (synopsis "Support for Libertinus OpenType")
     (description
