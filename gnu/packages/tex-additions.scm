@@ -129,3 +129,45 @@ copied to their outputs; otherwise the TEXLIVE-BUILD-SYSTEM is used."
     (synopsis "Document class for the journal of DANTE")
     (description "The bundle provides a class and style file for typesetting “Die TEXnische Komödie” — the communications of the German TEX Users Group DANTE e.V. The arrangement means that the class may be used by article writers to typeset a single article, as well as to produce the complete journal.")
     (license license:public-domain)))
+
+(define-public texlive-filehook
+  (package
+    (inherit (simple-texlive-package
+	      "texlive-filehook"
+              (list "doc/latex/filehook/"
+                    "source/latex/filehook/"
+                    "tex/latex/filehook/")
+              (base32
+               "03dsnv8fn111kn8h2fa281w2jvcdrqag1im6mkkfahvjgl1apk6k")
+	      #:trivial? #t))
+    (home-page "https://ctan.org/macros/latex/contrib/filehook")
+    (synopsis "Hooks for input files")
+    (description
+     "The package provides several file hooks (AtBegin, AtEnd, ...) for files read by
+\\input, \\include and \\InputIfFileExists.  General hooks for all such files (e.g.
+ all \\included ones) and file specific hooks only used for named files are
+provided; two hooks are provided for the end of \\included files -- one before,
+and one after the final \\clearpage.")
+    (license license:lppl1.3+)))
+
+(define-public texlive-lualatex-math
+  (package
+    (inherit (simple-texlive-package
+	      "texlive-lualatex-math"
+              (list "doc/lualatex/lualatex-math/"
+                    "source/lualatex/lualatex-math/"
+                    "tex/lualatex/lualatex-math/")
+              (base32
+               "1xfr31rwr7zc6d5bsc3v5lwvcfrg109rzfgvvs69w4xs61j06jcg")
+	      #:trivial? #t))
+    (propagated-inputs (list texlive-filehook texlive-etoolbox))
+    (home-page "https://ctan.org/macros/luatex/latex/lualatex-math")
+    (synopsis "Fixes for mathematics-related LuaLaTeX issues")
+    (description
+     "The package patches a few commands of the LaTeX2e kernel and the amsmath and
+mathtools packages to be more compatible with the LuaTeX engine.  It is only
+meaningful for LuaLaTeX documents containing mathematical formulas, and does not
+exhibit any new functionality.  The fixes are mostly moved from the unicode-math
+package to this package since they are not directly related to Unicode
+mathematics typesetting.")
+    (license license:lppl1.3c)))
