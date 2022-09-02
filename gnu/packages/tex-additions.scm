@@ -171,3 +171,62 @@ exhibit any new functionality.  The fixes are mostly moved from the unicode-math
 package to this package since they are not directly related to Unicode
 mathematics typesetting.")
     (license license:lppl1.3c)))
+
+(define-public texlive-libertinus-otf
+  (package
+    (inherit (simple-texlive-package
+	      "texlive-libertinus-otf"
+              (list "doc/fonts/libertinus-otf/"
+                    "tex/latex/libertinus-otf/")
+              (base32
+               "021101qxxlvwbic49zb63wasdrhg7vvv95ln3pzbx0800fdi9p7v")
+              #:trivial? #t))
+    (propagated-inputs (list font-libertinus))
+    (home-page "https://ctan.org/fonts/libertinus-otf")
+    (synopsis "Support for Libertinus OpenType")
+    (description
+     "This package offers LuaLaTeX/XeLaTeX support for the Libertinus OpenType fonts
+maintained by Khaled Hosny.  Missing fonts are defined via several font feature
+settings.  The Libertinus fonts are similiar to Libertine and Biolinum, but come
+with math symbols.")
+    (license license:lppl1.3+)))
+
+(define-public texlive-libertinus-type1
+  (package
+    (inherit (simple-texlive-package
+	      "texlive-libertinus-type1"
+              (list "doc/fonts/libertinus-type1/"
+		    "fonts/enc/dvips/libertinus-type1/"
+		    "fonts/map/dvips/libertinus-type1/"
+		    "fonts/tfm/public/libertinus-type1/"
+		    "fonts/type1/public/libertinus-type1/"
+		    "fonts/vf/public/libertinus-type1/"
+		    "tex/latex/libertinus-type1/")
+              (base32
+               "1f4w0p0jdmhpnj8x5anm6jv2jzbf5bhajq2qnxcacp23k7fjkq86")
+              #:trivial? #t))
+    (home-page "https://ctan.org/fonts/libertinus-type1")
+    (synopsis "Support for using Libertinus fonts with LaTeX/pdfLaTeX")
+    (description
+     "This package provides support for use of Libertinus fonts with traditional
+processing engines (LaTeX with dvips or dvipdfmx, or pdfLaTeX).")
+    (license license:lppl1.3+)))
+
+(define-public texlive-libertinus
+  (package
+    (inherit (simple-texlive-package
+	      "texlive-libertinus"
+	      (list "doc/fonts/libertinus/"
+                    "tex/latex/libertinus/")
+	      (base32
+	       "13m20jkrf0sp39f0ihc0fw7spzc3gys5xdc720r5gzdnbdqdvih4")
+	      #:trivial? #t))
+    (propagted-inputs (list texlive-libertinus-otf texlive-libertinus-type1))
+    (home-page "https://ctan.org/fonts/libertinus")
+    (synopsis
+     "Wrapper to use the correct libertinus package according to the used TeX engine")
+    (description
+     "This package is only a wrapper for the the two packages libertinus-type1
+(pdfLaTeX) and libertinus-otf (LuaLaTeX/XeLaTeX).  The Libertinus fonts are
+similiar to Libertine and Biolinum, but come with math symbols.")
+    (license license:lppl1.3+)))
