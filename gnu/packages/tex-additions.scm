@@ -217,16 +217,11 @@ processing engines (LaTeX with dvips or dvipdfmx, or pdfLaTeX).")
     (inherit (simple-texlive-package
 	      "texlive-libertinus"
 	      (list "doc/fonts/libertinus/"
-		    "fonts/opentype/public/libertinus-fonts/"
-		    "fonts/enc/dvips/libertinus-type1/"
-		    "fonts/map/dvips/libertinus-type1/"
-		    "fonts/tfm/public/libertinus-type1/"
-		    "fonts/type1/public/libertinus-type1/"
-		    "fonts/vf/public/libertinus-type1/"
                     "tex/latex/libertinus/")
 	      (base32
 	       "13m20jkrf0sp39f0ihc0fw7spzc3gys5xdc720r5gzdnbdqdvih4")
 	      #:trivial? #t))
+    (propagated-inputs (list texlive-libertinus-otf texlive-libertinus-type1))
     (home-page "https://ctan.org/fonts/libertinus")
     (synopsis
      "Wrapper to use the correct libertinus package according to the used TeX engine")
@@ -235,3 +230,5 @@ processing engines (LaTeX with dvips or dvipdfmx, or pdfLaTeX).")
 (pdfLaTeX) and libertinus-otf (LuaLaTeX/XeLaTeX).  The Libertinus fonts are
 similiar to Libertine and Biolinum, but come with math symbols.")
     (license license:lppl1.3+)))
+
+texlive-libertinus-otf
