@@ -11,6 +11,7 @@
   #:use-module (guix svn-download)
   #:use-module (gnu packages)
   #:use-module (gnu packages base)
+  #:use-module (gnu packages fonts)
   #:use-module (gnu packages texinfo)
   #:use-module (gnu packages tex)
   #:use-module (ice-9 ftw)
@@ -221,7 +222,7 @@ processing engines (LaTeX with dvips or dvipdfmx, or pdfLaTeX).")
 	      (base32
 	       "13m20jkrf0sp39f0ihc0fw7spzc3gys5xdc720r5gzdnbdqdvih4")
 	      #:trivial? #t))
-    (propagted-inputs (list texlive-libertinus-otf texlive-libertinus-type1))
+    (propagated-inputs (list texlive-libertinus-otf texlive-libertinus-type1))
     (home-page "https://ctan.org/fonts/libertinus")
     (synopsis
      "Wrapper to use the correct libertinus package according to the used TeX engine")
