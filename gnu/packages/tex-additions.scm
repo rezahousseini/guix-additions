@@ -180,7 +180,7 @@ mathematics typesetting.")
                     "tex/latex/libertinus-otf/"
 		    "fonts/opentype/public/libertinus-fonts/")
               (base32
-               "021101qxxlvwbic49zb63wasdrhg7vvv95ln3pzbx0800fdi9p7v")
+               "09n2j9p1c314nv1l2i2j58ij0h4s89mi49zrrkbzl6p6f51dl35f")
               #:trivial? #t))
     (home-page "https://ctan.org/fonts/libertinus-otf")
     (synopsis "Support for Libertinus OpenType")
@@ -230,5 +230,3 @@ processing engines (LaTeX with dvips or dvipdfmx, or pdfLaTeX).")
 (pdfLaTeX) and libertinus-otf (LuaLaTeX/XeLaTeX).  The Libertinus fonts are
 similiar to Libertine and Biolinum, but come with math symbols.")
     (license license:lppl1.3+)))
-
-texlive-libertinus-otf
