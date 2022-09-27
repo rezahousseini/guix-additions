@@ -230,3 +230,19 @@ processing engines (LaTeX with dvips or dvipdfmx, or pdfLaTeX).")
 (pdfLaTeX) and libertinus-otf (LuaLaTeX/XeLaTeX).  The Libertinus fonts are
 similiar to Libertine and Biolinum, but come with math symbols.")
     (license license:lppl1.3+)))
+
+(define-public texlive-luatex85
+  (package
+    (inherit (simple-texlive-package
+	      "texlive-luatex85"
+              (list "doc/generic/luatex85/"
+                    "source/generic/luatex85/"
+                    "tex/generic/luatex85/")
+              (base32
+               "02j42g9c5smgbrk898fpvrgqlxqcqi8xch23awvnbvg6y54cs573")
+	      #:trivial? #t))
+    (home-page "https://ctan.org/macros/generic/luatex85")
+    (synopsis "pdfTeX aliases for LuaTeX")
+    (description
+     "The package provides emulation of pdfTeX primitives for LuaTeX v0.85+.")
+    (license license:lppl1.3+)))
