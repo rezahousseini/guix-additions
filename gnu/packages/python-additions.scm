@@ -381,44 +381,45 @@ Properties of Water and Steam")
 
 (define-public python-tefw-ml
   (package
-    (name "python-tefw-ml")
-    (version "v1.1.2")
-    (source (origin
-	      (method git-fetch)
-	      (uri (git-reference
-		    (url "https://gitlab+deploy-token-280:wxLe5fs3dhSaxxz2ZYvM@gitlab.ost.ch/sciceg/hitachiinovazosen/tefw-ml.git")
-		    (commit version)))
-	      (file-name (git-file-name name version))
-	      (sha256
-	       (base32
-		"12arpml1pak6r0s839m9awpail1ydw6y86r6xr8r0g169yph9gqw"))))
-    (build-system python-build-system)
-    (arguments
-     `(#:phases
-       (modify-phases %standard-phases
-	 (replace 'check
-	   (lambda* (#:key tests? #:allow-other-keys)
-	     (when tests?
-	       (invoke "python" "-m" "unittest")))))))
-    (native-inputs (list
-		    python-numpy
-		    python-scipy
-		    python-matplotlib))
-    (propagated-inputs (list
-			python-pyaml
-			python-pandas
-			python-tdigest
-			python-scikit-learn
-			;; testing
-			python-hypothesis
-			;; scripts
-			python-ttictoc
-			python-plac
-			python-colorama
-			python-seaborn))
-    (home-page "https://gitlab.ost.ch/sciceg/hitachiinovazosen/tefw-ml")
-    (synopsis
-     "Library for the data-driven modelling and monitoring of boiler signals")
-    (description
-     "Library for the data-driven modelling and monitoring of boiler signals")
-    (license license:gpl3)))
+   (name "python-tefw-ml")
+   (version "v1.1.2")
+   (source (origin
+	    (method git-fetch)
+	    (uri (git-reference
+		  (url "https://gitlab+deploy-token-280:wxLe5fs3dhSaxxz2ZYvM@gitlab.ost.ch/sciceg/hitachiinovazosen/tefw-ml.git")
+		  (commit version)))
+	    (file-name (git-file-name name version))
+	    (sha256
+	     (base32
+	      "12arpml1pak6r0s839m9awpail1ydw6y86r6xr8r0g169yph9gqw"))))
+   (build-system python-build-system)
+   (arguments
+    `(#:phases
+      (modify-phases %standard-phases
+		     (replace 'check
+			      (lambda* (#:key tests? #:allow-other-keys)
+				(when tests?
+				  (invoke "python" "-m" "unittest")))))))
+   (native-inputs (list
+		   python-numpy
+		   python-scipy
+		   python-matplotlib))
+   (propagated-inputs (list
+		       python-pyaml
+		       python-pyarrow
+		       python-pandas
+		       python-tdigest
+		       python-scikit-learn
+		       ;; testing
+		       python-hypothesis
+		       ;; scripts
+		       python-ttictoc
+		       python-plac
+		       python-colorama
+		       python-seaborn))
+   (home-page "https://gitlab.ost.ch/sciceg/hitachiinovazosen/tefw-ml")
+   (synopsis
+    "Library for the data-driven modelling and monitoring of boiler signals")
+   (description
+    "Library for the data-driven modelling and monitoring of boiler signals")
+   (license license:gpl3)))
