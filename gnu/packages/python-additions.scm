@@ -361,23 +361,23 @@ Properties of Water and Steam")
 
 (define-public python-plac
   (package
-    (name "python-plac")
-    (version "1.3.4")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (pypi-uri "plac" version))
-       (sha256
-	(base32 "1x9pn6903cawzshxvy7qxbjszl2wl473p0mn2dr7wz66kjglq6n9"))))
-    (build-system python-build-system)
-    (arguments
-     (list #:phases
-	   #~(modify-phases %standard-phases
-	       (delete 'sanity-check))))
-    (home-page "https://github.com/ialbert/plac")
-    (synopsis "The smartest command line arguments parser in the world")
-    (description "The smartest command line arguments parser in the world")
-    (license license:bsd-3)))
+   (name "python-plac")
+   (version "1.3.4")
+   (source
+    (origin
+     (method url-fetch)
+     (uri (pypi-uri "plac" version))
+     (sha256
+      (base32 "1x9pn6903cawzshxvy7qxbjszl2wl473p0mn2dr7wz66kjglq6n9"))))
+   (build-system python-build-system)
+   (arguments
+    (list #:phases
+	  #~(modify-phases %standard-phases
+			   (delete 'sanity-check))))
+   (home-page "https://github.com/ialbert/plac")
+   (synopsis "The smartest command line arguments parser in the world")
+   (description "The smartest command line arguments parser in the world")
+   (license license:bsd-3)))
 
 (define-public python-tefw-ml
   (package
@@ -406,7 +406,7 @@ Properties of Water and Steam")
 		   python-matplotlib))
    (propagated-inputs (list
 		       python-pyaml
-		       python-pyarrow
+		       python-pyarrow-with-dataset
 		       python-pandas
 		       python-tdigest
 		       python-scikit-learn
@@ -423,3 +423,62 @@ Properties of Water and Steam")
    (description
     "Library for the data-driven modelling and monitoring of boiler signals")
    (license license:gpl3)))
+
+(define-public python-pyarrow-with-dataset
+  (package
+   (inherit apache-arrow)
+   (name "python-pyarrow-with-dataset")
+   (build-system python-build-system)
+   (arguments
+    '(#:tests? #f          ; XXX There are no tests in the "python" directory
+      #:phases
+      (modify-phases %standard-phases
+		     (delete 'build) ; XXX the build is performed again during the install phase
+		     (add-after 'unpack 'enter-source-directory
+				(lambda _ (chdir "python")))
+		     (add-after 'unpack 'make-git-checkout-writable
+				(lambda _
+				  (for-each make-file-writable (find-files "."))))
+		     (add-before 'install 'patch-cmake-variables
+				 (lambda* (#:key inputs #:allow-other-keys)
+				   ;; Replace cmake locations with hardcoded guix links for the
+				   ;; underlying C++ library and headers.  This is a pretty awful
+				   ;; hack.
+				   (substitute* "cmake_modules/FindParquet.cmake"
+						(("# Licensed to the Apache Software Foundation" m)
+						 (string-append "set(PARQUET_INCLUDE_DIR \""
+								(assoc-ref inputs "apache-arrow:include")
+								"/share/include\")\n" m))
+						(("find_package_handle_standard_args" m)
+						 (string-append "set(PARQUET_LIB_DIR \""
+								(assoc-ref inputs "apache-arrow:lib")
+								"/lib\")\n" m)))))
+		     (add-before 'install 'patch-parquet-library
+				 (lambda _
+				   (substitute* "CMakeLists.txt"
+						(("parquet_shared") "parquet"))))
+		     (add-before 'install 'set-PYARROW_WITH_PARQUET
+				 (lambda _
+				   (setenv "PYARROW_WITH_PARQUET" "1")
+				   (setenv "PYARROW_WITH_DATASET" "1"))))))
+   (propagated-inputs
+    `(("apache-arrow:lib" ,apache-arrow "lib")
+      ("apache-arrow:include" ,apache-arrow "include")
+      ("python-numpy" ,python-numpy)
+      ("python-pandas" ,python-pandas)
+      ("python-six" ,python-six)))
+   (native-inputs
+    `(("cmake" ,cmake-minimal)
+      ("pkg-config" ,pkg-config)
+      ("python-cython" ,python-cython)
+      ("python-pytest" ,python-pytest)
+      ("python-pytest-runner" ,python-pytest-runner)
+      ("python-setuptools-scm" ,python-setuptools-scm)))
+   (outputs '("out"))
+   (home-page "https://arrow.apache.org/docs/python/")
+   (synopsis "Python bindings for Apache Arrow")
+   (description
+    "This library provides a Pythonic API wrapper for the reference Arrow C++
+implementation, along with tools for interoperability with pandas, NumPy, and
+other traditional Python scientific computing packages.")
+   (license license:asl2.0)))
