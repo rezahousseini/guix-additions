@@ -382,7 +382,7 @@ Properties of Water and Steam")
 (define-public python-tefw-ml
   (package
    (name "python-tefw-ml")
-   (version "v1.1.2")
+   (version "v1.2.5")
    (source (origin
 	    (method git-fetch)
 	    (uri (git-reference
