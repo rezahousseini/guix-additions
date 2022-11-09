@@ -88,25 +88,29 @@
 
 (define-public rust-pcsc-sys-1
   (package
-    (name "rust-pcsc-sys")
-    (version "1.2.0")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (crate-uri "pcsc-sys" version))
-       (file-name (string-append name "-" version ".tar.gz"))
-       (sha256
-        (base32 "1si37v9n07r3csqcnnqn4i82j75b6dssyz0fzdg1n3rcpbnbzdz1"))))
-    (build-system cargo-build-system)
-    (arguments
-     `(#:skip-build?
-       #t
-       #:cargo-inputs
-       (("rust-pkg-config" ,rust-pkg-config-0.3))))
-    (home-page "https://github.com/bluetech/pcsc-rust")
-    (synopsis "Low-level bindings to the PC/SC C API")
-    (description "Low-level bindings to the PC/SC C API")
-    (license license:expat)))
+   (name "rust-pcsc-sys")
+   (version "1.2.0")
+   (source
+    (origin
+     (method url-fetch)
+     (uri (crate-uri "pcsc-sys" version))
+     (file-name (string-append name "-" version ".tar.gz"))
+     (sha256
+      (base32 "1si37v9n07r3csqcnnqn4i82j75b6dssyz0fzdg1n3rcpbnbzdz1"))))
+   (build-system cargo-build-system)
+   (arguments
+    `(#:skip-build?
+      #t
+      #:cargo-inputs
+      (("rust-pkg-config" ,rust-pkg-config-0.3))))
+   (native-inputs
+    (list pkg-config))
+   (inputs
+    (list pcsc-lite))
+   (home-page "https://github.com/bluetech/pcsc-rust")
+   (synopsis "Low-level bindings to the PC/SC C API")
+   (description "Low-level bindings to the PC/SC C API")
+   (license license:expat)))
 
 (define-public rust-pcsc-2
   (package
@@ -1364,34 +1368,34 @@ allocations.")
 
 (define-public rust-intel-mkl-tool-0.1
   (package
-    (name "rust-intel-mkl-tool")
-    (version "0.1.0")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (crate-uri "intel-mkl-tool" version))
-       (file-name (string-append name "-" version ".tar.gz"))
-       (sha256
-        (base32 "1myyrxvmyij4c60w9x15npwzhlbjm8y8c94lvfsnrl5pbyakz8md"))))
-    (build-system cargo-build-system)
-    (arguments
-     `(#:skip-build?
-       #t
-       #:cargo-inputs
-       (("rust-curl" ,rust-curl-0.4)
-        ("rust-dirs" ,rust-dirs-2)
-        ("rust-env-logger" ,rust-env-logger-0.7)
-        ("rust-failure" ,rust-failure-0.1)
-        ("rust-glob" ,rust-glob-0.3)
-        ("rust-log" ,rust-log-0.4)
-        ("rust-pkg-config" ,rust-pkg-config-0.3)
-        ("rust-structopt" ,rust-structopt-0.3)
-        ("rust-tar" ,rust-tar-0.4)
-        ("rust-zstd" ,rust-zstd-0.5))))
-    (home-page "https://github.com/rust-math/intel-mkl-src")
-    (synopsis "CLI utility for redistributiing Intel(R) MKL")
-    (description "CLI utility for redistributiing Intel(R) MKL")
-    (license license:expat)))
+   (name "rust-intel-mkl-tool")
+   (version "0.1.0")
+   (source
+    (origin
+     (method url-fetch)
+     (uri (crate-uri "intel-mkl-tool" version))
+     (file-name (string-append name "-" version ".tar.gz"))
+     (sha256
+      (base32 "1myyrxvmyij4c60w9x15npwzhlbjm8y8c94lvfsnrl5pbyakz8md"))))
+   (build-system cargo-build-system)
+   (arguments
+    `(#:skip-build?
+      #t
+      #:cargo-inputs
+      (("rust-curl" ,rust-curl-0.4)
+       ("rust-dirs" ,rust-dirs-2)
+       ("rust-env-logger" ,rust-env-logger-0.7)
+       ("rust-failure" ,rust-failure-0.1)
+       ("rust-glob" ,rust-glob-0.3)
+       ("rust-log" ,rust-log-0.4)
+       ("rust-pkg-config" ,rust-pkg-config-0.3)
+       ("rust-structopt" ,rust-structopt-0.3)
+       ("rust-tar" ,rust-tar-0.4)
+       ("rust-zstd" ,rust-zstd-safe))))
+   (home-page "https://github.com/rust-math/intel-mkl-src")
+   (synopsis "CLI utility for redistributiing Intel(R) MKL")
+   (description "CLI utility for redistributiing Intel(R) MKL")
+   (license license:expat)))
 
 (define-public rust-accelerate-src-0.3
   (package
@@ -1780,7 +1784,7 @@ Argument Parser")
     (native-inputs
      (list pkg-config))
     (inputs
-     (list pcsc-lite eudev))
+     (list eudev))
     (home-page "https://github.com/solokeys/solo2-cli")
     (synopsis "Library and CLI for the SoloKeys Solo 2 security key")
     (description "Library and CLI for the SoloKeys Solo 2 security key")
@@ -4566,3 +4570,5 @@ log output.")
     (synopsis "Open URLs in web browsers available on a platform")
     (description "Open URLs in web browsers available on a platform")
     (license (list license:expat license:asl2.0))))
+
+rust-solo2-0.1
