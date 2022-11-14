@@ -276,7 +276,7 @@ similiar to Libertine and Biolinum, but come with math symbols.")
 		    "tex/latex/pgfplots/libs/"
 		    "tex/plain/pgfplots/")
               (base32
-               "052cqxxlkdigkg62d201ziwab5mqzhfpz2ll36k575bmd96jcnwh")
+               "08ahzc3yvqj31m018d313bbhvcka59dfdmphlrsavqk68x9023k1")
 	      #:trivial? #t))
     (propagated-inputs (list texlive-pgf))
     (home-page "https://ctan.org/graphics/pgf/contrib/pgfplots")
@@ -289,3 +289,5 @@ scaling, computes any logarithms and axis ticks and draws the plots, supporting
 line plots, scatter plots, piecewise constant plots, bar plots, area plots,
 mesh-- and surface plots and some more.  Pgfplots is based on PGF/TikZ (PGF); it
 runs equally for LaTeX/TeX/ConTeXt.")))
+
+texlive-pgfplots
