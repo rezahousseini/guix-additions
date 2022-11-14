@@ -263,6 +263,8 @@ similiar to Libertine and Biolinum, but come with math symbols.")
 		    "tex/generic/pgfplots/libs/"
 		    "tex/generic/pgfplots/liststructure/"
 		    "tex/generic/pgfplots/lua/"
+		    "tex/generic/pgfplots/lua/pgfplots/"
+		    "tex/generic/pgfplots/lua/pgfplotsoldpgfsupp/luamath/"
 		    "tex/generic/pgfplots/numtable/"
 		    "tex/generic/pgfplots/oldpgfcompatib/"
 		    "tex/generic/pgfplots/oldpgfplotscompatib/"
@@ -271,6 +273,7 @@ similiar to Libertine and Biolinum, but come with math symbols.")
 		    "tex/generic/pgfplots/test/"
 		    "tex/generic/pgfplots/util/"
 		    "tex/latex/pgfplots/"
+		    "tex/latex/pgfplots/libs/"
 		    "tex/plain/pgfplots/")
               (base32
                "052cqxxlkdigkg62d201ziwab5mqzhfpz2ll36k575bmd96jcnwh")
