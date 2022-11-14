@@ -259,6 +259,7 @@ similiar to Libertine and Biolinum, but come with math symbols.")
 		    "source/context/third/pgfplots/"
 		    "source/latex/pgfplots/"
 		    "tex/context/third/pgfplots/"
+		    "tex/generic/pgfplots/"
 		    "tex/generic/pgfplots/libs/"
 		    "tex/generic/pgfplots/liststructure/"
 		    "tex/generic/pgfplots/lua/"
