@@ -246,3 +246,42 @@ similiar to Libertine and Biolinum, but come with math symbols.")
     (description
      "The package provides emulation of pdfTeX primitives for LuaTeX v0.85+.")
     (license license:lppl1.3+)))
+
+(define-public texlive-pgfplots
+  (package
+    (inherit (simple-texlive-package
+	      "texlive-pgfplots"
+              (list "doc/context/third/pgfplots/"
+		    "doc/generic/pgfplots/"
+		    "doc/latex/pgfplots/"
+		    "doc/plain/pgfplots/"
+		    "scripts/pgfplots/"
+		    "source/context/third/pgfplots/"
+		    "source/latex/pgfplots/"
+		    "tex/context/third/pgfplots/"
+		    "tex/generic/pgfplots/libs/"
+		    "tex/generic/pgfplots/liststructure/"
+		    "tex/generic/pgfplots/lua/"
+		    "tex/generic/pgfplots/numtable/"
+		    "tex/generic/pgfplots/oldpgfcompatib/"
+		    "tex/generic/pgfplots/oldpgfplotscompatib/"
+		    "tex/generic/pgfplots/pgfcontrib/"
+		    "tex/generic/pgfplots/sys/"
+		    "tex/generic/pgfplots/test/"
+		    "tex/generic/pgfplots/util/"
+		    "tex/latex/pgfplots/"
+		    "tex/plain/pgfplots/")
+              (base32
+               "052cqxxlkdigkg62d201ziwab5mqzhfpz2ll36k575bmd96jcnwh")
+	      #:trivial? #t))
+    (propagated-inputs (list texlive-pgf))
+    (home-page "https://ctan.org/graphics/pgf/contrib/pgfplots")
+    (synopsis "Create normal/logarithmic plots in two and three dimensions")
+    (description
+     "PGFPlots draws high-quality function plots in normal or logarithmic scaling with
+a user-friendly interface directly in TeX. The user supplies axis labels, legend
+entries and the plot coordinates for one or more plots and PGFPlots applies axis
+scaling, computes any logarithms and axis ticks and draws the plots, supporting
+line plots, scatter plots, piecewise constant plots, bar plots, area plots,
+mesh-- and surface plots and some more.  Pgfplots is based on PGF/TikZ (PGF); it
+runs equally for LaTeX/TeX/ConTeXt.")))
