@@ -688,11 +688,11 @@ easy.")
 	    (lambda _
 	      (with-directory-excursion "wrappers/Python"
 		(invoke "python" "setup.py" "install"
-			(string-append "--prefix=" #$output)))))
-	  (replace 'check
-	    (lambda _
-	      (with-directory-excursion "wrappers/Python"
-		(invoke "python" "setup.py" "check")))))))
+			(string-append "--prefix=" #$output)
+			"--no-compile"
+			"--single-version-externally-managed"
+                        "--root=/"))))
+	  (delete 'check))))
     (native-inputs
      (list cmake-minimal
 	   python
