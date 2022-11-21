@@ -732,11 +732,10 @@ easy.")
 	   (lambda* (#:key tests? #:allow-other-keys)
 	     (when tests?
 	       (invoke "python" "-m" "unittest")))))))
-    (native-inputs (list
-		    python-numpy
-		    python-scipy
-		    python-matplotlib))
     (propagated-inputs (list
+			python-numpy
+			python-scipy
+			python-matplotlib
 			python-pyaml
 			python-pandas
 			python-numpy-stl
