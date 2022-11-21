@@ -723,31 +723,19 @@ easy.")
 	      (sha256
 	       (base32
 		"1ys5my2kfsr5w94k619qrdjm5wa7j45z11dw2ib2ha0wpc85aw4x"))))
-    (build-system python-build-system)
+    (build-system pyproject-build-system)
     (arguments
-     (list
-      #:tests? #f ;; error in test suite
-      #:phases
-      #~(modify-phases %standard-phases
-	  (replace 'build
-            (lambda _
-	      ;; ZIP does not support timestamps before 1980.
-              (setenv "SOURCE_DATE_EPOCH" "315532800")
-              (invoke "python" "-m" "build" "--wheel" "--no-isolation" ".")))
-          (replace 'install
-            (lambda _
-              (let ((whl (car (find-files "dist" "\\.whl$"))))
-                (invoke "pip" "--no-cache-dir" "--no-input"
-                        "install" "--no-deps" "--prefix" #$output whl))))
-	  (replace 'check
-	    (lambda* (#:key tests? #:allow-other-keys)
-	      (when tests?
-		(invoke "python" "-m" "unittest")))))))
+     `(#:tests? #f ;; error in test suite
+       #:phases
+       (modify-phases %standard-phases
+	 (replace 'check
+	   (lambda* (#:key tests? #:allow-other-keys)
+	     (when tests?
+	       (invoke "python" "-m" "unittest")))))))
     (native-inputs (list
 		    python-numpy
 		    python-scipy
-		    python-matplotlib
-		    python-pypa-build))
+		    python-matplotlib))
     (propagated-inputs (list
 			python-pyaml
 			python-pandas
@@ -759,6 +747,4 @@ easy.")
     (description
      "CFD simulation tool to produce pressure-discharge curve for water spring taps.")
     (license license:gpl3)))
-
-python-cfd-qsense
 
