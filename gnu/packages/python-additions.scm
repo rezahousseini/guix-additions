@@ -105,6 +105,7 @@
   #:use-module (guix build-system gnu)
   #:use-module (guix build-system cmake)
   #:use-module (guix build-system python)
+  #:use-module (guix build-system pyproject)
   #:use-module (guix build-system trivial)
   #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-26)
@@ -708,4 +709,44 @@ easy.")
     (synopsis "Open-source thermodynamic and transport properties database")
     (description "Open-source thermodynamic and transport properties database")
     (license license:asl2.0)))
+
+(define-public python-cfd-qsense
+  (package
+    (name "python-cfd-qsense")
+    (version "d02178fc02cfef00d7fa0584d552614e9bdf4c5e")
+    (source (origin
+	      (method git-fetch)
+	      (uri (git-reference
+		    (url "https://gitlab.com/hsr-iet/wabesense/cfd_qsense.git")
+		    (commit version)))
+	      (file-name (git-file-name name version))
+	      (sha256
+	       (base32
+		"1ys5my2kfsr5w94k619qrdjm5wa7j45z11dw2ib2ha0wpc85aw4x"))))
+    (build-system pyproject-build-system)
+    (arguments
+     `(#:tests? #f ;; error in test suite
+       #:phases
+       (modify-phases %standard-phases
+	 (replace 'check
+	   (lambda* (#:key tests? #:allow-other-keys)
+	     (when tests?
+	       (invoke "python" "-m" "unittest")))))))
+    (native-inputs (list
+		    python-numpy
+		    python-scipy
+		    python-matplotlib))
+    (propagated-inputs (list
+			python-pyaml
+			python-pandas
+			python-numpy-stl
+			python-coolprop))
+    (home-page "https://gitlab.com/hsr-iet/wabesense/cfd_qsense")
+    (synopsis
+     "CFD simulation tool to produce pressure-discharge curve for water spring taps.")
+    (description
+     "CFD simulation tool to produce pressure-discharge curve for water spring taps.")
+    (license license:gpl3)))
+
+python-cfd-qsense
 
