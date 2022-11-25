@@ -1,4 +1,4 @@
-From 1b4e0c3aef5e9ac010a5fbe20a9142ef3a1b2a55 Mon Sep 17 00:00:00 2001
+From 65b311906d5e012b4e8251706d0d3b69f5cb4e38 Mon Sep 17 00:00:00 2001
 From: Reza Housseini <reza.housseini@gmail.com>
 Date: Mon, 21 Nov 2022 21:58:04 +0100
 Subject: [PATCH] build: change installation directory
@@ -117,7 +117,7 @@ index 47af55043..193e4fc03 100644
                      then
                          ((++errorCount))
 diff --git a/etc/bashrc b/etc/bashrc
-index 663993951..7eb980000 100644
+index 663993951..c93e47974 100644
 --- a/etc/bashrc
 +++ b/etc/bashrc
 @@ -229,3 +229,5 @@ unset cleaned foamClean foamOldDirs
@@ -125,7 +125,7 @@ index 663993951..7eb980000 100644
  
  #------------------------------------------------------------------------------
 +
-+export GNUPLOT = gnuplot
++export GNUPLOT=gnuplot
 diff --git a/etc/config.sh/CGAL b/etc/config.sh/CGAL
 index 0fec802a0..d80278bcb 100644
 --- a/etc/config.sh/CGAL
