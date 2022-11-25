@@ -713,7 +713,7 @@ easy.")
 (define-public python-cfd-qsense
   (package
     (name "python-cfd-qsense")
-    (version "d02178fc02cfef00d7fa0584d552614e9bdf4c5e")
+    (version "5863879673923f7776c2c1763805147b29583d71")
     (source (origin
 	      (method git-fetch)
 	      (uri (git-reference
@@ -722,7 +722,7 @@ easy.")
 	      (file-name (git-file-name name version))
 	      (sha256
 	       (base32
-		"1ys5my2kfsr5w94k619qrdjm5wa7j45z11dw2ib2ha0wpc85aw4x"))))
+		"1vq4armcxwzjnywanvb37vircz9jk1x2zpmxa6dqp0bcv6dcrm7n"))))
     (build-system pyproject-build-system)
     (arguments
      `(#:tests? #f ;; error in test suite
