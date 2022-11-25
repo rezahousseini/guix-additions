@@ -245,6 +245,11 @@
 		       (string-append "./lib/OpenFOAM-" ,version
 				      "/platforms/linux64GccDPInt32Opt/bin")
 		       (string-append %output "/bin"))
+		      ;; symlink bashrc to standard 'etc' directory
+		      (mkdir-p (string-append %output "/etc"))
+		      (symlink
+		       (string-append "./lib/OpenFOAM-" ,version "/etc/bashrc")
+		       (string-append %output "/etc/bashrc"))
 		      #t))
 		  )))))
 
