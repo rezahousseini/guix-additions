@@ -66,7 +66,13 @@
 	      (file-name (string-append name "-" version ".tar.gz"))
 	      (sha256
 	       (base32 "1kq083cci7y11vhn3ydwhb5yqkjkgk5hpibakfc4p94cg6x15msr"))
-	      (patches (search-patches "openfoam-10-cleanup.patch"))
+	      (patches
+	       (parameterize
+		   ((%patch-path
+		     (map (lambda (directory)
+			    (string-append directory "/gnu/packages/patches"))
+			  %load-path)))
+		 (search-patches "openfoam-10-cleanup.patch")))
 	      (modules '((guix build utils)))
 	      (snippet
     	       '(begin
@@ -95,8 +101,6 @@
        #:modules ((ice-9 ftw)
                   (ice-9 regex)
 		  (ice-9 string-fun)
-		  (ice-9 rdelim)
-		  (ice-9 textual-ports)
 		  (srfi srfi-1)
                   (guix build gnu-build-system)
                   (guix build utils))
@@ -108,7 +112,7 @@
 		      ;; Use 'OpenFOAM-version' convention to match the file
 		      ;; name expectations in the build phase.
 		      (let ((unpack-dir (string-append
-		  			 (getcwd) "/source"))
+		  			 (getcwd) "/OpenFOAM-" ,version "-version-" ,version))
 		            (build-dir (string-append
 		  			(getcwd) "/OpenFOAM-" ,version)))
 			(rename-file unpack-dir build-dir) ; rename build directory
@@ -135,8 +139,8 @@
 		  (add-after 'patch-gzip 'patch-gnuplot
 		    (lambda _
 		      (substitute* "etc/bashrc"
-			(("export GNUPLOT = gnuplot")
-			 (string-append "export GNUPLOT = " (assoc-ref %build-inputs "gnuplot"))))
+			(("export GNUPLOT=gnuplot")
+			 (string-append "export GNUPLOT=" (assoc-ref %build-inputs "gnuplot"))))
 		      #t))
 		  (delete 'configure)             ; no configure phase
 		  (replace 'build
