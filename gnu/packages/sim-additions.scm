@@ -246,10 +246,10 @@
 				      "/platforms/linux64GccDPInt32Opt/bin")
 		       (string-append %output "/bin"))
 		      ;; symlink bashrc to standard 'etc' directory
-		      (mkdir-p (string-append %output "/etc"))
+		      (mkdir-p (string-append %output "/etc/profile.d"))
 		      (symlink
 		       (string-append "./lib/OpenFOAM-" ,version "/etc/bashrc")
-		       (string-append %output "/etc/bashrc"))
+		       (string-append %output "/etc/profile.d/bashrc"))
 		      #t))
 		  )))))
 
