@@ -218,8 +218,9 @@
 					 "wmake/wmakeSchedulerUptime")
 			(("\\$\\(cd \\$\\(dirname \\$BASH_SOURCE\\)/\\.\\./\\.\\. && pwd -P)") "$HOME"))
 		      ;; enable sourcing of bash_completion again
-		      (substitute* "etc/bashrc"
-			(("^#(.*bash_completion.*$)" _ cmd) cmd))
+		      ;; command "complete" not recognized?
+		      ;;(substitute* "etc/bashrc"
+		      ;;	(("^#(.*bash_completion.*$)" _ cmd) cmd))
 		      #t))
 		  (add-after 'build 'cleanup
 		    ;; Avoid unncessary, voluminous object and dep files.
@@ -245,11 +246,9 @@
 		       (string-append "./lib/OpenFOAM-" ,version
 				      "/platforms/linux64GccDPInt32Opt/bin")
 		       (string-append %output "/bin"))
-		      ;; symlink bashrc to standard 'etc' directory
-		      (mkdir-p (string-append %output "/etc/profile.d"))
-		      (symlink
-		       (string-append "./lib/OpenFOAM-" ,version "/etc/bashrc")
-		       (string-append %output "/etc/profile.d/bashrc"))
+		      ;; add etc/bashrc to bash startup files
+		      (setenv "BASH_ENV"
+			      (string-append "./lib/OpenFOAM-" ,version "/etc/bashrc"))
 		      #t))
 		  )))))
 
