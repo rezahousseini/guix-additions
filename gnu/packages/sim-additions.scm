@@ -8,6 +8,7 @@
   #:use-module (gnu packages boost)
   #:use-module (gnu packages check)
   #:use-module (gnu packages cmake)
+  #:use-module (gnu packages commencement)
   #:use-module (gnu packages compression)
   #:use-module (gnu packages cpp)
   #:use-module (gnu packages flex)
@@ -84,7 +85,7 @@
 		  (substitute* "wmake/rules/General/general"
 		    (("^COMPILER_TYPE   = .*$") "COMPILER_TYPE   = Gcc\n"))))))
     (inputs (modify-inputs (package-inputs openfoam)
-	      (append gnuplot gzip openmpi pt-scotch paraview)
+	      (append gnuplot gzip openmpi pt-scotch paraview-5.9)
 	      (delete pt-scotch32)))
     (propagated-inputs (modify-inputs (package-propagated-inputs openfoam)
 			 (delete openmpi gzip gnuplot)))
@@ -162,20 +163,18 @@
 						       (assoc-ref %build-inputs library)
 						       "/lib,"))
 						    "" libraries)))
-			;; set variables to define store paths and versions
+			;; set variables to define store paths
 			(for-each (lambda (library)
-				    ;; set store path
-				    (setenv (string-replace-substring
-					     (string-append
-					      (string-upcase library) "_ROOT")
-					     "-" "_")
-					    (assoc-ref %build-inputs library))
-				    ;; set version
-				    (setenv (string-replace-substring
-					     (string-append
-					      (string-upcase library) "VERSION")
-					     "-" "_")
-					    (package-version library))) libraries)
+				    (let* ((name (string-replace-substring
+						  (string-upcase library) "-" "_"))
+					   (path (assoc-ref %build-inputs library)))
+				      ;; set store path
+				      (setenv (string-append name "_ROOT") path))) libraries)
+			;; set package versions
+			(setenv "SCOTCHVERSION" ,(package-version pt-scotch))
+			(setenv "METISVERSION" ,(package-version metis))
+			(setenv "OPENMPIVERSION" ,(package-version openmpi))
+			(setenv "PARAVIEWVERSION" ,(package-version paraview-5.9))
 			;; set variable to pass extra 'rpath' arguments to linker
 			(setenv "LDFLAGS"
 				(string-append
@@ -259,4 +258,66 @@
 		      #t))
 		  )))))
 
+(define-public timpi
+  (package
+    (name "timpi")
+    (version "1.8.5")
+    (source (origin
+	      (method url-fetch)
+	      (uri (string-append
+		    "https://github.com/libMesh/TIMPI/archive/refs/tags/v"
+		    version ".tar.gz"))
+	      (file-name (string-append "v" version ".tar.gz"))
+	      (sha256
+	       (base32 "191rcc96n6bb1skivv4q1py4r3kk8sdhrgj4v5azs736l79dkwc0"))))
+    (build-system gnu-build-system)
+    ;;(arguments
+    ;; `(#:phases
+    ;;   (modify-phases %standard-phases
+    ;;	 (add-after 'unpack 'remove-packaged-dependencies
+    ;;	   (lambda _
+    ;;	     (delete-file-recursively "contrib"))
+    ;;	   ))))
+    ;;(native-inputs (list m4 gfortran-toolchain openmpi))
+    (home-page "http://libmesh.github.io")
+    (synopsis
+     "Templated Interface to MPI")
+    (description
+     "Templated Interface to MPI")
+    (license license:lgpl2.1)))
+
+(define-public libmesh
+  (package
+    (name "libmesh")
+    (version "1.7.1")
+    (source (origin
+	      (method url-fetch)
+	      (uri (string-append
+		    "https://github.com/libMesh/libmesh/releases/download/v"
+		    version "/libmesh-" version ".tar.gz"))
+	      (file-name (string-append name "-" version ".tar.gz"))
+	      (sha256
+	       (base32 "0q5hypvxvyk5bkjki7xk8pmf0xfzxmpd8kq6j25kgls9y59wq4yz"))
+	      (modules '((guix build utils)))
+	      (snippet
+    	       '(begin
+    		  ;; delete bundled dependencies
+		  (delete-file-recursively "contrib")))))
+    (build-system gnu-build-system)
+    ;;(arguments
+    ;; `(#:phases
+    ;;   (modify-phases %standard-phases
+    ;;	 (add-after 'unpack 'remove-packaged-dependencies
+    ;;	   (lambda _
+    ;;	     (delete-file-recursively "contrib"))
+    ;;	   ))))
+    (native-inputs (list m4 gfortran-toolchain openmpi))
+    (home-page "http://libmesh.github.io")
+    (synopsis
+     "The libMesh library provides a framework for the numerical simulation of partial differential equations using arbitrary unstructured discretizations on serial and parallel platforms.")
+    (description
+     "The libMesh library provides a framework for the numerical simulation of partial differential equations using arbitrary unstructured discretizations on serial and parallel platforms. A major goal of the library is to provide support for adaptive mesh refinement (AMR) computations in parallel while allowing a research scientist to focus on the physics they are modeling.")
+    (license license:lgpl2.1)))
+
+;;timpi
 openfoam-10
