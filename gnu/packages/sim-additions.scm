@@ -215,6 +215,10 @@
 			(("$OPENMPIVERSION") (getenv "OPENMPIVERSION")))
 		      (substitute* "etc/config.sh/gperftools"
 			(("$GPERFTOOLS_ROOT") (getenv "GPERFTOOLS_ROOT")))
+		      (substitute* "etc/config.sh/paraview"
+			(("$PARAVIEWVERSION") (getenv "PARAVIEWVERSION")))
+		      (substitute* "etc/config.sh/paraview"
+			(("$PARAVIEW_ROOT") (getenv "PARAVIEW_ROOT")))
 		      ;; reset lockDir variable to refer to write-enabled
 		      ;; directory
 		      (substitute* (list "wmake/wmake"
@@ -254,7 +258,7 @@
 		      (mkdir-p (string-append %output "/etc/profile.d"))
 		      (symlink
 		       (string-append "./lib/OpenFOAM-" ,version "/etc/bashrc")
-		       (string-append %output "/etc/profile.d/bashrc"))
+		       (string-append %output "/etc/profile.d/bashrc.sh"))
 		      #t))
 		  )))))
 
