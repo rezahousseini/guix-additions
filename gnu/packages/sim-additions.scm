@@ -19,6 +19,7 @@
   #:use-module (gnu packages graphics)
   #:use-module (gnu packages gtk)
   #:use-module (gnu packages image)
+  #:use-module (gnu packages image-processing)
   #:use-module (gnu packages linux)
   #:use-module (gnu packages m4)
   #:use-module (gnu packages maths)
@@ -83,7 +84,7 @@
 		  (substitute* "wmake/rules/General/general"
 		    (("^COMPILER_TYPE   = .*$") "COMPILER_TYPE   = Gcc\n"))))))
     (inputs (modify-inputs (package-inputs openfoam)
-	      (append gnuplot gzip openmpi pt-scotch)
+	      (append gnuplot gzip openmpi pt-scotch paraview)
 	      (delete pt-scotch32)))
     (propagated-inputs (modify-inputs (package-propagated-inputs openfoam)
 			 (delete openmpi gzip gnuplot)))
@@ -152,7 +153,8 @@
 					     "mpfr"
 					     "pt-scotch"
 					     "openmpi"
-					     "zlib"))
+					     "zlib"
+					     "paraview"))
 				(rpaths (fold-right (lambda (library rpaths)
 						      (string-append
 						       rpaths
@@ -160,13 +162,20 @@
 						       (assoc-ref %build-inputs library)
 						       "/lib,"))
 						    "" libraries)))
-			;; set variables to define store paths
+			;; set variables to define store paths and versions
 			(for-each (lambda (library)
+				    ;; set store path
 				    (setenv (string-replace-substring
 					     (string-append
 					      (string-upcase library) "_ROOT")
 					     "-" "_")
-					    (assoc-ref %build-inputs library))) libraries)
+					    (assoc-ref %build-inputs library))
+				    ;; set version
+				    (setenv (string-replace-substring
+					     (string-append
+					      (string-upcase library) "VERSION")
+					     "-" "_")
+					    (package-version library))) libraries)
 			;; set variable to pass extra 'rpath' arguments to linker
 			(setenv "LDFLAGS"
 				(string-append
@@ -176,10 +185,6 @@
 				 "/platforms/linux64GccDPInt32Opt/lib,"
 				 "-rpath=" %output "/lib/OpenFOAM-" ,version
 				 "/platforms/linux64GccDPInt32Opt/lib/dummy")))
-		      ;; set variables to define package versions
-		      (setenv "SCOTCHVERSION" ,(package-version pt-scotch))
-		      (setenv "METISVERSION" ,(package-version metis))
-		      (setenv "OPENMPIVERSION" ,(package-version openmpi))
 		      
 		      ;; compile OpenFOAM libraries and applications
 		      (zero? (system (format #f
@@ -246,9 +251,11 @@
 		       (string-append "./lib/OpenFOAM-" ,version
 				      "/platforms/linux64GccDPInt32Opt/bin")
 		       (string-append %output "/bin"))
-		      ;; add etc/bashrc to bash startup files
-		      (setenv "BASH_ENV"
-			      (string-append "./lib/OpenFOAM-" ,version "/etc/bashrc"))
+		      ;; symlink bashrc to 'etc' directory
+		      (mkdir-p (string-append %output "/etc/profile.d"))
+		      (symlink
+		       (string-append "./lib/OpenFOAM-" ,version "/etc/bashrc")
+		       (string-append %output "/etc/profile.d/bashrc"))
 		      #t))
 		  )))))
 

@@ -1,131 +1,181 @@
-From 65b311906d5e012b4e8251706d0d3b69f5cb4e38 Mon Sep 17 00:00:00 2001
+From 4e185f8d6de79a26a35c0365485897ef883a721a Mon Sep 17 00:00:00 2001
 From: Reza Housseini <reza.housseini@gmail.com>
-Date: Mon, 21 Nov 2022 21:58:04 +0100
-Subject: [PATCH] build: change installation directory
+Date: Wed, 30 Nov 2022 14:14:53 +0100
+Subject: [PATCH 01/10] chore: fix paraview dependencies
 
 ---
- applications/test/Distribution2/createGraphs  |   2 +-
- .../Test-rigidBodyDynamics.C                  |   2 +-
- bin/foamMonitor                               |   4 +-
- bin/tools/HookFunctions                       |   2 +-
- etc/bashrc                                    |   2 +
- etc/config.sh/CGAL                            |  19 +-
- etc/config.sh/gperftools                      |   9 +-
- etc/config.sh/metis                           |   4 +-
- etc/config.sh/mpi                             | 233 +-----------------
- etc/config.sh/scotch                          |   4 +-
- etc/config.sh/settings                        |   3 +
- .../decompose/ptscotchDecomp/Make/options     |   3 +-
- .../decompose/scotchDecomp/Make/options       |   2 -
- .../graph/writers/gnuplotGraph/gnuplotGraph.H |   2 +-
- .../writers/gnuplot/gnuplotSetWriter.H        |   2 +-
- .../waterAndIsopropanolEvaporation/Allrun     |   2 +-
- .../waterEvaporation/Allrun                   |   2 +-
- .../binaryBreakup/validation/createGraphs     |   4 +-
- .../breakup/validation/createGraphs           |   4 +-
- .../coalescence/validation/createGraphs       |   4 +-
- .../drift/validation/createGraphs             |   4 +-
- .../isothermalGrowth/validation/createGraphs  |   4 +-
- .../negativeDrift/validation/createGraphs     |   4 +-
- .../validation/createGraphs                   |   4 +-
- .../thermal/waterEvaporation/Allrun           |   2 +-
- .../chemFoam/gri/validation/createGraph       |   4 +-
- .../chemFoam/h2/validation/createGraph        |   4 +-
- .../chemFoam/ic8h18/validation/createGraph    |   4 +-
- .../ic8h18_TDAC/validation/createGraph        |   4 +-
- .../chemFoam/nc7h16/validation/createGraph    |   4 +-
- .../laminar/helmholtzResonance/Allrun         |   2 +-
- .../buoyantCavity/validation/createGraphs     |   6 +-
- .../boundaryWallFunctionsProfile/Allrun       |   4 +-
- .../pimpleFoam/RAS/ballValve/createGraphs     |   4 +-
- .../laminar/nonConformalChannel/Allrun        |   2 +-
- .../planarPoiseuille/validation/createGraph   |   4 +-
- .../simpleFoam/T3A/validation/createGraphs    |   4 +-
- .../roomResidenceTime/validation/Allrun       |   2 +-
- tutorials/mesh/snappyHexMesh/iglooWithFridges |   2 +-
- .../RAS/Grossetete/validation/createGraphs    |   4 +-
- .../RAS/bubblePipe/validation/createGraphs    |   6 +-
- .../RAS/pipeBend/validation/createGraphs      |   6 +-
- .../RAS/wallBoiling/validation/createGraphs   |   4 +-
- .../wallBoilingIATE/validation/createGraphs   |   4 +-
- .../validation/createGraphs                   |   4 +-
- .../validation/createGraphs                   |   4 +-
- .../titaniaSynthesis/validation/createGraphs  |   6 +-
- .../validation/createGraphs                   |   6 +-
- wmake/rules/General/CGAL                      |   4 +-
- wmake/rules/linux64Gcc/c++                    |   4 +-
- 50 files changed, 98 insertions(+), 331 deletions(-)
+ etc/config.sh/paraview | 139 +++++------------------------------------
+ 1 file changed, 14 insertions(+), 125 deletions(-)
 
-diff --git a/applications/test/Distribution2/createGraphs b/applications/test/Distribution2/createGraphs
-index bbcb522f0..58b9c0388 100755
---- a/applications/test/Distribution2/createGraphs
-+++ b/applications/test/Distribution2/createGraphs
-@@ -1,6 +1,6 @@
- #!/bin/sh
- 
--gnuplot<<EOF
-+$GNUPLOT<<EOF
-     set terminal postscript eps color enhanced font "Helvetica,15"
-     set output 'comparison.eps'
-     set multiplot layout 2, 1
-diff --git a/applications/test/rigidBodyDynamics/Test-rigidBodyDynamics.C b/applications/test/rigidBodyDynamics/Test-rigidBodyDynamics.C
-index c13edfe73..1b2dbe689 100644
---- a/applications/test/rigidBodyDynamics/Test-rigidBodyDynamics.C
-+++ b/applications/test/rigidBodyDynamics/Test-rigidBodyDynamics.C
-@@ -98,7 +98,7 @@ int main(int argc, char *argv[])
-     }
-     dataFile<< endl;
-     animationFile
--        << "#!/usr/bin/env gnuplot" << endl << endl
-+        << "$GNUPLOT" << endl << endl
-         << "$data << end" << endl;
- 
-     // Run the RBD simulation
-diff --git a/bin/foamMonitor b/bin/foamMonitor
-index 32b62d792..def3d902a 100755
---- a/bin/foamMonitor
-+++ b/bin/foamMonitor
-@@ -98,7 +98,7 @@ title="Data Monitoring"
- size=""
- gpterminal='x11 1 font "helvetica,17" linewidth 1.5 persist noraise'
- 
--command -v gnuplot >/dev/null 2>&1 || error "Gnuplot not installed"
-+command -v $GNUPLOT >/dev/null 2>&1 || error "Gnuplot not installed"
- 
- # parse options
- while [ "$#" -gt 0 ]
-@@ -197,7 +197,7 @@ done
- plotFileFooter >> "$gp_file"
- 
- touch "$file"
--gnuplot "$gp_file" &
-+$GNUPLOT "$gp_file" &
- pid=$!
- 
- while true
-diff --git a/bin/tools/HookFunctions b/bin/tools/HookFunctions
-index 47af55043..193e4fc03 100644
---- a/bin/tools/HookFunctions
-+++ b/bin/tools/HookFunctions
-@@ -391,7 +391,7 @@ checkBanner() # scope, files...
-                         errorMessages+=("$file")
-                     fi
-                     ;;
--                (''|awk|csh|gnuplot|sed|sh)
-+                (''|awk|csh|$GNUPLOT|sed|sh)
-                     if ! git show $scopeShow"$file" | pcregrep -q -M "$scriptBanner"
-                     then
-                         ((++errorCount))
-diff --git a/etc/bashrc b/etc/bashrc
-index 663993951..c93e47974 100644
---- a/etc/bashrc
-+++ b/etc/bashrc
-@@ -229,3 +229,5 @@ unset cleaned foamClean foamOldDirs
- [ "$BASH" ] && . $WM_PROJECT_DIR/etc/config.sh/bash_completion
- 
+diff --git a/etc/config.sh/paraview b/etc/config.sh/paraview
+index 97826c1ca..a27de0818 100644
+--- a/etc/config.sh/paraview
++++ b/etc/config.sh/paraview
+@@ -33,137 +33,26 @@
+ #     are required for building plugins
  #------------------------------------------------------------------------------
-+
-+export GNUPLOT=gnuplot
+ 
+-# Clean the PATH
+-cleaned=$($WM_PROJECT_DIR/bin/foamCleanPath "$PATH" \
+-        "$ParaView_DIR \
+-         $WM_THIRD_PARTY_DIR/platforms/$WM_ARCH$WM_COMPILER/cmake- \
+-         $WM_THIRD_PARTY_DIR/platforms/$WM_ARCH$WM_COMPILER/paraview-" \
+-        ) \
+-        && PATH="$cleaned"
+-
+-# Determine the cmake to be used. Take the most recent.
+-unset CMAKE_HOME CMAKE_ROOT
+-for cmake in $WM_THIRD_PARTY_DIR/platforms/$WM_ARCH$WM_COMPILER/cmake-*
+-do
+-    if [ -d $cmake ]
+-    then
+-        if [ -z $CMAKE_HOME ] || \
+-            $WM_PROJECT_DIR/bin/tools/foamVersionCompare $CMAKE_HOME lt $cmake
+-        then
+-            export CMAKE_HOME=$cmake
+-            export CMAKE_ROOT=$cmake
+-        fi
+-    fi
+-done
+-if [ -n $CMAKE_HOME ]
+-then
+-    export PATH=$cmake/bin:$PATH
+-fi
+-
+ #- ParaView version, automatically determine major version
+-#export ParaView_VERSION=4.0.1
+-#export ParaView_VERSION=4.1.0
+-#export ParaView_VERSION=4.3.1
+-#export ParaView_VERSION=4.4.0
+-#export ParaView_VERSION=5.0.0
+-#export ParaView_VERSION=5.0.1
+-#export ParaView_VERSION=5.4.0
+-#export ParaView_VERSION=5.5.0
+-export ParaView_VERSION=5.6.3
+-export ParaView_MAJOR=detect
+-
+-#export ParaView_GL=system
+-export ParaView_GL=mesa
+-
+-# Evaluate command-line parameters for ParaView
+-_foamParaviewEval()
+-{
+-    while [ $# -gt 0 ]
+-    do
+-        case "$1" in
+-        ParaView*=*)
+-            # name=value  -> export name=value
+-            eval "export $1"
+-            ;;
+-        esac
+-        shift
+-    done
+-}
+-
+-# Evaluate command-line parameters
+-_foamParaviewEval $@
+-
+-# Set MAJOR version to correspond to VERSION
+-# ParaView_MAJOR is "<digits>.<digits>" from ParaView_VERSION
+-case "$ParaView_VERSION" in
+-"$ParaView_MAJOR".* )
+-    # Version and major appear to correspond
+-    ;;
+-
+-[0-9]*)
+-    # Extract major from the version
+-    ParaView_MAJOR=$(echo $ParaView_VERSION | \
+-                   sed -e 's/^\([0-9][0-9]*\.[0-9][0-9]*\).*$/\1/')
+-    ;;
+-esac
++export ParaView_MAJOR=$(echo $PARAVIEWVERSION | sed -e 's/^\([0-9][0-9]*\.[0-9][0-9]*\).*$/\1/')
+ export ParaView_VERSION ParaView_MAJOR
+ 
+ # Set the binary and source directories
+-export ParaView_DIR=$WM_THIRD_PARTY_DIR/platforms/$WM_ARCH$WM_COMPILER/ParaView-$ParaView_VERSION
+-paraviewSrcDir=$WM_THIRD_PARTY_DIR/ParaView-$ParaView_VERSION
+-
+-# Set paths if binaries or source are present
+-if [ -d $ParaView_DIR -o -d $paraviewSrcDir ]
+-then
+-    export ParaView_INCLUDE_DIR=$ParaView_DIR/include/paraview-$ParaView_MAJOR
+-
+-    paraviewArch=
+-    if [ -d $ParaView_DIR/lib64 ]
+-    then
+-        paraviewArch=64
+-    fi
+-    paraviewLibSubDir=
+-    if $WM_PROJECT_DIR/bin/tools/foamVersionCompare $ParaView_VERSION lt 5.5.0
+-    then
+-        paraviewLibSubDir=/paraview-$ParaView_MAJOR
+-    fi
+-    export ParaView_LIB_DIR=$ParaView_DIR/lib$paraviewArch$paraviewLibSubDir
++export ParaView_DIR=$PARAVIEW_ROOT
+ 
+-    export PATH=$ParaView_DIR/bin:$PATH
+-    export LD_LIBRARY_PATH=$ParaView_LIB_DIR:$LD_LIBRARY_PATH
+-    export PV_PLUGIN_PATH=$FOAM_LIBBIN/paraview-$ParaView_MAJOR
++# Set paths
++export ParaView_INCLUDE_DIR=$ParaView_DIR/include/paraview-$ParaView_MAJOR
++export ParaView_LIB_DIR=$ParaView_DIR/lib/paraview-$ParaView_MAJOR
++export LD_LIBRARY_PATH=$ParaView_LIB_DIR:$LD_LIBRARY_PATH
++export PV_PLUGIN_PATH=$FOAM_LIBBIN/paraview-$ParaView_MAJOR
+ 
+-    if [ "$FOAM_VERBOSE" -a "$PS1" ]
+-    then
+-        echo "Using paraview"
+-        echo "    ParaView_DIR         : $ParaView_DIR"
+-        echo "    ParaView_LIB_DIR     : $ParaView_LIB_DIR"
+-        echo "    ParaView_INCLUDE_DIR : $ParaView_INCLUDE_DIR"
+-        echo "    PV_PLUGIN_PATH       : $PV_PLUGIN_PATH"
+-    fi
+-
+-    # Add in python libraries if required
+-    paraviewPython=$ParaView_DIR/Utilities/VTKPythonWrapping
+-    if [ -r $paraviewPython ]
+-    then
+-        if [ "$PYTHONPATH" ]
+-        then
+-            export PYTHONPATH=$PYTHONPATH:$paraviewPython:$ParaView_LIB_DIR
+-        else
+-            export PYTHONPATH=$paraviewPython:$ParaView_LIB_DIR
+-        fi
+-    fi
+-
+-    # Alias paraview to launch with mesa if necessary
+-    if [ "$ParaView_GL" = mesa ]
+-    then
+-        alias paraview='LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$ParaView_LIB_DIR/mesa paraview'
+-    fi
+-else
+-    unset PV_PLUGIN_PATH
++if [ "$FOAM_VERBOSE" -a "$PS1" ]
++then
++    echo "Using paraview"
++    echo "    ParaView_DIR         : $ParaView_DIR"
++    echo "    ParaView_LIB_DIR     : $ParaView_LIB_DIR"
++    echo "    ParaView_INCLUDE_DIR : $ParaView_INCLUDE_DIR"
++    echo "    PV_PLUGIN_PATH       : $PV_PLUGIN_PATH"
+ fi
+ 
+-unset _foamParaviewEval
+-unset cleaned cmake paraviewInstDir paraviewPython
+-
+ #------------------------------------------------------------------------------
+-- 
+2.38.1
+
+
+From ba0acb2026328538105e82b9b008f809ab54fe3a Mon Sep 17 00:00:00 2001
+From: Reza Housseini <reza.housseini@gmail.com>
+Date: Wed, 30 Nov 2022 14:15:22 +0100
+Subject: [PATCH 02/10] chore: fix CGAL and Boost dependencies
+
+---
+ etc/config.sh/CGAL | 19 ++-----------------
+ 1 file changed, 2 insertions(+), 17 deletions(-)
+
 diff --git a/etc/config.sh/CGAL b/etc/config.sh/CGAL
 index 0fec802a0..d80278bcb 100644
 --- a/etc/config.sh/CGAL
@@ -155,6 +205,19 @@ index 0fec802a0..d80278bcb 100644
 +export BOOST_ARCH_PATH=$BOOST_ROOT
  
  #------------------------------------------------------------------------------
+-- 
+2.38.1
+
+
+From e5ba0208c6cfedf8d0ab9f2a8829cbd30591f937 Mon Sep 17 00:00:00 2001
+From: Reza Housseini <reza.housseini@gmail.com>
+Date: Wed, 30 Nov 2022 14:15:44 +0100
+Subject: [PATCH 03/10] chore: fix gperftools dependecy
+
+---
+ etc/config.sh/gperftools | 9 +--------
+ 1 file changed, 1 insertion(+), 8 deletions(-)
+
 diff --git a/etc/config.sh/gperftools b/etc/config.sh/gperftools
 index f9cdb8533..41aea7802 100644
 --- a/etc/config.sh/gperftools
@@ -174,6 +237,19 @@ index f9cdb8533..41aea7802 100644
 +export GPERFTOOLS_ARCH_PATH=$GPERFTOOLS_ROOT
  
  #------------------------------------------------------------------------------
+-- 
+2.38.1
+
+
+From e4db0e192fcb5bea2b0227f8fc7b544948aff682 Mon Sep 17 00:00:00 2001
+From: Reza Housseini <reza.housseini@gmail.com>
+Date: Wed, 30 Nov 2022 14:16:13 +0100
+Subject: [PATCH 04/10] chore: fix metis dependency
+
+---
+ etc/config.sh/metis | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
 diff --git a/etc/config.sh/metis b/etc/config.sh/metis
 index 40ef6aa0f..d04d5ea32 100644
 --- a/etc/config.sh/metis
@@ -188,6 +264,20 @@ index 40ef6aa0f..d04d5ea32 100644
 +export METIS_ARCH_PATH=$METIS_ROOT
  
  #------------------------------------------------------------------------------
+-- 
+2.38.1
+
+
+From 8ee06cb23b9711446841d9717d2bc68a6acf4904 Mon Sep 17 00:00:00 2001
+From: Reza Housseini <reza.housseini@gmail.com>
+Date: Wed, 30 Nov 2022 14:17:08 +0100
+Subject: [PATCH 05/10] chore: fix mpi dependency
+
+---
+ etc/config.sh/mpi                             | 233 +-----------------
+ .../decompose/ptscotchDecomp/Make/options     |   2 +-
+ 2 files changed, 11 insertions(+), 224 deletions(-)
+
 diff --git a/etc/config.sh/mpi b/etc/config.sh/mpi
 index b368cc51a..79efff92d 100644
 --- a/etc/config.sh/mpi
@@ -437,6 +527,34 @@ index b368cc51a..79efff92d 100644
  
  # Add (non-dummy) MPI implementation
  # Dummy MPI already added to LD_LIBRARY_PATH and has no external libraries
+diff --git a/src/parallel/decompose/ptscotchDecomp/Make/options b/src/parallel/decompose/ptscotchDecomp/Make/options
+index 2af0fddac..00eb03bff 100644
+--- a/src/parallel/decompose/ptscotchDecomp/Make/options
++++ b/src/parallel/decompose/ptscotchDecomp/Make/options
+@@ -10,7 +10,7 @@ EXE_INC = \
+ 
+ LIB_LIBS = \
+     -L$(SCOTCH_ARCH_PATH)/lib \
+-    -L$(FOAM_EXT_LIBBIN)/$(FOAM_MPI) \
++    -L$(MPI_ARCH_PATH)/lib \
+     -lptscotch \
+     -lptscotcherrexit \
+     -lscotch \
+-- 
+2.38.1
+
+
+From 3f5c1fe2cbdb22a667dd011cb2f75e4e66bfd17f Mon Sep 17 00:00:00 2001
+From: Reza Housseini <reza.housseini@gmail.com>
+Date: Wed, 30 Nov 2022 14:19:45 +0100
+Subject: [PATCH 06/10] chore: fix scotch dependency
+
+---
+ etc/config.sh/scotch                               | 4 ++--
+ src/parallel/decompose/ptscotchDecomp/Make/options | 1 -
+ src/parallel/decompose/scotchDecomp/Make/options   | 2 --
+ 3 files changed, 2 insertions(+), 5 deletions(-)
+
 diff --git a/etc/config.sh/scotch b/etc/config.sh/scotch
 index a345a2d00..8883707d2 100644
 --- a/etc/config.sh/scotch
@@ -451,25 +569,11 @@ index a345a2d00..8883707d2 100644
 +export SCOTCH_ARCH_PATH=$PT_SCOTCH_ROOT
  
  #------------------------------------------------------------------------------
-diff --git a/etc/config.sh/settings b/etc/config.sh/settings
-index d48896bac..3067d4608 100644
---- a/etc/config.sh/settings
-+++ b/etc/config.sh/settings
-@@ -290,6 +290,9 @@ OpenFOAM | ThirdParty)
-     ;;
- system)
-     # Use system compiler
-+    # Use system GMP and MPFR packages
-+    export GMP_ARCH_PATH=$GMP_ROOT
-+    export MPFR_ARCH_PATH=$MPFR_ROOT
-     ;;
- *)
-     echo "Warn: WM_COMPILER_TYPE='$WM_COMPILER_TYPE' is unsupported" 1>&2
 diff --git a/src/parallel/decompose/ptscotchDecomp/Make/options b/src/parallel/decompose/ptscotchDecomp/Make/options
-index 2af0fddac..993f9f2aa 100644
+index 00eb03bff..993f9f2aa 100644
 --- a/src/parallel/decompose/ptscotchDecomp/Make/options
 +++ b/src/parallel/decompose/ptscotchDecomp/Make/options
-@@ -5,12 +5,11 @@ EXE_INC = \
+@@ -5,7 +5,6 @@ EXE_INC = \
      -I$(FOAM_SRC)/Pstream/mpi/lnInclude \
      -I$(SCOTCH_ARCH_PATH)/include/$(FOAM_MPI) \
      -I$(SCOTCH_ARCH_PATH)/include \
@@ -477,12 +581,6 @@ index 2af0fddac..993f9f2aa 100644
      -I../decompositionMethods/lnInclude
  
  LIB_LIBS = \
-     -L$(SCOTCH_ARCH_PATH)/lib \
--    -L$(FOAM_EXT_LIBBIN)/$(FOAM_MPI) \
-+    -L$(MPI_ARCH_PATH)/lib \
-     -lptscotch \
-     -lptscotcherrexit \
-     -lscotch \
 diff --git a/src/parallel/decompose/scotchDecomp/Make/options b/src/parallel/decompose/scotchDecomp/Make/options
 index 038f88d5f..f57b8ee14 100644
 --- a/src/parallel/decompose/scotchDecomp/Make/options
@@ -500,6 +598,219 @@ index 038f88d5f..f57b8ee14 100644
      -lscotch \
      -lscotcherrexit \
      -lrt
+-- 
+2.38.1
+
+
+From 63e45fb1c4d743768d77e4a61f410bc3dc2e596a Mon Sep 17 00:00:00 2001
+From: Reza Housseini <reza.housseini@gmail.com>
+Date: Wed, 30 Nov 2022 14:20:49 +0100
+Subject: [PATCH 07/10] chore: fix GMP and MPFR dependency
+
+---
+ etc/config.sh/settings   | 3 +++
+ wmake/rules/General/CGAL | 4 ++--
+ 2 files changed, 5 insertions(+), 2 deletions(-)
+
+diff --git a/etc/config.sh/settings b/etc/config.sh/settings
+index d48896bac..3067d4608 100644
+--- a/etc/config.sh/settings
++++ b/etc/config.sh/settings
+@@ -290,6 +290,9 @@ OpenFOAM | ThirdParty)
+     ;;
+ system)
+     # Use system compiler
++    # Use system GMP and MPFR packages
++    export GMP_ARCH_PATH=$GMP_ROOT
++    export MPFR_ARCH_PATH=$MPFR_ROOT
+     ;;
+ *)
+     echo "Warn: WM_COMPILER_TYPE='$WM_COMPILER_TYPE' is unsupported" 1>&2
+diff --git a/wmake/rules/General/CGAL b/wmake/rules/General/CGAL
+index 4c574c283..1c6d3b55d 100644
+--- a/wmake/rules/General/CGAL
++++ b/wmake/rules/General/CGAL
+@@ -8,7 +8,7 @@ CGAL_INC = \
+     $(if $(CGAL_ARCH_PATH),-I$(CGAL_ARCH_PATH)/include,-I/usr/include)
+ 
+ CGAL_LIBS = \
+-    $(if $(GMP_ARCH_PATH),-L$(GMP_ARCH_PATH)/lib$(WM_COMPILER_LIB_ARCH),) \
++    $(if $(GMP_ARCH_PATH),-L$(GMP_ARCH_PATH)/lib,) \
+     -lgmp \
+-    $(if $(MPFR_ARCH_PATH),-L$(MPFR_ARCH_PATH)/lib$(WM_COMPILER_LIB_ARCH),) \
++    $(if $(MPFR_ARCH_PATH),-L$(MPFR_ARCH_PATH)/lib,) \
+     -lmpfr
+-- 
+2.38.1
+
+
+From ff574f3ebfb84e733e225e3d9241a3f2a1060824 Mon Sep 17 00:00:00 2001
+From: Reza Housseini <reza.housseini@gmail.com>
+Date: Wed, 30 Nov 2022 14:21:32 +0100
+Subject: [PATCH 08/10] build: add LDFLAGS environment variable to compile step
+
+---
+ wmake/rules/linux64Gcc/c++ | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/wmake/rules/linux64Gcc/c++ b/wmake/rules/linux64Gcc/c++
+index 9ba6ce377..3ced6c9fb 100644
+--- a/wmake/rules/linux64Gcc/c++
++++ b/wmake/rules/linux64Gcc/c++
+@@ -22,8 +22,8 @@ cpptoo      = $(Ctoo)
+ 
+ LINK_LIBS   = $(c++DBUG)
+ 
+-LINKLIBSO   = $(CC) $(c++FLAGS) -fuse-ld=bfd -shared \
++LINKLIBSO   = $(CC) $(c++FLAGS) $(LDFLAGS) -fuse-ld=bfd -shared \
+               -Xlinker --add-needed -Xlinker --no-as-needed
+ 
+-LINKEXE     = $(CC) $(c++FLAGS) -fuse-ld=bfd \
++LINKEXE     = $(CC) $(c++FLAGS) $(LDFLAGS) -fuse-ld=bfd \
+               -Xlinker --add-needed -Xlinker --no-as-needed
+-- 
+2.38.1
+
+
+From 4510a2907767f1a3d3769003e606b93b979c4a82 Mon Sep 17 00:00:00 2001
+From: Reza Housseini <reza.housseini@gmail.com>
+Date: Wed, 30 Nov 2022 14:22:25 +0100
+Subject: [PATCH 09/10] fix: wrong symbolic link path
+
+---
+ tutorials/mesh/snappyHexMesh/iglooWithFridges | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/tutorials/mesh/snappyHexMesh/iglooWithFridges b/tutorials/mesh/snappyHexMesh/iglooWithFridges
+index 3d18de2c2..ef42b45b3 120000
+--- a/tutorials/mesh/snappyHexMesh/iglooWithFridges
++++ b/tutorials/mesh/snappyHexMesh/iglooWithFridges
+@@ -1 +1 @@
+-../../heatTransfer/buoyantSimpleFoam/iglooWithFridges
+\ No newline at end of file
++../../heatTransfer/buoyantFoam/iglooWithFridges
+\ No newline at end of file
+-- 
+2.38.1
+
+
+From 64f6de90929ba90d7d6e092f540d09ac41c190ff Mon Sep 17 00:00:00 2001
+From: Reza Housseini <reza.housseini@gmail.com>
+Date: Wed, 30 Nov 2022 14:23:47 +0100
+Subject: [PATCH 10/10] chore: fix gnuplot dependency
+
+---
+ applications/test/Distribution2/createGraphs                | 2 +-
+ .../test/rigidBodyDynamics/Test-rigidBodyDynamics.C         | 2 +-
+ bin/foamMonitor                                             | 4 ++--
+ bin/tools/HookFunctions                                     | 2 +-
+ etc/bashrc                                                  | 2 ++
+ .../graph/writers/gnuplotGraph/gnuplotGraph.H               | 2 +-
+ src/sampling/sampledSet/writers/gnuplot/gnuplotSetWriter.H  | 2 +-
+ .../waterAndIsopropanolEvaporation/Allrun                   | 2 +-
+ .../interfaceComposition/waterEvaporation/Allrun            | 2 +-
+ .../populationBalance/binaryBreakup/validation/createGraphs | 4 ++--
+ .../populationBalance/breakup/validation/createGraphs       | 4 ++--
+ .../populationBalance/coalescence/validation/createGraphs   | 4 ++--
+ .../populationBalance/drift/validation/createGraphs         | 4 ++--
+ .../isothermalGrowth/validation/createGraphs                | 4 ++--
+ .../populationBalance/negativeDrift/validation/createGraphs | 4 ++--
+ .../validation/createGraphs                                 | 4 ++--
+ .../multiphaseEulerFoam/thermal/waterEvaporation/Allrun     | 2 +-
+ tutorials/combustion/chemFoam/gri/validation/createGraph    | 4 ++--
+ tutorials/combustion/chemFoam/h2/validation/createGraph     | 4 ++--
+ tutorials/combustion/chemFoam/ic8h18/validation/createGraph | 4 ++--
+ .../combustion/chemFoam/ic8h18_TDAC/validation/createGraph  | 4 ++--
+ tutorials/combustion/chemFoam/nc7h16/validation/createGraph | 4 ++--
+ .../rhoPimpleFoam/laminar/helmholtzResonance/Allrun         | 2 +-
+ .../buoyantFoam/buoyantCavity/validation/createGraphs       | 6 +++---
+ .../boundaryFoam/boundaryWallFunctionsProfile/Allrun        | 4 ++--
+ .../incompressible/pimpleFoam/RAS/ballValve/createGraphs    | 4 ++--
+ .../pimpleFoam/laminar/nonConformalChannel/Allrun           | 2 +-
+ .../laminar/planarPoiseuille/validation/createGraph         | 4 ++--
+ .../incompressible/simpleFoam/T3A/validation/createGraphs   | 4 ++--
+ .../simpleFoam/roomResidenceTime/validation/Allrun          | 2 +-
+ .../RAS/Grossetete/validation/createGraphs                  | 4 ++--
+ .../RAS/bubblePipe/validation/createGraphs                  | 6 +++---
+ .../RAS/pipeBend/validation/createGraphs                    | 6 +++---
+ .../RAS/wallBoiling/validation/createGraphs                 | 4 ++--
+ .../RAS/wallBoilingIATE/validation/createGraphs             | 4 ++--
+ .../RAS/wallBoilingPolydisperse/validation/createGraphs     | 4 ++--
+ .../validation/createGraphs                                 | 4 ++--
+ .../laminar/titaniaSynthesis/validation/createGraphs        | 6 +++---
+ .../laminar/titaniaSynthesisSurface/validation/createGraphs | 6 +++---
+ 39 files changed, 72 insertions(+), 70 deletions(-)
+
+diff --git a/applications/test/Distribution2/createGraphs b/applications/test/Distribution2/createGraphs
+index bbcb522f0..58b9c0388 100755
+--- a/applications/test/Distribution2/createGraphs
++++ b/applications/test/Distribution2/createGraphs
+@@ -1,6 +1,6 @@
+ #!/bin/sh
+ 
+-gnuplot<<EOF
++$GNUPLOT<<EOF
+     set terminal postscript eps color enhanced font "Helvetica,15"
+     set output 'comparison.eps'
+     set multiplot layout 2, 1
+diff --git a/applications/test/rigidBodyDynamics/Test-rigidBodyDynamics.C b/applications/test/rigidBodyDynamics/Test-rigidBodyDynamics.C
+index c13edfe73..1b2dbe689 100644
+--- a/applications/test/rigidBodyDynamics/Test-rigidBodyDynamics.C
++++ b/applications/test/rigidBodyDynamics/Test-rigidBodyDynamics.C
+@@ -98,7 +98,7 @@ int main(int argc, char *argv[])
+     }
+     dataFile<< endl;
+     animationFile
+-        << "#!/usr/bin/env gnuplot" << endl << endl
++        << "$GNUPLOT" << endl << endl
+         << "$data << end" << endl;
+ 
+     // Run the RBD simulation
+diff --git a/bin/foamMonitor b/bin/foamMonitor
+index 32b62d792..def3d902a 100755
+--- a/bin/foamMonitor
++++ b/bin/foamMonitor
+@@ -98,7 +98,7 @@ title="Data Monitoring"
+ size=""
+ gpterminal='x11 1 font "helvetica,17" linewidth 1.5 persist noraise'
+ 
+-command -v gnuplot >/dev/null 2>&1 || error "Gnuplot not installed"
++command -v $GNUPLOT >/dev/null 2>&1 || error "Gnuplot not installed"
+ 
+ # parse options
+ while [ "$#" -gt 0 ]
+@@ -197,7 +197,7 @@ done
+ plotFileFooter >> "$gp_file"
+ 
+ touch "$file"
+-gnuplot "$gp_file" &
++$GNUPLOT "$gp_file" &
+ pid=$!
+ 
+ while true
+diff --git a/bin/tools/HookFunctions b/bin/tools/HookFunctions
+index 47af55043..193e4fc03 100644
+--- a/bin/tools/HookFunctions
++++ b/bin/tools/HookFunctions
+@@ -391,7 +391,7 @@ checkBanner() # scope, files...
+                         errorMessages+=("$file")
+                     fi
+                     ;;
+-                (''|awk|csh|gnuplot|sed|sh)
++                (''|awk|csh|$GNUPLOT|sed|sh)
+                     if ! git show $scopeShow"$file" | pcregrep -q -M "$scriptBanner"
+                     then
+                         ((++errorCount))
+diff --git a/etc/bashrc b/etc/bashrc
+index 663993951..c93e47974 100644
+--- a/etc/bashrc
++++ b/etc/bashrc
+@@ -229,3 +229,5 @@ unset cleaned foamClean foamOldDirs
+ [ "$BASH" ] && . $WM_PROJECT_DIR/etc/config.sh/bash_completion
+ 
+ #------------------------------------------------------------------------------
++
++export GNUPLOT=gnuplot
 diff --git a/src/randomProcesses/graph/writers/gnuplotGraph/gnuplotGraph.H b/src/randomProcesses/graph/writers/gnuplotGraph/gnuplotGraph.H
 index 9c2df4377..95d940285 100644
 --- a/src/randomProcesses/graph/writers/gnuplotGraph/gnuplotGraph.H
@@ -947,15 +1258,6 @@ index 9bf0240c8..914728a93 100755
 +$GNUPLOT plot*
  
  #------------------------------------------------------------------------------
-diff --git a/tutorials/mesh/snappyHexMesh/iglooWithFridges b/tutorials/mesh/snappyHexMesh/iglooWithFridges
-index 3d18de2c2..ef42b45b3 120000
---- a/tutorials/mesh/snappyHexMesh/iglooWithFridges
-+++ b/tutorials/mesh/snappyHexMesh/iglooWithFridges
-@@ -1 +1 @@
--../../heatTransfer/buoyantSimpleFoam/iglooWithFridges
-\ No newline at end of file
-+../../heatTransfer/buoyantFoam/iglooWithFridges
-\ No newline at end of file
 diff --git a/tutorials/multiphase/multiphaseEulerFoam/RAS/Grossetete/validation/createGraphs b/tutorials/multiphase/multiphaseEulerFoam/RAS/Grossetete/validation/createGraphs
 index 69e308bbf..e768b6c84 100755
 --- a/tutorials/multiphase/multiphaseEulerFoam/RAS/Grossetete/validation/createGraphs
@@ -1179,35 +1481,6 @@ index e93c7d850..d9c4b668c 100755
      set terminal postscript eps color enhanced font "Helvetica,20"
      set output '../sizeDistribution.eps'
  
-diff --git a/wmake/rules/General/CGAL b/wmake/rules/General/CGAL
-index 4c574c283..1c6d3b55d 100644
---- a/wmake/rules/General/CGAL
-+++ b/wmake/rules/General/CGAL
-@@ -8,7 +8,7 @@ CGAL_INC = \
-     $(if $(CGAL_ARCH_PATH),-I$(CGAL_ARCH_PATH)/include,-I/usr/include)
- 
- CGAL_LIBS = \
--    $(if $(GMP_ARCH_PATH),-L$(GMP_ARCH_PATH)/lib$(WM_COMPILER_LIB_ARCH),) \
-+    $(if $(GMP_ARCH_PATH),-L$(GMP_ARCH_PATH)/lib,) \
-     -lgmp \
--    $(if $(MPFR_ARCH_PATH),-L$(MPFR_ARCH_PATH)/lib$(WM_COMPILER_LIB_ARCH),) \
-+    $(if $(MPFR_ARCH_PATH),-L$(MPFR_ARCH_PATH)/lib,) \
-     -lmpfr
-diff --git a/wmake/rules/linux64Gcc/c++ b/wmake/rules/linux64Gcc/c++
-index 9ba6ce377..3ced6c9fb 100644
---- a/wmake/rules/linux64Gcc/c++
-+++ b/wmake/rules/linux64Gcc/c++
-@@ -22,8 +22,8 @@ cpptoo      = $(Ctoo)
- 
- LINK_LIBS   = $(c++DBUG)
- 
--LINKLIBSO   = $(CC) $(c++FLAGS) -fuse-ld=bfd -shared \
-+LINKLIBSO   = $(CC) $(c++FLAGS) $(LDFLAGS) -fuse-ld=bfd -shared \
-               -Xlinker --add-needed -Xlinker --no-as-needed
- 
--LINKEXE     = $(CC) $(c++FLAGS) -fuse-ld=bfd \
-+LINKEXE     = $(CC) $(c++FLAGS) $(LDFLAGS) -fuse-ld=bfd \
-               -Xlinker --add-needed -Xlinker --no-as-needed
 -- 
 2.38.1
 
