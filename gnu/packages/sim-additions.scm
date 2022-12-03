@@ -218,7 +218,7 @@
 		      (substitute* "etc/config.sh/paraview"
 			(("$PARAVIEWVERSION") (getenv "PARAVIEWVERSION")))
 		      (substitute* "etc/config.sh/paraview"
-			(("$PARAVIEW_ROOT") (getenv "PARAVIEW_ROOT")))
+			(("$PARAVIEW_ROOT") (assoc-ref %build-inputs "paraview")))
 		      ;; reset lockDir variable to refer to write-enabled
 		      ;; directory
 		      (substitute* (list "wmake/wmake"
@@ -226,7 +226,7 @@
 					 "wmake/wmakeSchedulerUptime")
 			(("\\$\\(cd \\$\\(dirname \\$BASH_SOURCE\\)/\\.\\./\\.\\. && pwd -P)") "$HOME"))
 		      ;; enable sourcing of bash_completion again
-		      ;; command "complete" not recognized?
+		      ;; gives error command "complete" not recognized?
 		      ;;(substitute* "etc/bashrc"
 		      ;;	(("^#(.*bash_completion.*$)" _ cmd) cmd))
 		      #t))
@@ -258,7 +258,7 @@
 		      (mkdir-p (string-append %output "/etc/profile.d"))
 		      (symlink
 		       (string-append "./lib/OpenFOAM-" ,version "/etc/bashrc")
-		       (string-append %output "/etc/profile.d/bashrc.sh"))
+		       (string-append %output "/etc/profile.d/bashrc"))
 		      #t))
 		  )))))
 
