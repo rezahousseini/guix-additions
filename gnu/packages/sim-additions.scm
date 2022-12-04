@@ -74,7 +74,7 @@
 		     (map (lambda (directory)
 			    (string-append directory "/gnu/packages/patches"))
 			  %load-path)))
-		 (search-patches "openfoam-10-cleanup-2.patch")))
+		 (search-patches "openfoam-10-cleanup.patch")))
 	      (modules '((guix build utils)))
 	      (snippet
     	       '(begin
@@ -169,10 +169,6 @@
 						     (string-upcase library) "-" "_"))
 					      (path (assoc-ref %build-inputs library)))
 				      ;; set store path
-				      (display name)
-				      (newline)
-				      (display path)
-				      (newline)
 				      (setenv (string-append name "_ROOT") path))) libraries)
 			;; set package versions
 			(setenv "SCOTCHVERSION" ,(package-version pt-scotch))
@@ -197,34 +193,32 @@
 		    (lambda _
 		      ;; record store paths and package versions in
 		      ;; configuration files
-		      (display (getcwd))
-		      (newline)
 		      (substitute* "etc/config.sh/CGAL"
-			(("$BOOST_ROOT") (getenv "BOOST_ROOT")))
+			(("\\$BOOST_ROOT") (getenv "BOOST_ROOT")))
 		      (substitute* "etc/config.sh/CGAL"
-			(("$CGAL_ROOT") (getenv "CGAL_ROOT")))
+			(("\\$CGAL_ROOT") (getenv "CGAL_ROOT")))
 		      (substitute* "etc/config.sh/metis"
-			(("$METIS_ROOT") (getenv "METIS_ROOT")))
+			(("\\$METIS_ROOT") (getenv "METIS_ROOT")))
 		      (substitute* "etc/config.sh/metis"
-			(("$METISVERSION") (getenv "METISVERSION")))
+			(("\\$METISVERSION") (getenv "METISVERSION")))
 		      (substitute* "etc/config.sh/scotch"
-			(("$SCOTCH_ROOT") (getenv "SCOTCH_ROOT")))
+			(("\\$SCOTCH_ROOT") (getenv "SCOTCH_ROOT")))
 		      (substitute* "etc/config.sh/scotch"
-			(("$SCOTCHVERSION") (getenv "SCOTCHVERSION")))
+			(("\\$SCOTCHVERSION") (getenv "SCOTCHVERSION")))
 		      (substitute* "etc/config.sh/settings"
-			(("$GMP_ROOT") (getenv "GMP_ROOT")))
+			(("\\$GMP_ROOT") (getenv "GMP_ROOT")))
 		      (substitute* "etc/config.sh/settings"
-			(("$MPFR_ROOT") (getenv "MPFR_ROOT")))
+			(("\\$MPFR_ROOT") (getenv "MPFR_ROOT")))
 		      (substitute* "etc/config.sh/mpi"
-			(("$OPENMPI_ROOT") (getenv "OPENMPI_ROOT")))
+			(("\\$OPENMPI_ROOT") (getenv "OPENMPI_ROOT")))
 		      (substitute* "etc/config.sh/mpi"
-			(("$OPENMPIVERSION") (getenv "OPENMPIVERSION")))
+			(("\\$OPENMPIVERSION") (getenv "OPENMPIVERSION")))
 		      (substitute* "etc/config.sh/gperftools"
-			(("$GPERFTOOLS_ROOT") (getenv "GPERFTOOLS_ROOT")))
+			(("\\$GPERFTOOLS_ROOT") (getenv "GPERFTOOLS_ROOT")))
 		      (substitute* "etc/config.sh/paraview"
-			(("$PARAVIEWVERSION") (getenv "PARAVIEWVERSION")))
+			(("\\$PARAVIEWVERSION") (getenv "PARAVIEWVERSION")))
 		      (substitute* "etc/config.sh/paraview"
-			(("$PARAVIEW_ROOT") (assoc-ref %build-inputs "paraview")))
+			(("\\$PARAVIEW_ROOT") (getenv "PARAVIEW_ROOT")))
 		      ;; reset lockDir variable to refer to write-enabled
 		      ;; directory
 		      (substitute* (list "wmake/wmake"
@@ -264,7 +258,7 @@
 		      (mkdir-p (string-append %output "/etc/profile.d"))
 		      (symlink
 		       (string-append "./lib/OpenFOAM-" ,version "/etc/bashrc")
-		       (string-append %output "/etc/profile.d/bashrc"))
+		       (string-append %output "/etc/profile.d/openfoam-10-init.sh"))
 		      #t))
 		  )))))
 
