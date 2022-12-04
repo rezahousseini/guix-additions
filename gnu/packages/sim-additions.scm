@@ -74,7 +74,7 @@
 		     (map (lambda (directory)
 			    (string-append directory "/gnu/packages/patches"))
 			  %load-path)))
-		 (search-patches "openfoam-10-cleanup.patch")))
+		 (search-patches "openfoam-10-cleanup-2.patch")))
 	      (modules '((guix build utils)))
 	      (snippet
     	       '(begin
@@ -165,10 +165,14 @@
 						    "" libraries)))
 			;; set variables to define store paths
 			(for-each (lambda (library)
-				    (let* ((name (string-replace-substring
-						  (string-upcase library) "-" "_"))
-					   (path (assoc-ref %build-inputs library)))
+				    (letrec* ((name (string-replace-substring
+						     (string-upcase library) "-" "_"))
+					      (path (assoc-ref %build-inputs library)))
 				      ;; set store path
+				      (display name)
+				      (newline)
+				      (display path)
+				      (newline)
 				      (setenv (string-append name "_ROOT") path))) libraries)
 			;; set package versions
 			(setenv "SCOTCHVERSION" ,(package-version pt-scotch))
@@ -193,6 +197,8 @@
 		    (lambda _
 		      ;; record store paths and package versions in
 		      ;; configuration files
+		      (display (getcwd))
+		      (newline)
 		      (substitute* "etc/config.sh/CGAL"
 			(("$BOOST_ROOT") (getenv "BOOST_ROOT")))
 		      (substitute* "etc/config.sh/CGAL"
