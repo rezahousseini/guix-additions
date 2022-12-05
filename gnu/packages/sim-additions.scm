@@ -59,7 +59,7 @@
   (package
     (inherit openfoam)
     (name "openfoam")
-    (version "10-20221128")
+    (version "10.20221128")
     (source (origin
 	      (method url-fetch)
 	      (uri (string-append
