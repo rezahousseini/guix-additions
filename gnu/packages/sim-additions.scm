@@ -64,9 +64,11 @@
 	      (method url-fetch)
 	      (uri (string-append
 		    "http://dl.openfoam.org/source/" version))
-	      (file-name (string-append name "-" version ".tar.gz"))
+	      (file-name
+	       (string-append name "-"
+			      (string-replace-substring version "." "-") ".tar.gz"))
 	      (sha256
-	       (base32 "1kq083cci7y11vhn3ydwhb5yqkjkgk5hpibakfc4p94cg6x15msr"))
+	       (base32 "0yd924nhck4jh9gf1wrdnk8svj38yicg4803q79nnjqhn6lcq8c5"))
 	      (patches
 	       (parameterize
 		   ((%patch-path
@@ -92,10 +94,10 @@
      `( ;; Executable files and shared libraries are located in the 'platforms'
        ;; subdirectory.
        #:strip-directories (list (string-append
-                                  "lib/OpenFOAM-" ,version
+                                  "lib/OpenFOAM-" ,(version-major version)
                                   "/platforms/linux64GccDPInt32Opt/bin")
-                                 (string-append
-                                  "lib/OpenFOAM-" ,version
+				 (string-append
+                                  "lib/OpenFOAM-" ,(version-major version)
                                   "/platforms/linux64GccDPInt32Opt/lib"))
 
        #:modules ((ice-9 ftw)
@@ -112,11 +114,15 @@
 		      ;; Use 'OpenFOAM-version' convention to match the file
 		      ;; name expectations in the build phase.
 		      (let ((unpack-dir (string-append
-		  			 (getcwd) "/OpenFOAM-" ,version "-version-" ,version))
+		  			 (getcwd) "/OpenFOAM-"
+					 ,(string-replace-substring version "." "-")))
 		            (build-dir (string-append
-		  			(getcwd) "/OpenFOAM-" ,version)))
-			(rename-file unpack-dir build-dir) ; rename build directory
-			(chdir (basename build-dir))) ; move to build directory
+		  			(getcwd) "/OpenFOAM-"
+					,(version-major version))))
+		  	(rename-file unpack-dir build-dir) ; rename build directory
+		  	(chdir (basename build-dir))
+			(display (getcwd))
+			(newline)) ; move to build directory
 		      #t))
 		  (add-after 'rename-build-directory 'patch-SHELL
 		    (lambda _
@@ -137,7 +143,8 @@
 		    (lambda _
 		      (substitute* "etc/bashrc"
 			(("export GNUPLOT=gnuplot")
-			 (string-append "export GNUPLOT=" (assoc-ref %build-inputs "gnuplot"))))
+			 (string-append "export GNUPLOT="
+					(assoc-ref %build-inputs "gnuplot") "/bin/gnuplot")))
 		      #t))
 		  (delete 'configure)             ; no configure phase
 		  (replace 'build
@@ -175,9 +182,11 @@
 				(string-append
 				 "-Wl,"
 				 rpaths
-				 "-rpath=" %output "/lib/OpenFOAM-" ,version
+				 "-rpath=" %output "/lib/OpenFOAM-"
+				 ,(version-major version)
 				 "/platforms/linux64GccDPInt32Opt/lib,"
-				 "-rpath=" %output "/lib/OpenFOAM-" ,version
+				 "-rpath=" %output "/lib/OpenFOAM-"
+				 ,(version-major version)
 				 "/platforms/linux64GccDPInt32Opt/lib/dummy")))
 		      
 		      ;; compile OpenFOAM libraries and applications
@@ -236,7 +245,8 @@
 		    (lambda _
 		      ;; use 'OpenFOAM-version' convention
 		      (let ((install-dir (string-append
-					  %output "/lib/OpenFOAM-" ,version)))
+					  %output "/lib/OpenFOAM-"
+					  ,(version-major version))))
 			(mkdir-p install-dir)     ; create install directory
 			;; move contents of build directory to install directory
 			(copy-recursively "." install-dir))))
@@ -244,14 +254,17 @@
 		    (lambda _
 		      ;; add symbolic link for standard 'bin' directory
 		      (symlink
-		       (string-append "./lib/OpenFOAM-" ,version
+		       (string-append "./lib/OpenFOAM-" ,(version-major version)
 				      "/platforms/linux64GccDPInt32Opt/bin")
 		       (string-append %output "/bin"))
 		      ;; symlink bashrc to 'etc' directory
 		      (mkdir-p (string-append %output "/etc/profile.d"))
 		      (symlink
-		       (string-append "./lib/OpenFOAM-" ,version "/etc/bashrc")
-		       (string-append %output "/etc/profile.d/openfoam-10-init.sh"))
+		       (string-append "./lib/OpenFOAM-"
+				      ,(version-major version) "/etc/bashrc")
+		       (string-append %output
+				      "/etc/profile.d/openfoam-"
+				      ,(version-major version) "-init.sh"))
 		      #t))
 		  )))))
 
