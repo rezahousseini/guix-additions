@@ -252,15 +252,15 @@
 		  (add-after 'install 'add-symbolic-link
 		    (lambda _
 		      ;; add symbolic link for standard 'bin' directory
-		      ;;(symlink
-		      ;; (string-append %output "/lib/OpenFOAM-"
-		      ;;		      ,(version-major version)
-		      ;;		      "/platforms/linux64GccDPInt32Opt/bin")
-		      ;; (string-append %output "/bin"))
+		      (symlink
+		       (string-append "./lib/OpenFOAM-"
+		      		      ,(version-major version)
+		      		      "/platforms/linux64GccDPInt32Opt/bin")
+		       (string-append %output "/bin"))
 		      ;; symlink bashrc to 'etc' directory
 		      (mkdir-p (string-append %output "/etc/profile.d"))
 		      (symlink
-		       (string-append %output "/lib/OpenFOAM-"
+		       (string-append "../../lib/OpenFOAM-"
 				      ,(version-major version) "/etc/bashrc")
 		       (string-append %output
 				      "/etc/profile.d/openfoam-"
