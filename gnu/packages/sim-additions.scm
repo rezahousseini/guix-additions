@@ -75,7 +75,7 @@
 		     (map (lambda (directory)
 			    (string-append directory "/gnu/packages/patches"))
 			  %load-path)))
-		 (search-patches "openfoam-10-cleanup-2.patch")))
+		 (search-patches "openfoam-10-cleanup-3.patch")))
 	      (modules '((guix build utils)))
 	      (snippet
     	       '(begin
@@ -86,7 +86,7 @@
 		  (substitute* "wmake/rules/General/general"
 		    (("^COMPILER_TYPE   = .*$") "COMPILER_TYPE   = Gcc\n"))))))
     (inputs (modify-inputs (package-inputs openfoam)
-	      (append gnuplot gzip openmpi pt-scotch paraview-5.9)
+	      (append gnuplot gzip openmpi pt-scotch32 paraview-5.9)
 	      (delete pt-scotch32)))
     (propagated-inputs (modify-inputs (package-propagated-inputs openfoam)
 			 (delete openmpi gzip gnuplot)))
@@ -153,7 +153,7 @@
 					     "gmp"
 					     "metis"
 					     "mpfr"
-					     "pt-scotch"
+					     "pt-scotch32"
 					     "openmpi"
 					     "zlib"
 					     "paraview"))
@@ -172,7 +172,7 @@
 				      ;; set store path
 				      (setenv (string-append name "_ROOT") path))) libraries)
 			;; set package versions
-			(setenv "SCOTCHVERSION" ,(package-version pt-scotch))
+			(setenv "PT_SCOTCH32VERSION" ,(package-version pt-scotch32))
 			(setenv "METISVERSION" ,(package-version metis))
 			(setenv "OPENMPIVERSION" ,(package-version openmpi))
 			(setenv "PARAVIEWVERSION" ,(package-version paraview-5.9))
@@ -205,9 +205,9 @@
 		      (substitute* "etc/config.sh/metis"
 			(("\\$METISVERSION") (getenv "METISVERSION")))
 		      (substitute* "etc/config.sh/scotch"
-			(("\\$PT_SCOTCH_ROOT") (getenv "PT_SCOTCH_ROOT")))
+			(("\\$PT_SCOTCH32_ROOT") (getenv "PT_SCOTCH32_ROOT")))
 		      (substitute* "etc/config.sh/scotch"
-			(("\\$SCOTCHVERSION") (getenv "SCOTCHVERSION")))
+			(("\\$PT_SCOTCH32VERSION") (getenv "PT_SCOTCH32VERSION")))
 		      (substitute* "etc/config.sh/settings"
 			(("\\$GMP_ROOT") (getenv "GMP_ROOT")))
 		      (substitute* "etc/config.sh/settings"
