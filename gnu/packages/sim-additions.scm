@@ -63,8 +63,7 @@
     (source (origin
 	      (method url-fetch)
 	      (uri (string-append
-		    "http://dl.openfoam.org/source/"
-		    (string-map (lambda (x) (if (eq? x #\.) #\- x)) version)))
+		    "http://dl.openfoam.org/source/" version))
 	      (file-name (string-append name "-" version ".tar.gz"))
 	      (sha256
 	       (base32 "1kq083cci7y11vhn3ydwhb5yqkjkgk5hpibakfc4p94cg6x15msr"))
