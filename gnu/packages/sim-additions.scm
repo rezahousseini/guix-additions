@@ -59,7 +59,7 @@
   (package
     (inherit openfoam)
     (name "openfoam")
-    (version "10")
+    (version "10-20221128")
     (source (origin
 	      (method url-fetch)
 	      (uri (string-append
@@ -74,7 +74,7 @@
 		     (map (lambda (directory)
 			    (string-append directory "/gnu/packages/patches"))
 			  %load-path)))
-		 (search-patches "openfoam-10-cleanup.patch")))
+		 (search-patches "openfoam-10-cleanup-2.patch")))
 	      (modules '((guix build utils)))
 	      (snippet
     	       '(begin
@@ -98,7 +98,6 @@
                                  (string-append
                                   "lib/OpenFOAM-" ,version
                                   "/platforms/linux64GccDPInt32Opt/lib"))
-       #:tests? #f                                ; no tests to run
 
        #:modules ((ice-9 ftw)
                   (ice-9 regex)
@@ -128,10 +127,7 @@
 		      #t))
 		  (add-after 'patch-SHELL 'patch-HOME
 		    (lambda _
-		      (substitute* (list "wmake/wmake"
-					 "wmake/wmakeScheduler"
-					 "wmake/wmakeSchedulerUptime")
-			(("\\$HOME") "$(cd $(dirname $BASH_SOURCE)/../.. && pwd -P)"))
+		      (setenv "HOME" "/tmp")
 		      #t))
 		  (add-after 'patch-HOME 'patch-gzip
 		    (lambda _
@@ -202,7 +198,7 @@
 		      (substitute* "etc/config.sh/metis"
 			(("\\$METISVERSION") (getenv "METISVERSION")))
 		      (substitute* "etc/config.sh/scotch"
-			(("\\$SCOTCH_ROOT") (getenv "SCOTCH_ROOT")))
+			(("\\$PT_SCOTCH_ROOT") (getenv "PT_SCOTCH_ROOT")))
 		      (substitute* "etc/config.sh/scotch"
 			(("\\$SCOTCHVERSION") (getenv "SCOTCHVERSION")))
 		      (substitute* "etc/config.sh/settings"
@@ -213,22 +209,20 @@
 			(("\\$OPENMPI_ROOT") (getenv "OPENMPI_ROOT")))
 		      (substitute* "etc/config.sh/mpi"
 			(("\\$OPENMPIVERSION") (getenv "OPENMPIVERSION")))
-		      (substitute* "etc/config.sh/gperftools"
-			(("\\$GPERFTOOLS_ROOT") (getenv "GPERFTOOLS_ROOT")))
 		      (substitute* "etc/config.sh/paraview"
 			(("\\$PARAVIEWVERSION") (getenv "PARAVIEWVERSION")))
 		      (substitute* "etc/config.sh/paraview"
 			(("\\$PARAVIEW_ROOT") (getenv "PARAVIEW_ROOT")))
-		      ;; reset lockDir variable to refer to write-enabled
-		      ;; directory
-		      (substitute* (list "wmake/wmake"
-					 "wmake/wmakeScheduler"
-					 "wmake/wmakeSchedulerUptime")
-			(("\\$\\(cd \\$\\(dirname \\$BASH_SOURCE\\)/\\.\\./\\.\\. && pwd -P)") "$HOME"))
 		      ;; enable sourcing of bash_completion again
 		      ;; gives error command "complete" not recognized?
 		      ;;(substitute* "etc/bashrc"
 		      ;;	(("^#(.*bash_completion.*$)" _ cmd) cmd))
+		      #t))
+		  (replace 'check
+		    (lambda _
+		      (zero? (system (format #f
+					     "source ./etc/bashrc && ./test/Allrun -j~a"
+					     (parallel-job-count))))
 		      #t))
 		  (add-after 'build 'cleanup
 		    ;; Avoid unncessary, voluminous object and dep files.
