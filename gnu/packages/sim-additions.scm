@@ -120,9 +120,7 @@
 		  			(getcwd) "/OpenFOAM-"
 					,(version-major version))))
 		  	(rename-file unpack-dir build-dir) ; rename build directory
-		  	(chdir (basename build-dir))
-			(display (getcwd))
-			(newline)) ; move to build directory
+		  	(chdir (basename build-dir))) ; move to build directory
 		      #t))
 		  (add-after 'rename-build-directory 'patch-SHELL
 		    (lambda _
@@ -144,7 +142,8 @@
 		      (substitute* "etc/bashrc"
 			(("export GNUPLOT=gnuplot")
 			 (string-append "export GNUPLOT="
-					(assoc-ref %build-inputs "gnuplot") "/bin/gnuplot")))
+					(assoc-ref %build-inputs "gnuplot")
+					"/bin/gnuplot")))
 		      #t))
 		  (delete 'configure)             ; no configure phase
 		  (replace 'build
@@ -254,13 +253,14 @@
 		    (lambda _
 		      ;; add symbolic link for standard 'bin' directory
 		      (symlink
-		       (string-append "./lib/OpenFOAM-" ,(version-major version)
+		       (string-append %output "/lib/OpenFOAM-"
+				      ,(version-major version)
 				      "/platforms/linux64GccDPInt32Opt/bin")
 		       (string-append %output "/bin"))
 		      ;; symlink bashrc to 'etc' directory
 		      (mkdir-p (string-append %output "/etc/profile.d"))
 		      (symlink
-		       (string-append "./lib/OpenFOAM-"
+		       (string-append %output "/lib/OpenFOAM-"
 				      ,(version-major version) "/etc/bashrc")
 		       (string-append %output
 				      "/etc/profile.d/openfoam-"
