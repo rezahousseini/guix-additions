@@ -189,9 +189,10 @@
 				 "/platforms/linux64GccDPInt32Opt/lib/dummy")))
 		      
 		      ;; compile OpenFOAM libraries and applications
-		      (invoke (format #f
-				      "source ./etc/bashrc && ./Allwmake -j~a"
-				      (parallel-job-count)))))
+		      (= 1 (status:exit-val
+			    (system (format #f
+					    "source ./etc/bashrc && ./Allwmake -j~a"
+					    (parallel-job-count)))))))
 		  (add-after 'build 'update-configuration-files
 		    (lambda _
 		      ;; record store paths and package versions in
@@ -247,13 +248,14 @@
 			(copy-recursively "." install-dir))))
 		  (add-after 'install 'check
 		    (lambda _
-		      (invoke
-		       (format #f
-			       (string-append "source " %output
-					      "/lib/OpenFOAM-"
-					      ,(version-major version)
-					      "/etc/bashrc && ./test/Allrun -j~a")
-			       (parallel-job-count)))
+		      (= 1 (status:exit-val
+			    (system
+			     (format #f
+				     (string-append "source " %output
+						    "/lib/OpenFOAM-"
+						    ,(version-major version)
+						    "/etc/bashrc && ./test/Allrun -j~a")
+				     (parallel-job-count)))))
 		      #t))
 		  (add-after 'check 'add-symbolic-link
 		    (lambda _
