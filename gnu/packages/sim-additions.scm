@@ -75,7 +75,7 @@
 		     (map (lambda (directory)
 			    (string-append directory "/gnu/packages/patches"))
 			  %load-path)))
-		 (search-patches "openfoam-10-cleanup-4.patch")))
+		 (search-patches "openfoam-10-cleanup-5.patch")))
 	      (modules '((guix build utils)))
 	      (snippet
     	       '(begin
@@ -85,6 +85,8 @@
 		  ;; set Gcc directly, somehow a bug in openfoam
 		  (substitute* "wmake/rules/General/general"
 		    (("^COMPILER_TYPE   = .*$") "COMPILER_TYPE   = Gcc\n"))))))
+    (native-inputs (modify-inputs (package-native-inputs openfoam)
+		     (append cmake-minimal libxml2 libogg)))
     (inputs (modify-inputs (package-inputs openfoam)
 	      (append gnuplot gzip openmpi pt-scotch32 paraview-5.9)
 	      (delete pt-scotch32)))
@@ -108,7 +110,9 @@
                   (guix build utils))
 
        #:phases (modify-phases %standard-phases
-		  (add-after 'unpack 'rename-build-directory
+		  (add-after 'unpack 'make-files-writable-for-tests
+		    (lambda _ (for-each make-file-writable (find-files "test"))))
+		  (add-after 'make-files-writable-for-tests 'rename-build-directory
 		    (lambda _
 		      (chdir "..")
 		      ;; Use 'OpenFOAM-version' convention to match the file
@@ -189,10 +193,10 @@
 				 "/platforms/linux64GccDPInt32Opt/lib/dummy")))
 		      
 		      ;; compile OpenFOAM libraries and applications
-		      (= 1 (status:exit-val
-			    (system (format #f
-					    "source ./etc/bashrc && ./Allwmake -j~a"
-					    (parallel-job-count)))))))
+		      (invoke "bash" "-c"
+			      (format #f
+				      "source ./etc/bashrc && ./Allwmake -j~a"
+				      (parallel-job-count)))))
 		  (add-after 'build 'update-configuration-files
 		    (lambda _
 		      ;; record store paths and package versions in
@@ -226,8 +230,6 @@
 		      ;;(substitute* "etc/bashrc"
 		      ;;	(("^#(.*bash_completion.*$)" _ cmd) cmd))
 		      #t))
-		  ;; move check after install
-		  (delete 'check)
 		  (add-after 'build 'cleanup
 		    ;; Avoid unncessary, voluminous object and dep files.
 		    (lambda _
@@ -236,6 +238,15 @@
 		      (delete-file-recursively
 		       "platforms/linux64GccDPInt32OptSYSTEMOPENMPI")
 		      (for-each delete-file (find-files "." "\\.o$"))
+		      #t))
+		  (replace 'check
+		    (lambda _
+		      (with-directory-excursion "test"
+			(invoke "bash" "-c"
+				(format #f
+					(string-append
+					 "source ../etc/bashrc && ./Allrun -j~a")
+					(parallel-job-count))))
 		      #t))
 		  (replace 'install
 		    (lambda _
@@ -246,18 +257,7 @@
 			(mkdir-p install-dir)     ; create install directory
 			;; move contents of build directory to install directory
 			(copy-recursively "." install-dir))))
-		  (add-after 'install 'check
-		    (lambda _
-		      (= 1 (status:exit-val
-			    (system
-			     (format #f
-				     (string-append "source " %output
-						    "/lib/OpenFOAM-"
-						    ,(version-major version)
-						    "/etc/bashrc && ./test/Allrun -j~a")
-				     (parallel-job-count)))))
-		      #t))
-		  (add-after 'check 'add-symbolic-link
+		  (add-after 'install 'add-symbolic-link
 		    (lambda _
 		      ;; add symbolic link for standard 'bin' directory
 		      (symlink
