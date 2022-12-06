@@ -75,7 +75,7 @@
 		     (map (lambda (directory)
 			    (string-append directory "/gnu/packages/patches"))
 			  %load-path)))
-		 (search-patches "openfoam-10-cleanup-3.patch")))
+		 (search-patches "openfoam-10-cleanup-4.patch")))
 	      (modules '((guix build utils)))
 	      (snippet
     	       '(begin
@@ -189,9 +189,9 @@
 				 "/platforms/linux64GccDPInt32Opt/lib/dummy")))
 		      
 		      ;; compile OpenFOAM libraries and applications
-		      (zero? (system (format #f
-					     "source ./etc/bashrc && ./Allwmake -j~a"
-					     (parallel-job-count))))))
+		      (invoke (format #f
+				      "source ./etc/bashrc && ./Allwmake -j~a"
+				      (parallel-job-count)))))
 		  (add-after 'build 'update-configuration-files
 		    (lambda _
 		      ;; record store paths and package versions in
@@ -225,12 +225,8 @@
 		      ;;(substitute* "etc/bashrc"
 		      ;;	(("^#(.*bash_completion.*$)" _ cmd) cmd))
 		      #t))
-		  (replace 'check
-		    (lambda _
-		      (zero? (system (format #f
-					     "source ./etc/bashrc && ./test/Allrun -j~a"
-					     (parallel-job-count))))
-		      #t))
+		  ;; move check after install
+		  (delete 'check)
 		  (add-after 'build 'cleanup
 		    ;; Avoid unncessary, voluminous object and dep files.
 		    (lambda _
@@ -249,7 +245,17 @@
 			(mkdir-p install-dir)     ; create install directory
 			;; move contents of build directory to install directory
 			(copy-recursively "." install-dir))))
-		  (add-after 'install 'add-symbolic-link
+		  (add-after 'install 'check
+		    (lambda _
+		      (invoke
+		       (format #f
+			       (string-append "source " %output
+					      "/lib/OpenFOAM-"
+					      ,(version-major version)
+					      "/etc/bashrc && ./test/Allrun -j~a")
+			       (parallel-job-count)))
+		      #t))
+		  (add-after 'check 'add-symbolic-link
 		    (lambda _
 		      ;; add symbolic link for standard 'bin' directory
 		      (symlink
