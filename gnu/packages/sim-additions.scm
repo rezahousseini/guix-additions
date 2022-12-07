@@ -87,7 +87,34 @@
 		  (substitute* "wmake/rules/General/general"
 		    (("^COMPILER_TYPE   = .*$") "COMPILER_TYPE   = Gcc\n"))))))
     (native-inputs (modify-inputs (package-native-inputs openfoam)
-		     (append cmake-minimal libxml2 libogg libtheora ffmpeg gl2ps libpng)))
+		     (append
+		      ;; VTK dependencies
+		      cmake-minimal
+		      ;;libxml2
+		      ;;libogg
+		      ;;libtheora
+		      ;;ffmpeg
+		      ;;gl2ps
+		      ;;libpng
+		      ;;libharu
+		      ;;jsoncpp
+		      ;;netcdf
+		      ;;hdf5
+		      ;;gdal
+		      ;;libx11
+		      ;;qt5compat
+		      ;;eigen
+		      ;;glew
+		      ;;pugixml
+		      ;;libtiff
+		      ;;freetype
+		      ;;double-conversion
+		      ;;libjpeg
+		      ;;python
+		      ;;lz4
+		      ;;expat
+		      ;;lzip
+		      vtk)))
     (inputs (modify-inputs (package-inputs openfoam)
 	      (append gnuplot gzip openmpi pt-scotch32 paraview-5.9)
 	      (delete pt-scotch32)))
