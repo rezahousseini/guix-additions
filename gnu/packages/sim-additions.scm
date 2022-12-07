@@ -76,7 +76,7 @@
 		     (map (lambda (directory)
 			    (string-append directory "/gnu/packages/patches"))
 			  %load-path)))
-		 (search-patches "openfoam-10-cleanup-5.patch")))
+		 (search-patches "openfoam-10-cleanup-6.patch")))
 	      (modules '((guix build utils)))
 	      (snippet
     	       '(begin
@@ -87,34 +87,7 @@
 		  (substitute* "wmake/rules/General/general"
 		    (("^COMPILER_TYPE   = .*$") "COMPILER_TYPE   = Gcc\n"))))))
     (native-inputs (modify-inputs (package-native-inputs openfoam)
-		     (append
-		      ;; VTK dependencies
-		      cmake-minimal
-		      ;;libxml2
-		      ;;libogg
-		      ;;libtheora
-		      ;;ffmpeg
-		      ;;gl2ps
-		      ;;libpng
-		      ;;libharu
-		      ;;jsoncpp
-		      ;;netcdf
-		      ;;hdf5
-		      ;;gdal
-		      ;;libx11
-		      ;;qt5compat
-		      ;;eigen
-		      ;;glew
-		      ;;pugixml
-		      ;;libtiff
-		      ;;freetype
-		      ;;double-conversion
-		      ;;libjpeg
-		      ;;python
-		      ;;lz4
-		      ;;expat
-		      ;;lzip
-		      vtk)))
+		     (append cmake-minimal python)))
     (inputs (modify-inputs (package-inputs openfoam)
 	      (append gnuplot gzip openmpi pt-scotch32 paraview-5.9)
 	      (delete pt-scotch32)))
@@ -208,6 +181,7 @@
 			(setenv "METISVERSION" ,(package-version metis))
 			(setenv "OPENMPIVERSION" ,(package-version openmpi))
 			(setenv "PARAVIEWVERSION" ,(package-version paraview-5.9))
+			(setenv "PYTHONVERSION" ,(package-version python))
 			;; set variable to pass extra 'rpath' arguments to linker
 			(setenv "LDFLAGS"
 				(string-append
