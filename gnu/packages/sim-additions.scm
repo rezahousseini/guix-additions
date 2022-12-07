@@ -76,7 +76,7 @@
 		     (map (lambda (directory)
 			    (string-append directory "/gnu/packages/patches"))
 			  %load-path)))
-		 (search-patches "openfoam-10-cleanup-6.patch")))
+		 (search-patches "openfoam-10-cleanup-5.patch")))
 	      (modules '((guix build utils)))
 	      (snippet
     	       '(begin
@@ -87,7 +87,7 @@
 		  (substitute* "wmake/rules/General/general"
 		    (("^COMPILER_TYPE   = .*$") "COMPILER_TYPE   = Gcc\n"))))))
     (native-inputs (modify-inputs (package-native-inputs openfoam)
-		     (append cmake-minimal python)))
+		     (append cmake-minimal)))
     (inputs (modify-inputs (package-inputs openfoam)
 	      (append gnuplot gzip openmpi pt-scotch32 paraview-5.9)
 	      (delete pt-scotch32)))
@@ -181,7 +181,7 @@
 			(setenv "METISVERSION" ,(package-version metis))
 			(setenv "OPENMPIVERSION" ,(package-version openmpi))
 			(setenv "PARAVIEWVERSION" ,(package-version paraview-5.9))
-			(setenv "PYTHONVERSION" ,(package-version python))
+			;;(setenv "PYTHONVERSION" ,(package-version python))
 			;; set variable to pass extra 'rpath' arguments to linker
 			(setenv "LDFLAGS"
 				(string-append
@@ -195,10 +195,14 @@
 				 "/platforms/linux64GccDPInt32Opt/lib/dummy")))
 		      
 		      ;; compile OpenFOAM libraries and applications
-		      (invoke "bash" "-c"
-			      (format #f
+		      ;;(invoke "bash" "-c"
+		      ;;	      (format #f
+		      ;;		      "source ./etc/bashrc && ./Allwmake -j~a"
+		      ;;		      (parallel-job-count)))
+		      (system (format #f
 				      "source ./etc/bashrc && ./Allwmake -j~a"
-				      (parallel-job-count)))))
+		      		      (parallel-job-count)))
+		      ))
 		  (add-after 'build 'update-configuration-files
 		    (lambda _
 		      ;; record store paths and package versions in
@@ -244,11 +248,17 @@
 		  (replace 'check
 		    (lambda _
 		      (with-directory-excursion "test"
-			(invoke "bash" "-c"
-				(format #f
-					(string-append
-					 "source ../etc/bashrc && ./Allrun -j~a")
-					(parallel-job-count))))
+			;;(invoke "bash" "-c"
+			;;	(format #f
+			;;		(string-append
+			;;		 "source ../etc/bashrc && ./Allrun -j~a")
+			;;		(parallel-job-count)))
+			(system
+			 (format #f
+				 (string-append
+				  "source ../etc/bashrc && ./Allrun -j~a")
+				 (parallel-job-count)))
+			)
 		      #t))
 		  (replace 'install
 		    (lambda _
@@ -339,5 +349,29 @@
      "The libMesh library provides a framework for the numerical simulation of partial differential equations using arbitrary unstructured discretizations on serial and parallel platforms. A major goal of the library is to provide support for adaptive mesh refinement (AMR) computations in parallel while allowing a research scientist to focus on the physics they are modeling.")
     (license license:lgpl2.1)))
 
+(define-public utf8cpp
+  (package
+    (name "utf8cpp")
+    (version "3.2.2")
+    (source (origin
+              (method url-fetch)
+              (uri (string-append
+		    "https://github.com/nemtrif/utfcpp/archive/refs/tags/v"
+		    version ".tar.gz"))
+              (sha256
+	       (base32
+                "1x8rrvx266p1c2ka9pxmrldpz57c77fbf34ak88ak9p25g5yg0bg"))))
+    (build-system cmake-build-system)
+    (arguments
+     `(#:build-type "Release"
+       ))
+    (home-page "https://utfcpp.sourceforge.net/")
+    (synopsis
+     "UTF-8 with C++ in a Portable Way")
+    (description
+     "UTF-8 with C++ in a Portable Way")
+    (license license:asl2.0)))
+
 ;;timpi
 openfoam-10
+;;utf8cpp
