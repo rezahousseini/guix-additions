@@ -389,7 +389,7 @@
     (build-system copy-build-system)
     (native-inputs (list cmake-minimal))
     (arguments
-     `(#:install-plan '(("ftest.h" "include/"))
+     `(#:install-plan '(("ftest.h" "include/ftest/"))
        #:phases
        (modify-phases %standard-phases
     	 (add-before 'install 'check
