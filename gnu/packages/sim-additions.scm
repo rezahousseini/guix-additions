@@ -48,6 +48,7 @@
   #:use-module (guix build-system gnu)
   #:use-module (guix build-system pyproject)
   #:use-module (guix build-system python)
+  #:use-module (guix build-system copy)
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (guix packages)
   #:use-module (guix gexp)
@@ -370,6 +371,39 @@
      "UTF-8 with C++ in a Portable Way")
     (description
      "UTF-8 with C++ in a Portable Way")
+    (license license:asl2.0)))
+
+(define-public ftest
+  (package
+    (name "ftest")
+    (version "bf75576064fce2e07f52cd63a3e410f12358728b")
+    (source (origin
+	      (method git-fetch)
+	      (uri (git-reference
+		    (url "https://github.com/nemtrif/ftest")
+		    (commit version)))
+	      (file-name (git-file-name name version))
+	      (sha256
+	       (base32
+		"01yjhjnlq2gci8hkc6favwj0axq7y1vvnradsgcffby6h09x00b4"))))
+    (build-system copy-build-system)
+    (native-inputs (list cmake-minimal))
+    (arguments
+     `(#:install-plan '(("ftest.h" "include/"))
+       #:phases
+       (modify-phases %standard-phases
+    	 (add-before 'install 'check
+    	   (lambda _
+    	     (with-directory-excursion "tests"
+	       (invoke "cmake" ".")
+	       (invoke "make")
+	       (invoke "ctest")))
+    	   ))))
+    (home-page "https://github.com/nemtrif/ftest")
+    (synopsis
+     "A simple and limited unit-test framework for C++")
+    (description
+     "A simple and limited unit-test framework for C++")
     (license license:asl2.0)))
 
 ;;timpi
