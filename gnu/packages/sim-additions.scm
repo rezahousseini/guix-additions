@@ -361,8 +361,21 @@
 		    version ".tar.gz"))
               (sha256
 	       (base32
-                "1x8rrvx266p1c2ka9pxmrldpz57c77fbf34ak88ak9p25g5yg0bg"))))
+                "1x8rrvx266p1c2ka9pxmrldpz57c77fbf34ak88ak9p25g5yg0bg"))
+	      (modules '((guix build utils)))
+	      (snippet
+    	       '(begin
+    		  ;; delete bundled dependencies
+		  (delete-file-recursively "extern")
+		  (substitute* (list "tests/test_unchecked_iterator.cpp"
+				     "tests/test_checked_iterator.cpp"
+				     "tests/test_unchecked_api.cpp"
+				     "tests/test_checked_api.cpp"
+				     "tests/test_cpp11.cpp"
+				     "tests/test_cpp17.cpp")
+		    (("\"\\.\\./extern/ftest/ftest.h\"") "<ftest/ftest.h>"))))))
     (build-system cmake-build-system)
+    (native-inputs (list ftest))
     (arguments
      `(#:build-type "Release"
        ))
