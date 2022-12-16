@@ -2,11 +2,8 @@
  (version 0)
  (dependencies
   (channel
-        (name guix)
-        (url "https://git.savannah.gnu.org/git/guix.git"))
-  (channel
         (name nonguix)
-        (url "https://gitlab.com/nonguix/nonguix")
+        (url "https://gitlab.com/nonguix/nonguix.git")
         ;; Enable signature verification:
         (introduction
          (channel-introduction
