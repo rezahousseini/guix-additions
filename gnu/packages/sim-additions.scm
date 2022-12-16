@@ -202,9 +202,8 @@
 			 (delete openmpi gzip gnuplot)))
     (native-search-paths
      (list (search-path-specification
-            (variable "BASH_ENV")
-            (files (list (string-append "lib/OpenFOAM-" (version-major version)
-					"/etc/bashrc"))))))
+            (variable "WM_PROJECT_DIR")
+            (files (list (string-append "lib/OpenFOAM-" (version-major version)))))))
     (arguments
      `( ;; Executable files and shared libraries are located in the 'platforms'
        ;; subdirectory.
