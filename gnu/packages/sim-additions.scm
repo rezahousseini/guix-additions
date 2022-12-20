@@ -151,7 +151,7 @@
 		     (map (lambda (directory)
 			    (string-append directory "/gnu/packages/patches"))
 			  %load-path)))
-		 (search-patches "openfoam-10-cleanup-5.patch")))
+		 (search-patches "openfoam-10-cleanup.patch")))
 	      (modules '((guix build utils)))
 	      (snippet
     	       '(begin
@@ -200,10 +200,6 @@
 	      (delete pt-scotch32)))
     (propagated-inputs (modify-inputs (package-propagated-inputs openfoam)
 			 (delete openmpi gzip gnuplot)))
-    (native-search-paths
-     (list (search-path-specification
-            (variable "WM_PROJECT_DIR")
-            (files (list (string-append "lib/OpenFOAM-" (version-major version)))))))
     (arguments
      `( ;; Executable files and shared libraries are located in the 'platforms'
        ;; subdirectory.
@@ -315,11 +311,7 @@
 	     (invoke "bash" "-c"
 		     (format #f
 		      	     "source ./etc/bashrc && ./Allwmake -j~a"
-		      	     (parallel-job-count)))
-	     ;;(system (format #f
-	     ;;		      "source ./etc/bashrc && ./Allwmake -j~a"
-	     ;;		      (parallel-job-count)))
-	     ))
+		      	     (parallel-job-count)))))
 	 (add-after 'build 'update-configuration-files
 	   (lambda _
 	     ;; record store paths and package versions in
@@ -365,16 +357,23 @@
 	 (replace 'check
 	   (lambda _
 	     (with-directory-excursion "test"
-	       ;;(invoke "bash" "-c"
+	       (invoke "bash" "-c"
+	       	       (format #f
+	       		       (string-append
+	       			"source ../etc/bashrc && ./Allrun -j~a")
+	       		       (parallel-job-count)))
+	       ;;(system
 	       ;;	(format #f
 	       ;;		(string-append
 	       ;;		 "source ../etc/bashrc && ./Allrun -j~a")
 	       ;;		(parallel-job-count)))
-	       (system
-		(format #f
-			(string-append
-			 "source ../etc/bashrc && ./Allrun -j~a")
-			(parallel-job-count)))
+	       )
+	     (with-directory-excursion "tutorials"
+	       (invoke "bash" "-c"
+	       	       (format #f
+	       		       (string-append
+	       			"source ../etc/bashrc && ./Alltest -j~a")
+	       		       (parallel-job-count)))
 	       )
 	     #t))
 	 (replace 'install
@@ -394,14 +393,12 @@
 		      	     ,(version-major version)
 		      	     "/platforms/linux64GccDPInt32Opt/bin")
 	      (string-append %output "/bin"))
-	     ;; symlink bashrc to 'etc' directory
-	     (mkdir-p (string-append %output "/etc/profile.d"))
+	     ;; add symbolic link for standard 'lib' directory
 	     (symlink
-	      (string-append "../../lib/OpenFOAM-"
-			     ,(version-major version) "/etc/bashrc")
-	      (string-append %output
-			     "/etc/profile.d/openfoam-"
-			     ,(version-major version) "-init.sh"))
+	      (string-append "./lib/OpenFOAM-"
+		      	     ,(version-major version)
+		      	     "/platforms/linux64GccDPInt32Opt/lib")
+	      (string-append %output "/lib"))
 	     #t))
 	 )))))
 
