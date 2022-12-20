@@ -541,34 +541,34 @@ easy.")
                (base32
                 "15n9yi6xzzs7g9rm87kg8y5yhl2zrqj3bjr845saa63f6swlrsyc"))))))
 
- (define-public if97
-   (package
-     (name "if97")
-     (version "2.1.3")
-     (source (origin
-               (method url-fetch)
-               (uri (string-append
-		     "https://github.com/CoolProp/IF97/archive/refs/tags/v"
-		     version ".tar.gz"))
-               (sha256
-		(base32
-                 "07vd7z09rm6fyyszalv9lm1qr3kvry90rhf9hm83myzf1b5ah92x"))))
-     (build-system cmake-build-system)
-     (arguments
-      `(#:build-type "Release"
-	#:configure-flags (list "-DIF97_HEADER_MODULE:BOOL=ON")
-	#:tests? #f))
-     (home-page "https://github.com/CoolProp/IF97")
-     (synopsis
-      "Open-source C++ implementation of the IAPWS-IF97 equations")
-     (description
-      "Open-source C++ implementation of the IAPWS-IF97 equations")
-     (license license:asl2.0)))
+(define-public if97
+  (package
+    (name "if97")
+    (version "2.1.3")
+    (source (origin
+              (method url-fetch)
+              (uri (string-append
+		    "https://github.com/CoolProp/IF97/archive/refs/tags/v"
+		    version ".tar.gz"))
+              (sha256
+	       (base32
+                "07vd7z09rm6fyyszalv9lm1qr3kvry90rhf9hm83myzf1b5ah92x"))))
+    (build-system cmake-build-system)
+    (arguments
+     `(#:build-type "Release"
+       #:configure-flags (list "-DIF97_HEADER_MODULE:BOOL=ON")
+       #:tests? #f))
+    (home-page "https://github.com/CoolProp/IF97")
+    (synopsis
+     "Open-source C++ implementation of the IAPWS-IF97 equations")
+    (description
+     "Open-source C++ implementation of the IAPWS-IF97 equations")
+    (license license:asl2.0)))
 
 (define-public rapidjson-latest
   (package
     (inherit rapidjson)
-    (name "rapidjson-latest")
+    (name "rapidjson")
     (version "06d58b9e848c650114556a23294d0b6440078c61")
     (source (origin
 	      (method git-fetch)
@@ -747,3 +747,30 @@ easy.")
      "CFD simulation tool to produce pressure-discharge curve for water spring taps.")
     (license license:gpl3)))
 
+(define-public python-wabe-cfd
+  (package
+    (name "python-wabe-cfd")
+    (version "0063481015de827e71ca6e43e9ee862de0d52b3d")
+    (source (origin
+	      (method git-fetch)
+	      (uri (git-reference
+		    (url "https://gitlab+deploy-token-329:x4caUwE8NycugmFvjEPy@gitlab.ost.ch/sciceg/lippunerag/wabesense/wabe-cfd.git")
+		    (commit version)))
+	      (file-name (git-file-name name version))
+	      (sha256
+	       (base32
+		"13d1cryaidrsqicyr492f22rc2icxy92jqa8g3cqwl1pih0hp1gy"))))
+    (build-system pyproject-build-system)
+    (arguments `(#:tests? #f))
+    (propagated-inputs (list
+			python-numpy
+			python-scipy
+			python-matplotlib
+			python-seaborn
+			python-cfd-qsense))
+    (home-page "https://gitlab.ost.ch/sciceg/lippunerag/wabesense/wabe-cfd")
+    (synopsis
+     "Scripts to simulate WABE discharge curves")
+    (description
+     "Scripts to simulate WABE discharge curves.")
+    (license license:gpl3)))
