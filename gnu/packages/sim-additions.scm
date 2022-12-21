@@ -151,7 +151,7 @@
 		     (map (lambda (directory)
 			    (string-append directory "/gnu/packages/patches"))
 			  %load-path)))
-		 (search-patches "openfoam-10-cleanup-10.patch")))
+		 (search-patches "openfoam-10-cleanup-11.patch")))
 	      (modules '((guix build utils)))
 	      (snippet
     	       '(begin
@@ -220,10 +220,11 @@
        #:phases
        (modify-phases
 	   %standard-phases
-	 (add-after 'unpack 'make-files-writable-for-tests
-	   (lambda _ (ftw "test"
-			  (lambda (file stat flag) (make-file-writable file)))))
-	 (add-after 'make-files-writable-for-tests 'rename-build-directory
+	 ;;(add-after 'unpack 'make-files-writable-for-tests
+	 ;;  (lambda _
+         ;;    (for-each make-file-writable (find-files "test"))
+         ;;    #t))
+	 (add-after 'unpack 'rename-build-directory
 	   (lambda _
 	     (chdir "..")
 	     ;; Use 'OpenFOAM-version' convention to match the file
