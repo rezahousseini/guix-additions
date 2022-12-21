@@ -428,7 +428,7 @@ Properties of Water and Steam")
 (define-public python-pyarrow-with-dataset
   (package
     (inherit apache-arrow)
-    (name "python-pyarrow-with-dataset")
+    (name "python-pyarrow")
     (build-system python-build-system)
     (arguments
      '(#:tests? #f          ; XXX There are no tests in the "python" directory
@@ -440,41 +440,24 @@ Properties of Water and Steam")
 	 (add-after 'unpack 'make-git-checkout-writable
 	   (lambda _
 	     (for-each make-file-writable (find-files "."))))
-	 (add-before 'install 'patch-cmake-variables
-	   (lambda* (#:key inputs #:allow-other-keys)
-	     ;; Replace cmake locations with hardcoded guix links for the
-	     ;; underlying C++ library and headers.  This is a pretty awful
-	     ;; hack.
-	     (substitute* "cmake_modules/FindParquet.cmake"
-	       (("# Licensed to the Apache Software Foundation" m)
-		(string-append "set(PARQUET_INCLUDE_DIR \""
-			       (assoc-ref inputs "apache-arrow:include")
-			       "/share/include\")\n" m))
-	       (("find_package_handle_standard_args" m)
-		(string-append "set(PARQUET_LIB_DIR \""
-			       (assoc-ref inputs "apache-arrow:lib")
-			       "/lib\")\n" m)))))
-	 (add-before 'install 'patch-parquet-library
-	   (lambda _
-	     (substitute* "CMakeLists.txt"
-	       (("parquet_shared") "parquet"))))
 	 (add-before 'install 'set-PYARROW_WITH_PARQUET
 	   (lambda _
+	     (setenv "PYARROW_BUNDLE_ARROW_CPP_HEADERS" "0")
 	     (setenv "PYARROW_WITH_PARQUET" "1")
 	     (setenv "PYARROW_WITH_DATASET" "1"))))))
     (propagated-inputs
-     `(("apache-arrow:lib" ,apache-arrow "lib")
-       ("apache-arrow:include" ,apache-arrow "include")
-       ("python-numpy" ,python-numpy)
-       ("python-pandas" ,python-pandas)
-       ("python-six" ,python-six)))
+     (list (list apache-arrow "lib")
+           (list apache-arrow "include")
+           python-numpy
+           python-pandas
+           python-six))
     (native-inputs
-     `(("cmake" ,cmake-minimal)
-       ("pkg-config" ,pkg-config)
-       ("python-cython" ,python-cython)
-       ("python-pytest" ,python-pytest)
-       ("python-pytest-runner" ,python-pytest-runner)
-       ("python-setuptools-scm" ,python-setuptools-scm)))
+     (list cmake-minimal
+           pkg-config
+           python-cython
+           python-pytest
+           python-pytest-runner
+           python-setuptools-scm))
     (outputs '("out"))
     (home-page "https://arrow.apache.org/docs/python/")
     (synopsis "Python bindings for Apache Arrow")
@@ -750,7 +733,7 @@ easy.")
 (define-public python-wabe-cfd
   (package
     (name "python-wabe-cfd")
-    (version "0063481015de827e71ca6e43e9ee862de0d52b3d")
+    (version "4d5f16576a304150be9a7a97dacf8ac3d1cbe83b")
     (source (origin
 	      (method git-fetch)
 	      (uri (git-reference
@@ -759,7 +742,7 @@ easy.")
 	      (file-name (git-file-name name version))
 	      (sha256
 	       (base32
-		"13d1cryaidrsqicyr492f22rc2icxy92jqa8g3cqwl1pih0hp1gy"))))
+		"10cwy8a4dgm7gdps4bfwn3cwj0yq8616xrc0bsyxpx4v8zdrrswb"))))
     (build-system pyproject-build-system)
     (arguments `(#:tests? #f))
     (propagated-inputs (list
@@ -774,3 +757,5 @@ easy.")
     (description
      "Scripts to simulate WABE discharge curves.")
     (license license:gpl3)))
+
+python-pyarrow-with-dataset
