@@ -151,7 +151,7 @@
 		     (map (lambda (directory)
 			    (string-append directory "/gnu/packages/patches"))
 			  %load-path)))
-		 (search-patches "openfoam-10-cleanup-13.patch")))
+		 (search-patches "openfoam-10-cleanup-14.patch")))
 	      (modules '((guix build utils)))
 	      (snippet
     	       '(begin
@@ -234,13 +234,12 @@
 	       (rename-file unpack-dir build-dir) ; rename build directory
 	       (chdir (basename build-dir))) ; move to build directory
 	     #t))
-	 (add-after 'rename-build-directory 'remove-failing-test
+	 (add-after 'rename-build-directory 'make-files-writable-for-tests
 	   (lambda _
-	     ;; test fails with error 243 due to child processes which have
-	     ;; not terminated yet, reason unclear.
-	     (delete-file-recursively "test/IO")
+	     (for-each make-file-writable (find-files "test"))
+	     (for-each make-file-writable (find-files "tutorials"))
 	     #t))
-	 (add-after 'remove-failing-test 'patch-SHELL
+	 (add-after 'make-files-writable-for-tests 'patch-SHELL
 	   (lambda _
 	     (substitute* (list "wmake/src/Makefile"
 		      		"wmake/makefiles/general")
@@ -360,7 +359,7 @@
 	 (replace 'check
 	   (lambda _
 	     (with-directory-excursion "test"
-	       (invoke "bash" "-c" "source ../etc/bashrc && ./Allrun")
+	       (invoke "bash" "-x" "-c" "source ../etc/bashrc && ./Allrun")
 	       ;;(system
 	       ;;	(format #f
 	       ;;		(string-append
