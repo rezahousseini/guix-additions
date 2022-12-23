@@ -151,7 +151,7 @@
 		     (map (lambda (directory)
 			    (string-append directory "/gnu/packages/patches"))
 			  %load-path)))
-		 (search-patches "openfoam-10-cleanup-17.patch")))
+		 (search-patches "openfoam-10-cleanup-18.patch")))
 	      (modules '((guix build utils)))
 	      (snippet
     	       '(begin
