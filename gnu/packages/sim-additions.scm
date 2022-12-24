@@ -151,7 +151,7 @@
 		     (map (lambda (directory)
 			    (string-append directory "/gnu/packages/patches"))
 			  %load-path)))
-		 (search-patches "openfoam-10-cleanup-18.patch")))
+		 (search-patches "openfoam-10-cleanup-19.patch")))
 	      (modules '((guix build utils)))
 	      (snippet
     	       '(begin
@@ -196,7 +196,7 @@
 			     protobuf
 			     qtxmlpatterns)))
     (inputs (modify-inputs (package-inputs openfoam)
-	      (append gnuplot gzip openmpi pt-scotch32 paraview-5.9)
+	      (append gnuplot gzip openmpi pt-scotch32 paraview-5.9 openssh)
 	      (delete pt-scotch32)))
     (propagated-inputs (modify-inputs (package-propagated-inputs openfoam)
 			 (delete openmpi gzip gnuplot)))
