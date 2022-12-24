@@ -39,6 +39,7 @@
   #:use-module (gnu packages readline)
   #:use-module (gnu packages serialization)
   #:use-module (gnu packages simulation)
+  #:use-module (gnu packages ssh)
   #:use-module (gnu packages tls)
   #:use-module (gnu packages version-control)
   #:use-module (gnu packages video)
