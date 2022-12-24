@@ -152,7 +152,7 @@
 		     (map (lambda (directory)
 			    (string-append directory "/gnu/packages/patches"))
 			  %load-path)))
-		 (search-patches "openfoam-10-cleanup-19.patch")))
+		 (search-patches "openfoam-10-cleanup-20.patch")))
 	      (modules '((guix build utils)))
 	      (snippet
     	       '(begin
@@ -360,19 +360,12 @@
 	 (replace 'check
 	   (lambda _
 	     (with-directory-excursion "test"
-	       (invoke "bash" "-x" "-c" "source ../etc/bashrc && ./Allrun")
-	       ;;(system
-	       ;;	(format #f
-	       ;;		(string-append
-	       ;;		 "source ../etc/bashrc && ./Allrun -j~a")
-	       ;;		(parallel-job-count)))
-	       )
+	       (invoke "bash" "-x" "-c"
+		       (format #f
+			       "source ../etc/bashrc && ./Allrun -j~a"
+			       (parallel-job-count))))
 	     (with-directory-excursion "tutorials"
-	       (invoke "bash" "-c"
-	       	       (format #f
-	       		       "source ../etc/bashrc && ./Alltest -j~a"
-	       		       (parallel-job-count)))
-	       )
+	       (invoke "bash" "-c" "source ../etc/bashrc && ./Alltest"))
 	     #t))
 	 (replace 'install
 	   (lambda _
