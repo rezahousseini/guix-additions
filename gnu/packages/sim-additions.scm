@@ -385,12 +385,6 @@
 		      	     ,(version-major version)
 		      	     "/platforms/linux64GccDPInt32Opt/bin")
 	      (string-append %output "/bin"))
-	     ;; add symbolic link for standard 'lib' directory
-	     (symlink
-	      (string-append "./lib/OpenFOAM-"
-		      	     ,(version-major version)
-		      	     "/platforms/linux64GccDPInt32Opt/lib")
-	      (string-append %output "/lib"))
 	     #t))
 	 )))))
 
