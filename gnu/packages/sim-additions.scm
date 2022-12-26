@@ -372,7 +372,7 @@
 	   (lambda _
 	     ;; use 'OpenFOAM-version' convention
 	     (let ((install-dir (string-append
-				 %output "/lib/OpenFOAM-"
+				 %output "/share/OpenFOAM-"
 				 ,(version-major version))))
 	       (mkdir-p install-dir)     ; create install directory
 	       ;; move contents of build directory to install directory
@@ -381,10 +381,16 @@
 	   (lambda _
 	     ;; add symbolic link for standard 'bin' directory
 	     (symlink
-	      (string-append "./lib/OpenFOAM-"
+	      (string-append "./share/OpenFOAM-"
 		      	     ,(version-major version)
 		      	     "/platforms/linux64GccDPInt32Opt/bin")
 	      (string-append %output "/bin"))
+	     ;; add symbolic link for standard 'lib' directory
+	     (symlink
+	      (string-append "./share/OpenFOAM-"
+		      	     ,(version-major version)
+		      	     "/platforms/linux64GccDPInt32Opt/lib")
+	      (string-append %output "/lib"))
 	     #t))
 	 )))))
 
