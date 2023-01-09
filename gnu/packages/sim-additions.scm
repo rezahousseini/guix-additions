@@ -253,9 +253,17 @@
 	 (add-after 'patch-HOME 'patch-gzip
 	   (lambda _
 	     (substitute* "bin/tools/scanpackages"
-	       (("gzip") (assoc-ref %build-inputs "gzip")))
+	       (("gzip")
+		(string-append (assoc-ref %build-inputs "gzip") "/bin/gzip")))
 	     #t))
-	 (add-after 'patch-gzip 'patch-gnuplot
+	 ;; Fix path to addr2line which is in package binutils and gcc-toolchain
+	 (add-after 'patch-gzip 'patch-addr2line
+	   (lambda* (#:key inputs #:allow-other-keys)
+	     (substitute* "src/OSspecific/POSIX/printStack.C"
+	       (("addr2line -f")
+		(string-append (search-input-file inputs "/bin/addr2line") " -f")))
+	     #t))
+	 (add-after 'patch-addr2line 'patch-gnuplot
 	   (lambda _
 	     (substitute* "etc/bashrc"
 	       (("export GNUPLOT=gnuplot")
