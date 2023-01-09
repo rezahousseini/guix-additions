@@ -205,10 +205,10 @@
      `( ;; Executable files and shared libraries are located in the 'platforms'
        ;; subdirectory.
        #:strip-directories (list (string-append
-                                  "lib/OpenFOAM-" ,(version-major version)
+                                  "share/OpenFOAM-" ,(version-major version)
                                   "/platforms/linux64GccDPInt32Opt/bin")
 				 (string-append
-                                  "lib/OpenFOAM-" ,(version-major version)
+                                  "share/OpenFOAM-" ,(version-major version)
                                   "/platforms/linux64GccDPInt32Opt/lib"))
 
        #:modules ((ice-9 ftw)
@@ -299,13 +299,13 @@
 		       (string-append
 			"-Wl,"
 			rpaths
-			"-rpath=" %output "/lib/OpenFOAM-"
+			"-rpath=" %output "/share/OpenFOAM-"
 			,(version-major version)
 			"/platforms/linux64GccDPInt32Opt/lib,"
-			"-rpath=" %output "/lib/OpenFOAM-"
+			"-rpath=" %output "/share/OpenFOAM-"
 			,(version-major version)
 			"/platforms/linux64GccDPInt32Opt/lib/dummy,"
-			"-rpath=" %output "/lib/OpenFOAM-"
+			"-rpath=" %output "/share/OpenFOAM-"
 			,(version-major version)
 			"/platforms/linux64GccDPInt32Opt/lib/paraview-"
 			,(version-major+minor (package-version paraview-5.9)))))
