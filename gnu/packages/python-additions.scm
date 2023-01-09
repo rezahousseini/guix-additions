@@ -733,7 +733,7 @@ easy.")
 (define-public python-wabe-cfd
   (package
     (name "python-wabe-cfd")
-    (version "4d5f16576a304150be9a7a97dacf8ac3d1cbe83b")
+    (version "3259a9981b68379304d19921ed6ac298889413a7")
     (source (origin
 	      (method git-fetch)
 	      (uri (git-reference
@@ -742,7 +742,7 @@ easy.")
 	      (file-name (git-file-name name version))
 	      (sha256
 	       (base32
-		"10cwy8a4dgm7gdps4bfwn3cwj0yq8616xrc0bsyxpx4v8zdrrswb"))))
+		"1m6nzbc5a3klq0wvnwa860bmsdfnf40jr9w9nch4jcxn1q46vnv4"))))
     (build-system pyproject-build-system)
     (arguments `(#:tests? #f))
     (propagated-inputs (list
@@ -757,5 +757,3 @@ easy.")
     (description
      "Scripts to simulate WABE discharge curves.")
     (license license:gpl3)))
-
-python-pyarrow-with-dataset
