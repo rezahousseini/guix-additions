@@ -742,7 +742,7 @@ easy.")
 	      (file-name (git-file-name name version))
 	      (sha256
 	       (base32
-		"1p611bikzdhzaw1cnwsqxbybyn9lhqpsfs2dgd2pqpag2mjm20xw"))))
+		"0jvhgipswk1arfwb2y7aw435r7f0166w0x83ra2kmy1ds4nkwhy6"))))
     (build-system pyproject-build-system)
     (arguments `(#:tests? #f))
     (propagated-inputs (list
