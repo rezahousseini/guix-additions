@@ -733,7 +733,7 @@ easy.")
 (define-public python-wabe-cfd
   (package
     (name "python-wabe-cfd")
-    (version "3259a9981b68379304d19921ed6ac298889413a7")
+    (version "f970d6a2d03413b299e9b31880910cab9f01e8c6")
     (source (origin
 	      (method git-fetch)
 	      (uri (git-reference
