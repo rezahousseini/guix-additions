@@ -733,7 +733,7 @@ easy.")
 (define-public python-wabe-cfd
   (package
     (name "python-wabe-cfd")
-    (version "f970d6a2d03413b299e9b31880910cab9f01e8c6")
+    (version "7b7d873beb5098ae971e4af418260f47362c6dd2")
     (source (origin
 	      (method git-fetch)
 	      (uri (git-reference
@@ -742,7 +742,7 @@ easy.")
 	      (file-name (git-file-name name version))
 	      (sha256
 	       (base32
-		"0jvhgipswk1arfwb2y7aw435r7f0166w0x83ra2kmy1ds4nkwhy6"))))
+		"1c1ykz5s49x2bwfiaspjgshzkb28isk2i8dgibary8xbgn3qrakp"))))
     (build-system pyproject-build-system)
     (arguments `(#:tests? #f))
     (propagated-inputs (list
