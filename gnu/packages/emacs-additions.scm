@@ -110,27 +110,6 @@
   #:use-module (srfi srfi-1)
   #:use-module (ice-9 match))
 
-(define-public emacs-ox-rss
-  (package
-    (name "emacs-ox-rss")
-    (version "83dc898fa5493925b01716e5dd495d5e07c3d41a")
-    (source
-     (origin
-       (method git-fetch)
-       (uri (git-reference
-             (url "https://gitlab.com/nsavage/ox-rss")
-             (commit version)))
-       (sha256
-        (base32
-         "0513kixv9bgkignmji95m3rskn6px6c0fack4zdl61qq09fg8w6h"))))
-    (build-system emacs-build-system)
-    (home-page "https://gitlab.com/nsavage/ox-rss")
-    (synopsis "RSS 2.0 back-end for Org export engine")
-    (description
-     "This library implements an RSS 2.0 back-end for Org exporter, based
-on the `html' back-end.")
-    (license license:gpl3+)))
-
 (define-public emacs-lean-mode
   (package
     (name "emacs-lean-mode")
