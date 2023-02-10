@@ -759,66 +759,66 @@ easy.")
      "Scripts to simulate WABE discharge curves.")
     (license license:gpl3)))
 
-(define-public python-islpy
-  (package
-    (name "python-islpy")
-    (version "2022.2.1")
-    (source (origin
-              (method url-fetch)
-              (uri (pypi-uri "islpy" version))
-              (sha256
-               (base32
-		"07062ljvznm2dg3r9b3lq98qygxsha8ylxi4zs7hx49l0jw2vbjy"))))
-    (build-system python-build-system)
-    (inputs (list isl imath gmp))
-    (propagated-inputs (list python-pytest))
-    (home-page "http://documen.tician.de/islpy")
-    (synopsis "Wrapper around isl, an integer set library")
-    (description "Wrapper around isl, an integer set library")
-    (license license:expat)))
-
-(define-public python-loopy
-  (package
-    (name "python-loopy")
-    (version "2020.2.1")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (pypi-uri "loopy" version))
-       (sha256
-        (base32
-         "18rf8i32m1045zxglvicpgldvzmqdxqvs3dhjd7wilb64sd0ds83"))))
-    (build-system pyproject-build-system)
-                                        ;(arguments
-                                        ; `(#:phases
-                                        ;   (modify-phases %standard-phases
-                                        ;     (add-after 'unpack 'disable-proprietary-features
-                                        ;       (lambda _
-                                        ;         (setenv "NUMBA_DISABLE_HSA" "1")
-                                        ;         (setenv "NUMBA_DISABLE_CUDA" "1")))
-                                        ;     (add-after 'unpack 'disable-failing-tests
-                                        ;       (lambda _
-                                        ;         ;; This one test fails because a deprecation warning is printed.
-                                        ;         (substitute* "numba/tests/test_import.py"
-                                        ;           (("def test_no_accidental_warnings")
-                                        ;            "def disabled_test_no_accidental_warnings"))))
-                                        ;     (replace 'check
-                                        ;       (lambda* (#:key tests? inputs outputs #:allow-other-keys)
-                                        ;         (when tests?
-                                        ;           (add-installed-pythonpath inputs outputs)
-                                        ;           ;; Something is wrong with the PYTHONPATH when running the
-                                        ;           ;; tests from the build directory, as it complains about not being
-                                        ;           ;; able to import certain modules.
-                                        ;           (with-directory-excursion "/tmp"
-                                        ;             (setenv "HOME" (getcwd))
-                                        ;             (invoke "python3" "-m" "numba.runtests" "-v" "-m"))))))))
-    (propagated-inputs
-     (list python-pytools python-pyopencl python-ply))
-    (native-inputs                      ;for tests
-     (list python-scipy))
-    (home-page "http://mathema.tician.de/software/loopy")
-    (synopsis "A code generator for array-based code on CPUs and GPUs")
-    (description "Loopy lets you easily generate the tedious, complicated code that is necessary to get good performance out of GPUs and multi-core CPUs. Loopy’s core idea is that a computation should be described simply and then transformed into a version that gets high performance. This transformation takes place under user control, from within Python.")
-    (license license:expat)))
+;;(define-public python-islpy
+;;  (package
+;;    (name "python-islpy")
+;;    (version "2022.2.1")
+;;    (source (origin
+;;              (method url-fetch)
+;;              (uri (pypi-uri "islpy" version))
+;;              (sha256
+;;               (base32
+;;		"07062ljvznm2dg3r9b3lq98qygxsha8ylxi4zs7hx49l0jw2vbjy"))))
+;;    (build-system python-build-system)
+;;    (inputs (list isl imath gmp))
+;;    (propagated-inputs (list python-pytest))
+;;    (home-page "http://documen.tician.de/islpy")
+;;    (synopsis "Wrapper around isl, an integer set library")
+;;    (description "Wrapper around isl, an integer set library")
+;;    (license license:expat)))
+;;
+;;(define-public python-loopy
+;;  (package
+;;    (name "python-loopy")
+;;    (version "2020.2.1")
+;;    (source
+;;     (origin
+;;       (method url-fetch)
+;;       (uri (pypi-uri "loopy" version))
+;;       (sha256
+;;        (base32
+;;         "18rf8i32m1045zxglvicpgldvzmqdxqvs3dhjd7wilb64sd0ds83"))))
+;;    (build-system pyproject-build-system)
+;;                                        ;(arguments
+;;                                        ; `(#:phases
+;;                                        ;   (modify-phases %standard-phases
+;;                                        ;     (add-after 'unpack 'disable-proprietary-features
+;;                                        ;       (lambda _
+;;                                        ;         (setenv "NUMBA_DISABLE_HSA" "1")
+;;                                        ;         (setenv "NUMBA_DISABLE_CUDA" "1")))
+;;                                        ;     (add-after 'unpack 'disable-failing-tests
+;;                                        ;       (lambda _
+;;                                        ;         ;; This one test fails because a deprecation warning is printed.
+;;                                        ;         (substitute* "numba/tests/test_import.py"
+;;                                        ;           (("def test_no_accidental_warnings")
+;;                                        ;            "def disabled_test_no_accidental_warnings"))))
+;;                                        ;     (replace 'check
+;;                                        ;       (lambda* (#:key tests? inputs outputs #:allow-other-keys)
+;;                                        ;         (when tests?
+;;                                        ;           (add-installed-pythonpath inputs outputs)
+;;                                        ;           ;; Something is wrong with the PYTHONPATH when running the
+;;                                        ;           ;; tests from the build directory, as it complains about not being
+;;                                        ;           ;; able to import certain modules.
+;;                                        ;           (with-directory-excursion "/tmp"
+;;                                        ;             (setenv "HOME" (getcwd))
+;;                                        ;             (invoke "python3" "-m" "numba.runtests" "-v" "-m"))))))))
+;;    (propagated-inputs
+;;     (list python-pytools python-pyopencl python-ply))
+;;    (native-inputs                      ;for tests
+;;     (list python-scipy))
+;;    (home-page "http://mathema.tician.de/software/loopy")
+;;    (synopsis "A code generator for array-based code on CPUs and GPUs")
+;;    (description "Loopy lets you easily generate the tedious, complicated code that is necessary to get good performance out of GPUs and multi-core CPUs. Loopy’s core idea is that a computation should be described simply and then transformed into a version that gets high performance. This transformation takes place under user control, from within Python.")
+;;    (license license:expat)))
 
 python-wabe-cfd
