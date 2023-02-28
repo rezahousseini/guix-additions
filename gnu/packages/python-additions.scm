@@ -696,7 +696,7 @@ easy.")
 (define-public python-cfd-qsense
   (package
     (name "python-cfd-qsense")
-    (version "8d02c5feb1ea42284c5247d2b49ff50b35b67e1b")
+    (version "75a9e469025b3eabc03e48b6e029754e29d7b97f")
     (source (origin
 	      (method git-fetch)
 	      (uri (git-reference
@@ -705,7 +705,7 @@ easy.")
 	      (file-name (git-file-name name version))
 	      (sha256
 	       (base32
-		"01rxccn2dx0w2sdz9gsmmz0m0cqmdkpcmqdhnypxpgcgwcxd07aj"))))
+		"18lvsakvz2n653ffdk24k76z1nkzim04inq645z61s6v83cna8yr"))))
     (build-system pyproject-build-system)
     (arguments
      `(#:tests? #f ;; error in test suite
@@ -821,4 +821,4 @@ easy.")
 ;;    (description "Loopy lets you easily generate the tedious, complicated code that is necessary to get good performance out of GPUs and multi-core CPUs. Loopy’s core idea is that a computation should be described simply and then transformed into a version that gets high performance. This transformation takes place under user control, from within Python.")
 ;;    (license license:expat)))
 
-python-wabe-cfd
+python-cfd-qsense
