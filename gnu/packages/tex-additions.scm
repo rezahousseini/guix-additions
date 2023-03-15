@@ -315,4 +315,22 @@ different graphic formats, exactly as it is rendered within the LaTeX document,
 using either ImageMagick or Ghostscript.")
     (license license:lppl1.3c)))
 
-texlive-svg
+(define-public texlive-transparent
+  (package
+    (inherit (simple-texlive-package
+	      "texlive-transparent"
+              (list "doc/latex/transparent/"
+                    "source/latex/transparent/"
+                    "tex/latex/transparent/")
+              (base32
+               "172vh8fdrf67inzyrmah0kr1jdc8b3v9f18qrcrgabybhrh5j7qk")
+	      #:trivial? #t))
+    (home-page "https://ctan.org/macros/latex/contrib/transparent")
+    (synopsis "Using a color stack for transparency with pdfTeX")
+    (description
+     "Since version 1.40 pdfTeX supports several color stacks; the package uses a
+separate colour stack for control of transparency (which is not, of course, a
+colour).")
+    (license license:lppl1.3+)))
+
+texlive-transparent
