@@ -290,4 +290,29 @@ line plots, scatter plots, piecewise constant plots, bar plots, area plots,
 mesh-- and surface plots and some more.  Pgfplots is based on PGF/TikZ (PGF); it
 runs equally for LaTeX/TeX/ConTeXt.")))
 
-texlive-pgfplots
+(define-public texlive-svg
+  (package
+    (inherit (simple-texlive-package
+	      "texlive-svg"
+              (list "doc/latex/svg/"
+		    "source/latex/svg/"
+                    "tex/latex/svg/")
+              (base32
+               "1yizgrjn6l9j1cf8mvkjz0zni7bzmajszc1y8q80xc723nwnbq7q")
+	      #:trivial? #t))
+    (home-page "https://ctan.org/graphics/svg")
+    (synopsis "Include and extract SVG pictures in LaTeX documents")
+    (description
+     "This bundle contains the two packages svg and svg-extract.  The svg package is
+intended for the automated integration of SVG graphics into LaTeX documents.
+Therefore the capabilities provided by Inkscape -- or more precisely its command
+line tool -- are used to export the text within an SVG graphic to a separate
+file, which is then rendered by LaTeX. For this purpose the two commands
+\\includesvg and \\includeinkscape are provided which are very similar to the
+\\includegraphics command of the graphicx package.  In addition, the package
+svg-extract allows the extraction of these graphics into independent files in
+different graphic formats, exactly as it is rendered within the LaTeX document,
+using either ImageMagick or Ghostscript.")
+    (license license:lppl1.3c)))
+
+texlive-svg
