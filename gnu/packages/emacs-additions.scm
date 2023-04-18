@@ -112,28 +112,60 @@
 
 (define-public emacs-lean-mode
   (package
-    (name "emacs-lean-mode")
-    (version "20220501.1007")
-    (source (origin
-              (method git-fetch)
-              (uri (git-reference
-                    (url "https://github.com/leanprover/lean-mode.git")
-                    (commit "362bc6fa3efb1874c525ed6b4b6f24f76af22596")))
-              (sha256
-               (base32
-		"1lr4h555fa1kdi3q7hkhsnznv7nh9rgjqjkbj2bqp9zwh06245w3"))))
-    (build-system emacs-build-system)
-    (propagated-inputs (list emacs-dash emacs-s emacs-f emacs-flycheck))
-    (arguments
-     '(#:include '("^lean-[^/]+.el$")
-       #:exclude '()))
-    (home-page "https://github.com/leanprover/lean-mode")
-    (synopsis "A major mode for the Lean 3 language")
-    (description
-     "This package provides a major mode for the Lean 3 programming language.
+   (name "emacs-lean-mode")
+   (version "20220501.1007")
+   (source (origin
+            (method git-fetch)
+            (uri (git-reference
+                  (url "https://github.com/leanprover/lean-mode.git")
+                  (commit "362bc6fa3efb1874c525ed6b4b6f24f76af22596")))
+            (sha256
+             (base32
+	      "1lr4h555fa1kdi3q7hkhsnznv7nh9rgjqjkbj2bqp9zwh06245w3"))))
+   (build-system emacs-build-system)
+   (propagated-inputs (list emacs-dash emacs-s emacs-f emacs-flycheck))
+   (arguments
+    '(#:include '("^lean-[^/]+.el$")
+      #:exclude '()))
+   (home-page "https://github.com/leanprover/lean-mode")
+   (synopsis "A major mode for the Lean 3 language")
+   (description
+    "This package provides a major mode for the Lean 3 programming language.
 
 Provides highlighting, diagnostics, goal visualization, and many other useful
 features for Lean users.
 
 See the README.md for more advanced features and the associated keybindings.")
-    (license #f)))
+   (license #f)))
+
+(define-public emacs-org-projectile
+  (package
+   (name "emacs-org-projectile")
+   (version "20220114.730")
+   (source (origin
+            (method git-fetch)
+            (uri (git-reference
+                  (url "https://github.com/IvanMalison/org-projectile.git")
+                  (commit "642b39c698db00bc535c1c2335f425fb9f4855a9")))
+            (sha256
+             (base32
+              "1pcfyrmbnsk39w4d6cs27bcyihics3gll515fslnl5kqbaj9qn09"))))
+   (build-system emacs-build-system)
+   (propagated-inputs (list emacs-projectile
+			    emacs-dash
+			    emacs-s
+			    emacs-helm
+			    emacs-helm-org))
+   (arguments
+    '(#:include '("^org-projectile.el$"
+		  "^org-projectile-helm.el$"
+		  "^org-category-capture.el$")
+      #:exclude '()))
+   (home-page "https://github.com/IvanMalison/org-projectile")
+   (synopsis "Repository todo management for org-mode")
+   (description
+    "This package aims to provide an easy interface to creating per project org-mode
+TODO headings.")
+   (license #f)))
+
+emacs-org-projectile
