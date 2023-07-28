@@ -74,48 +74,6 @@ copied to their outputs; otherwise the TEXLIVE-BUILD-SYSTEM is used."
     (description #f)
     (license #f)))
 
-(define-public texlive-smartdiagram
-  (package
-    (inherit (simple-texlive-package
-              "texlive-smartdiagram"
-              (list "doc/latex/smartdiagram/"
-		    "tex/latex/smartdiagram/")
-              (base32
-               "0b9rq06c0xm9dpd6yljvgay0p7xpglpddw10vlf5c50wma4xqjda")
-              #:trivial? #t))
-    (home-page "https://www.ctan.org/pkg/smartdiagram")
-    (synopsis "Generate diagrams from lists")
-    (description "The package will create ‘smart’ diagrams from lists of items, for simple documents and for presentations.")
-    (license license:public-domain)))
-
-(define-public texlive-generic-xstring
-  (package
-    (inherit (simple-texlive-package
-              "texlive-generic-xstring"
-              (list "doc/generic/xstring/"
-		    "tex/generic/xstring/")
-              (base32
-               "1azpq855kq1l4686bjp8haxim5c8wycz1b6lcg5q7x8kb4g9sppn")
-              #:trivial? #t))
-    (home-page "https://www.ctan.org/pkg/xstring")
-    (synopsis "String manipulation for (La)TeX")
-    (description "The package provides macros for manipulating strings — testing a string’s contents, extracting substrings, substitution of substrings and providing numbers such as string length, position of, or number of recurrences of, a substring.")
-    (license license:public-domain)))
-
-(define-public texlive-metalogo
-  (package
-    (inherit (simple-texlive-package
-              "texlive-metalogo"
-              (list "doc/latex/metalogo/"
-		    "tex/latex/metalogo/")
-              (base32
-               "02c8ysyr8bc1b643zjgs5qshc704hm7wwz7g1w8izb202hvzsk13")
-              #:trivial? #t))
-    (home-page "https://www.ctan.org/pkg/metalogo")
-    (synopsis "Extended TeX logo macros")
-    (description "This package exposes spacing parameters for various TeX logos to the end user, to optimise the logos for different fonts. Written especially for XeLaTeX users.")
-    (license license:public-domain)))
-
 (define-public texlive-dtk
   (package
     (inherit (simple-texlive-package
@@ -130,48 +88,6 @@ copied to their outputs; otherwise the TEXLIVE-BUILD-SYSTEM is used."
     (description "The bundle provides a class and style file for typesetting “Die TEXnische Komödie” — the communications of the German TEX Users Group DANTE e.V. The arrangement means that the class may be used by article writers to typeset a single article, as well as to produce the complete journal.")
     (license license:public-domain)))
 
-(define-public texlive-filehook
-  (package
-    (inherit (simple-texlive-package
-	      "texlive-filehook"
-              (list "doc/latex/filehook/"
-                    "source/latex/filehook/"
-                    "tex/latex/filehook/")
-              (base32
-               "03dsnv8fn111kn8h2fa281w2jvcdrqag1im6mkkfahvjgl1apk6k")
-	      #:trivial? #t))
-    (home-page "https://ctan.org/macros/latex/contrib/filehook")
-    (synopsis "Hooks for input files")
-    (description
-     "The package provides several file hooks (AtBegin, AtEnd, ...) for files read by
-\\input, \\include and \\InputIfFileExists.  General hooks for all such files (e.g.
- all \\included ones) and file specific hooks only used for named files are
-provided; two hooks are provided for the end of \\included files -- one before,
-and one after the final \\clearpage.")
-    (license license:lppl1.3+)))
-
-(define-public texlive-lualatex-math
-  (package
-    (inherit (simple-texlive-package
-	      "texlive-lualatex-math"
-              (list "doc/lualatex/lualatex-math/"
-                    "source/lualatex/lualatex-math/"
-                    "tex/lualatex/lualatex-math/")
-              (base32
-               "1xfr31rwr7zc6d5bsc3v5lwvcfrg109rzfgvvs69w4xs61j06jcg")
-	      #:trivial? #t))
-    (propagated-inputs (list texlive-filehook texlive-etoolbox))
-    (home-page "https://ctan.org/macros/luatex/latex/lualatex-math")
-    (synopsis "Fixes for mathematics-related LuaLaTeX issues")
-    (description
-     "The package patches a few commands of the LaTeX2e kernel and the amsmath and
-mathtools packages to be more compatible with the LuaTeX engine.  It is only
-meaningful for LuaLaTeX documents containing mathematical formulas, and does not
-exhibit any new functionality.  The fixes are mostly moved from the unicode-math
-package to this package since they are not directly related to Unicode
-mathematics typesetting.")
-    (license license:lppl1.3c)))
-
 (define-public texlive-libertinus-otf
   (package
     (inherit (simple-texlive-package
@@ -180,7 +96,7 @@ mathematics typesetting.")
                     "tex/latex/libertinus-otf/"
 		    "fonts/opentype/public/libertinus-fonts/")
               (base32
-               "09n2j9p1c314nv1l2i2j58ij0h4s89mi49zrrkbzl6p6f51dl35f")
+               "1j3yiba6w2k8bjvkklpz1f0zanivgn1ljfr7f37aqxnhzcf8aa1h")
               #:trivial? #t))
     (home-page "https://ctan.org/fonts/libertinus-otf")
     (synopsis "Support for Libertinus OpenType")
@@ -203,7 +119,7 @@ with math symbols.")
 		    "fonts/vf/public/libertinus-type1/"
 		    "tex/latex/libertinus-type1/")
               (base32
-               "1f4w0p0jdmhpnj8x5anm6jv2jzbf5bhajq2qnxcacp23k7fjkq86")
+               "1vzvli3sbyxdsqzb3qk03mbl0qg4q7ihipddd1n6bdbjriv67zz6")
               #:trivial? #t))
     (home-page "https://ctan.org/fonts/libertinus-type1")
     (synopsis "Support for using Libertinus fonts with LaTeX/pdfLaTeX")
@@ -230,65 +146,6 @@ processing engines (LaTeX with dvips or dvipdfmx, or pdfLaTeX).")
 (pdfLaTeX) and libertinus-otf (LuaLaTeX/XeLaTeX).  The Libertinus fonts are
 similiar to Libertine and Biolinum, but come with math symbols.")
     (license license:lppl1.3+)))
-
-(define-public texlive-luatex85
-  (package
-    (inherit (simple-texlive-package
-	      "texlive-luatex85"
-              (list "doc/generic/luatex85/"
-                    "source/generic/luatex85/"
-                    "tex/generic/luatex85/")
-              (base32
-               "02j42g9c5smgbrk898fpvrgqlxqcqi8xch23awvnbvg6y54cs573")
-	      #:trivial? #t))
-    (home-page "https://ctan.org/macros/generic/luatex85")
-    (synopsis "pdfTeX aliases for LuaTeX")
-    (description
-     "The package provides emulation of pdfTeX primitives for LuaTeX v0.85+.")
-    (license license:lppl1.3+)))
-
-(define-public texlive-pgfplots
-  (package
-    (inherit (simple-texlive-package
-	      "texlive-pgfplots"
-              (list "doc/context/third/pgfplots/"
-		    "doc/generic/pgfplots/"
-		    "doc/latex/pgfplots/"
-		    "doc/plain/pgfplots/"
-		    "scripts/pgfplots/"
-		    "source/context/third/pgfplots/"
-		    "source/latex/pgfplots/"
-		    "tex/context/third/pgfplots/"
-		    "tex/generic/pgfplots/"
-		    "tex/generic/pgfplots/libs/"
-		    "tex/generic/pgfplots/liststructure/"
-		    "tex/generic/pgfplots/lua/"
-		    "tex/generic/pgfplots/lua/pgfplots/"
-		    "tex/generic/pgfplots/lua/pgfplotsoldpgfsupp/luamath/"
-		    "tex/generic/pgfplots/numtable/"
-		    "tex/generic/pgfplots/oldpgfcompatib/"
-		    "tex/generic/pgfplots/oldpgfplotscompatib/"
-		    "tex/generic/pgfplots/pgfcontrib/"
-		    "tex/generic/pgfplots/sys/"
-		    "tex/generic/pgfplots/test/"
-		    "tex/generic/pgfplots/util/"
-		    "tex/latex/pgfplots/"
-		    "tex/latex/pgfplots/libs/"
-		    "tex/plain/pgfplots/")
-              (base32
-               "08ahzc3yvqj31m018d313bbhvcka59dfdmphlrsavqk68x9023k1")
-	      #:trivial? #t))
-    (propagated-inputs (list texlive-pgf))
-    (home-page "https://ctan.org/graphics/pgf/contrib/pgfplots")
-    (synopsis "Create normal/logarithmic plots in two and three dimensions")
-    (description
-     "PGFPlots draws high-quality function plots in normal or logarithmic scaling with
-a user-friendly interface directly in TeX. The user supplies axis labels, legend
-entries and the plot coordinates for one or more plots and PGFPlots applies axis
-scaling, computes any logarithms and axis ticks and draws the plots, supporting
-line plots, scatter plots, piecewise constant plots, bar plots, area plots,
-mesh-- and surface plots and some more.  Pgfplots is based on PGF/TikZ (PGF); it
-runs equally for LaTeX/TeX/ConTeXt.")))
 
 (define-public texlive-svg
   (package
@@ -323,7 +180,7 @@ using either ImageMagick or Ghostscript.")
                     "source/latex/transparent/"
                     "tex/latex/transparent/")
               (base32
-               "172vh8fdrf67inzyrmah0kr1jdc8b3v9f18qrcrgabybhrh5j7qk")
+               "161lfx6yv8qgk76lz0j375swrk6012djay3sjxggrsx7l92qjvhd")
 	      #:trivial? #t))
     (home-page "https://ctan.org/macros/latex/contrib/transparent")
     (synopsis "Using a color stack for transparency with pdfTeX")
@@ -333,4 +190,4 @@ separate colour stack for control of transparency (which is not, of course, a
 colour).")
     (license license:lppl1.3+)))
 
-texlive-transparent
+texlive-svg
