@@ -88,65 +88,6 @@ copied to their outputs; otherwise the TEXLIVE-BUILD-SYSTEM is used."
     (description "The bundle provides a class and style file for typesetting “Die TEXnische Komödie” — the communications of the German TEX Users Group DANTE e.V. The arrangement means that the class may be used by article writers to typeset a single article, as well as to produce the complete journal.")
     (license license:public-domain)))
 
-(define-public texlive-libertinus-otf
-  (package
-    (inherit (simple-texlive-package
-	      "texlive-libertinus-otf"
-              (list "doc/fonts/libertinus-otf/"
-                    "tex/latex/libertinus-otf/"
-		    "fonts/opentype/public/libertinus-fonts/")
-              (base32
-               "1j3yiba6w2k8bjvkklpz1f0zanivgn1ljfr7f37aqxnhzcf8aa1h")
-              #:trivial? #t))
-    (home-page "https://ctan.org/fonts/libertinus-otf")
-    (synopsis "Support for Libertinus OpenType")
-    (description
-     "This package offers LuaLaTeX/XeLaTeX support for the Libertinus OpenType fonts
-maintained by Khaled Hosny.  Missing fonts are defined via several font feature
-settings.  The Libertinus fonts are similiar to Libertine and Biolinum, but come
-with math symbols.")
-    (license license:lppl1.3+)))
-
-(define-public texlive-libertinus-type1
-  (package
-    (inherit (simple-texlive-package
-	      "texlive-libertinus-type1"
-              (list "doc/fonts/libertinus-type1/"
-		    "fonts/enc/dvips/libertinus-type1/"
-		    "fonts/map/dvips/libertinus-type1/"
-		    "fonts/tfm/public/libertinus-type1/"
-		    "fonts/type1/public/libertinus-type1/"
-		    "fonts/vf/public/libertinus-type1/"
-		    "tex/latex/libertinus-type1/")
-              (base32
-               "1vzvli3sbyxdsqzb3qk03mbl0qg4q7ihipddd1n6bdbjriv67zz6")
-              #:trivial? #t))
-    (home-page "https://ctan.org/fonts/libertinus-type1")
-    (synopsis "Support for using Libertinus fonts with LaTeX/pdfLaTeX")
-    (description
-     "This package provides support for use of Libertinus fonts with traditional
-processing engines (LaTeX with dvips or dvipdfmx, or pdfLaTeX).")
-    (license license:lppl1.3+)))
-
-(define-public texlive-libertinus
-  (package
-    (inherit (simple-texlive-package
-	      "texlive-libertinus"
-	      (list "doc/fonts/libertinus/"
-                    "tex/latex/libertinus/")
-	      (base32
-	       "13m20jkrf0sp39f0ihc0fw7spzc3gys5xdc720r5gzdnbdqdvih4")
-	      #:trivial? #t))
-    (propagated-inputs (list texlive-libertinus-otf texlive-libertinus-type1))
-    (home-page "https://ctan.org/fonts/libertinus")
-    (synopsis
-     "Wrapper to use the correct libertinus package according to the used TeX engine")
-    (description
-     "This package is only a wrapper for the the two packages libertinus-type1
-(pdfLaTeX) and libertinus-otf (LuaLaTeX/XeLaTeX).  The Libertinus fonts are
-similiar to Libertine and Biolinum, but come with math symbols.")
-    (license license:lppl1.3+)))
-
 (define-public texlive-svg
   (package
     (inherit (simple-texlive-package
@@ -171,23 +112,5 @@ svg-extract allows the extraction of these graphics into independent files in
 different graphic formats, exactly as it is rendered within the LaTeX document,
 using either ImageMagick or Ghostscript.")
     (license license:lppl1.3c)))
-
-(define-public texlive-transparent
-  (package
-    (inherit (simple-texlive-package
-	      "texlive-transparent"
-              (list "doc/latex/transparent/"
-                    "source/latex/transparent/"
-                    "tex/latex/transparent/")
-              (base32
-               "161lfx6yv8qgk76lz0j375swrk6012djay3sjxggrsx7l92qjvhd")
-	      #:trivial? #t))
-    (home-page "https://ctan.org/macros/latex/contrib/transparent")
-    (synopsis "Using a color stack for transparency with pdfTeX")
-    (description
-     "Since version 1.40 pdfTeX supports several color stacks; the package uses a
-separate colour stack for control of transparency (which is not, of course, a
-colour).")
-    (license license:lppl1.3+)))
 
 texlive-svg
