@@ -821,4 +821,24 @@ easy.")
 ;;    (description "Loopy lets you easily generate the tedious, complicated code that is necessary to get good performance out of GPUs and multi-core CPUs. Loopy’s core idea is that a computation should be described simply and then transformed into a version that gets high performance. This transformation takes place under user control, from within Python.")
 ;;    (license license:expat)))
 
-python-cfd-qsense
+(define-public python-type-enforced
+  (package
+    (name "python-type-enforced")
+    (version "0.0.15")
+    (source (origin
+              (method url-fetch)
+              (uri (pypi-uri "type_enforced" version))
+              (sha256
+               (base32
+		"1zdk6grq0q0ipqgmhpdd8b9bd4f06kdyn9ipvx5dqm7qjc00amnp"))))
+    (build-system pyproject-build-system)
+    (home-page "https://github.com/connor-makowski/type_enforced")
+    (synopsis
+     "Enforce types in python functions.")
+    (description
+     "type_enforcer contains a basic Enforcer wrapper that can be used to enforce most basic python typing hints.
+
+type_enforcer currently supports all single level python types, single level class instances and classes themselves. For example, you can force an input to be an int or an instance of the self defined MyClass, but not a vector of the format list(int). In this case, when using type_enforcer, you would only pass the format list and would not validate that the content of the list was indeed integers.")
+    (license license:bsd-3)))
+
+python-type-enforced
