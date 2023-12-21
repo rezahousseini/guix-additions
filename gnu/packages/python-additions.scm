@@ -467,71 +467,71 @@ other traditional Python scientific computing packages.")
 easy.")
     (license license:bsd-3)))
 
-(define-public python-cfd-qsense
-  (package
-    (name "python-cfd-qsense")
-    (version "75a9e469025b3eabc03e48b6e029754e29d7b97f")
-    (source (origin
-	      (method git-fetch)
-	      (uri (git-reference
-		    (url "https://gitlab.com/hsr-iet/wabesense/cfd_qsense.git")
-		    (commit version)))
-	      (file-name (git-file-name name version))
-	      (sha256
-	       (base32
-		"18lvsakvz2n653ffdk24k76z1nkzim04inq645z61s6v83cna8yr"))))
-    (build-system pyproject-build-system)
-    (arguments
-     `(#:tests? #f ;; error in test suite
-       #:phases
-       (modify-phases %standard-phases
-	 (replace 'check
-	   (lambda* (#:key tests? #:allow-other-keys)
-	     (when tests?
-	       (invoke "python" "-m" "unittest")))))))
-    (propagated-inputs (list
-			python-numpy
-			python-scipy
-			python-matplotlib
-			python-pyaml
-			python-pandas
-			python-numpy-stl
-			python-coolprop))
-    (home-page "https://gitlab.com/hsr-iet/wabesense/cfd_qsense")
-    (synopsis
-     "CFD simulation tool to produce pressure-discharge curve for water spring taps.")
-    (description
-     "CFD simulation tool to produce pressure-discharge curve for water spring taps.")
-    (license license:gpl3)))
-
-(define-public python-wabe-cfd
-  (package
-    (name "python-wabe-cfd")
-    (version "64bec2545313adbf45456fcde4af0e11b2784ac0")
-    (source (origin
-	      (method git-fetch)
-	      (uri (git-reference
-		    (url "https://gitlab+deploy-token-329:x4caUwE8NycugmFvjEPy@gitlab.ost.ch/sciceg/lippunerag/wabesense/wabe-cfd.git")
-		    (commit version)))
-	      (file-name (git-file-name name version))
-	      (sha256
-	       (base32
-		"1cd8w6xmr575yg7gh6kpzkmhj7y52nlfzn8wydsdm5f47668b5ia"))))
-    (build-system pyproject-build-system)
-    (arguments `(#:tests? #f))
-    (propagated-inputs (list
-			python-numpy
-			python-scipy
-			python-matplotlib
-			python-seaborn
-			python-rich
-			python-cfd-qsense))
-    (home-page "https://gitlab.ost.ch/sciceg/lippunerag/wabesense/wabe-cfd")
-    (synopsis
-     "Scripts to simulate WABE discharge curves")
-    (description
-     "Scripts to simulate WABE discharge curves.")
-    (license license:gpl3)))
+;;(define-public python-cfd-qsense
+;;  (package
+;;    (name "python-cfd-qsense")
+;;    (version "75a9e469025b3eabc03e48b6e029754e29d7b97f")
+;;    (source (origin
+;;	      (method git-fetch)
+;;	      (uri (git-reference
+;;		    (url "https://gitlab.com/hsr-iet/wabesense/cfd_qsense.git")
+;;		    (commit version)))
+;;	      (file-name (git-file-name name version))
+;;	      (sha256
+;;	       (base32
+;;		"18lvsakvz2n653ffdk24k76z1nkzim04inq645z61s6v83cna8yr"))))
+;;    (build-system pyproject-build-system)
+;;    (arguments
+;;     `(#:tests? #f ;; error in test suite
+;;       #:phases
+;;       (modify-phases %standard-phases
+;;	 (replace 'check
+;;	   (lambda* (#:key tests? #:allow-other-keys)
+;;	     (when tests?
+;;	       (invoke "python" "-m" "unittest")))))))
+;;    (propagated-inputs (list
+;;			python-numpy
+;;			python-scipy
+;;			python-matplotlib
+;;			python-pyaml
+;;			python-pandas
+;;			python-numpy-stl
+;;			python-coolprop))
+;;    (home-page "https://gitlab.com/hsr-iet/wabesense/cfd_qsense")
+;;    (synopsis
+;;     "CFD simulation tool to produce pressure-discharge curve for water spring taps.")
+;;    (description
+;;     "CFD simulation tool to produce pressure-discharge curve for water spring taps.")
+;;    (license license:gpl3)))
+;;
+;;(define-public python-wabe-cfd
+;;  (package
+;;    (name "python-wabe-cfd")
+;;    (version "64bec2545313adbf45456fcde4af0e11b2784ac0")
+;;    (source (origin
+;;	      (method git-fetch)
+;;	      (uri (git-reference
+;;		    (url "https://gitlab+deploy-token-329:x4caUwE8NycugmFvjEPy@gitlab.ost.ch/sciceg/lippunerag/wabesense/wabe-cfd.git")
+;;		    (commit version)))
+;;	      (file-name (git-file-name name version))
+;;	      (sha256
+;;	       (base32
+;;		"1cd8w6xmr575yg7gh6kpzkmhj7y52nlfzn8wydsdm5f47668b5ia"))))
+;;    (build-system pyproject-build-system)
+;;    (arguments `(#:tests? #f))
+;;    (propagated-inputs (list
+;;			python-numpy
+;;			python-scipy
+;;			python-matplotlib
+;;			python-seaborn
+;;			python-rich
+;;			python-cfd-qsense))
+;;    (home-page "https://gitlab.ost.ch/sciceg/lippunerag/wabesense/wabe-cfd")
+;;    (synopsis
+;;     "Scripts to simulate WABE discharge curves")
+;;    (description
+;;     "Scripts to simulate WABE discharge curves.")
+;;    (license license:gpl3)))
 
 ;;(define-public python-islpy
 ;;  (package
