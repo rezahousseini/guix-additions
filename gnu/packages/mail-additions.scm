@@ -2,7 +2,7 @@
   #:use-module (gnu packages)
   #:use-module (gnu packages autotools)
   #:use-module (gnu packages compression)
-  #:use-module (gnu packages cyrus-sasl)
+  #:use-module (gnu packages cyrus-sasl-additions)
   #:use-module (gnu packages dbm)
   #:use-module (gnu packages kerberos)
   #:use-module (gnu packages mail)
