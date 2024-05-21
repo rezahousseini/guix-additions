@@ -14,6 +14,7 @@
 (define-public cyrus-sasl-with-search-path
   (package
     (inherit cyrus-sasl)
+    (name "cyrus-sasl-with-search-path")
     (native-search-paths
      (list (search-path-specification
             (variable "SASL_PATH")
