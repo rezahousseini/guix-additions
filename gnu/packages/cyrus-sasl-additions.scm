@@ -17,7 +17,7 @@
     (name "cyrus-sasl-with-search-path")
     (native-search-paths
      (list (search-path-specification
-            (variable "SASL_PLUGINDIR")
+            (variable "SASL_PATH")
             (files (list "lib/sasl2")))))))
 
 (define-public cyrus-sasl-xoauth2
