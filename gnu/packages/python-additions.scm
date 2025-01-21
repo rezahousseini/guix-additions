@@ -236,30 +236,29 @@ Properties of Water and Steam")
 
 (define-public python-sphinx-autodoc-defaultargs
   (package
-    (name "python-sphinx-autodoc-defaultargs")
-    (version "0.1.2")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (pypi-uri "sphinx-autodoc-defaultargs" version))
-       (sha256
-	(base32 "1qsvpv9xrx47k6vprrmr5jyf5fz6f2ink51zk8g1y32i8fndj75i"))))
-    (build-system python-build-system)
-    (propagated-inputs (list python-sphinx))
-    (native-inputs
-     (list
-      python-setuptools-scm
-      python-dataclasses
-      python-pytest
-      python-sphinx
-      python-sphobjinv
-      python-typing-extensions))
-    (home-page "https://github.com/zwang123/sphinx-autodoc-defaultargs")
-    (synopsis
-     "Automatic generation of default arguments for the Sphinx autodoc extension.")
-    (description
-     "Automatic generation of default arguments for the Sphinx autodoc extension.")
-    (license license:expat)))
+   (name "python-sphinx-autodoc-defaultargs")
+   (version "0.1.2")
+   (source
+    (origin
+     (method url-fetch)
+     (uri (pypi-uri "sphinx-autodoc-defaultargs" version))
+     (sha256
+	  (base32 "1qsvpv9xrx47k6vprrmr5jyf5fz6f2ink51zk8g1y32i8fndj75i"))))
+   (build-system python-build-system)
+   (propagated-inputs (list python-sphinx))
+   (native-inputs
+    (list
+     python-setuptools-scm
+     python-pytest
+     python-sphinx
+     python-sphobjinv
+     python-typing-extensions))
+   (home-page "https://github.com/zwang123/sphinx-autodoc-defaultargs")
+   (synopsis
+    "Automatic generation of default arguments for the Sphinx autodoc extension.")
+   (description
+    "Automatic generation of default arguments for the Sphinx autodoc extension.")
+   (license license:expat)))
 
 (define-public python-questionary
   (package
@@ -405,20 +404,48 @@ easy.")
 
 (define-public python-type-enforced
   (package
-    (name "python-type-enforced")
-    (version "0.0.15")
-    (source (origin
-              (method url-fetch)
-              (uri (pypi-uri "type_enforced" version))
-              (sha256
-               (base32
-		"1zdk6grq0q0ipqgmhpdd8b9bd4f06kdyn9ipvx5dqm7qjc00amnp"))))
-    (build-system pyproject-build-system)
-    (home-page "https://github.com/connor-makowski/type_enforced")
-    (synopsis
-     "Enforce types in python functions.")
-    (description
-     "type_enforcer contains a basic Enforcer wrapper that can be used to enforce most basic python typing hints.
+   (name "python-type-enforced")
+   (version "0.0.15")
+   (source (origin
+            (method url-fetch)
+            (uri (pypi-uri "type_enforced" version))
+            (sha256
+             (base32
+	      "1zdk6grq0q0ipqgmhpdd8b9bd4f06kdyn9ipvx5dqm7qjc00amnp"))))
+   (build-system pyproject-build-system)
+   (home-page "https://github.com/connor-makowski/type_enforced")
+   (synopsis
+    "Enforce types in python functions.")
+   (description
+    "type_enforcer contains a basic Enforcer wrapper that can be used to enforce most basic python typing hints.
 
 type_enforcer currently supports all single level python types, single level class instances and classes themselves. For example, you can force an input to be an int or an instance of the self defined MyClass, but not a vector of the format list(int). In this case, when using type_enforcer, you would only pass the format list and would not validate that the content of the list was indeed integers.")
-    (license license:bsd-3)))
+   (license license:bsd-3)))
+
+(define-public python-drawsvg
+  (package
+   (name "python-drawsvg")
+   (version "2.3.0")
+   (source
+    (origin
+     (method url-fetch)
+     (uri (string-append
+           "https://github.com/cduck/drawsvg/archive/tags/"
+           version
+           ".tar.gz"))
+     (sha256
+      (base32
+       "07z5rfbgr4pfmbn65bhhn5km35r244p9rpkmgx1cy575pqpcryay"))))
+   (build-system pyproject-build-system)
+   (arguments (list #:tests? #f))
+   (native-inputs (list cairo python-ipywidgets))
+   (home-page "https://github.com/cduck/drawsvg")
+   (synopsis
+    "Programmatically generate SVG (vector) images, animations, and interactive Jupyter widgets")
+   (description
+    "A Python 3 library for programmatically generating SVG images and animations that can render and display your drawings in a Jupyter notebook or Jupyter lab.
+
+Most common SVG tags are supported and others can easily be added by writing a small subclass of DrawableBasicElement or DrawableParentElement. Nearly all SVG attributes are supported via keyword args (e.g. Python keyword argument fill_opacity=0.5 becomes SVG attribute fill-opacity=\"0.5\").
+
+An interactive Jupyter notebook widget, drawsvg.widgets.DrawingWidget, is included that can update drawings based on mouse events. The widget does not yet work in Jupyter lab.")
+   (license license:asl2.0)))
