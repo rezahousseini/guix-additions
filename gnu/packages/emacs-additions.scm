@@ -138,34 +138,29 @@ features for Lean users.
 See the README.md for more advanced features and the associated keybindings.")
    (license #f)))
 
-(define-public emacs-org-projectile
+(define-public emacs-native-complete
   (package
-   (name "emacs-org-projectile")
-   (version "20220114.730")
+   (name "emacs-native-complete")
+   (version "157bd9c23508c4b0b8636c9a6d9b6ecc6209d4f0")
    (source (origin
             (method git-fetch)
             (uri (git-reference
-                  (url "https://github.com/IvanMalison/org-projectile.git")
-                  (commit "642b39c698db00bc535c1c2335f425fb9f4855a9")))
+                  (url "https://github.com/CeleritasCelery/emacs-native-shell-complete.git")
+                  (commit version)))
             (sha256
              (base32
-              "1pcfyrmbnsk39w4d6cs27bcyihics3gll515fslnl5kqbaj9qn09"))))
+              "1396il9646d4wkyc8bbl2baqq4vwaqp7la9s085g9qbk41g619lp"))))
    (build-system emacs-build-system)
-   (propagated-inputs (list emacs-projectile
-			    emacs-dash
-			    emacs-s
-			    emacs-helm
-			    emacs-helm-org))
+   (propagated-inputs (list emacs-company))
    (arguments
-    '(#:include '("^org-projectile.el$"
-		  "^org-projectile-helm.el$"
-		  "^org-category-capture.el$")
+    '(#:include '("^company-native-complete.el$"
+		          "^native-complete-test.el$"
+		          "^native-complete.el$")
       #:exclude '()))
-   (home-page "https://github.com/IvanMalison/org-projectile")
-   (synopsis "Repository todo management for org-mode")
+   (home-page "https://github.com/CeleritasCelery/emacs-native-shell-complete")
+   (synopsis "Completion in shell buffers using native mechanisms")
    (description
-    "This package aims to provide an easy interface to creating per project org-mode
-TODO headings.")
-   (license #f)))
+    "Completion in shell buffers using native mechanisms.")
+   (license license:lgpl3)))
 
-emacs-org-projectile
+emacs-native-complete
