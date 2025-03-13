@@ -163,4 +163,22 @@ See the README.md for more advanced features and the associated keybindings.")
     "Completion in shell buffers using native mechanisms.")
    (license license:lgpl3)))
 
-emacs-native-complete
+(define-public emacs-consult-recoll
+  (package
+    (name "emacs-consult-recoll")
+    (version "1.0.0")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append "https://elpa.gnu.org/packages/consult-recoll-"
+                           version ".tar"))
+       (sha256
+        (base32 "1fjc5s1xn15vglmaqywnrpqnjb46w15xysk7n18ifqapcya5g0x0"))))
+    (build-system emacs-build-system)
+    (propagated-inputs (list emacs-consult))
+    (home-page "https://codeberg.org/jao/consult-recoll")
+    (synopsis "Recoll queries using consult")
+    (description "Recoll queries using consult.")
+    (license license:gpl3+)))
+
+emacs-consult-recoll
