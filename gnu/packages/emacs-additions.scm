@@ -110,34 +110,6 @@
   #:use-module (srfi srfi-1)
   #:use-module (ice-9 match))
 
-(define-public emacs-lean-mode
-  (package
-   (name "emacs-lean-mode")
-   (version "20220501.1007")
-   (source (origin
-            (method git-fetch)
-            (uri (git-reference
-                  (url "https://github.com/leanprover/lean-mode.git")
-                  (commit "362bc6fa3efb1874c525ed6b4b6f24f76af22596")))
-            (sha256
-             (base32
-	      "1lr4h555fa1kdi3q7hkhsnznv7nh9rgjqjkbj2bqp9zwh06245w3"))))
-   (build-system emacs-build-system)
-   (propagated-inputs (list emacs-dash emacs-s emacs-f emacs-flycheck))
-   (arguments
-    '(#:include '("^lean-[^/]+.el$")
-      #:exclude '()))
-   (home-page "https://github.com/leanprover/lean-mode")
-   (synopsis "A major mode for the Lean 3 language")
-   (description
-    "This package provides a major mode for the Lean 3 programming language.
-
-Provides highlighting, diagnostics, goal visualization, and many other useful
-features for Lean users.
-
-See the README.md for more advanced features and the associated keybindings.")
-   (license #f)))
-
 (define-public emacs-native-complete
   (package
    (name "emacs-native-complete")
