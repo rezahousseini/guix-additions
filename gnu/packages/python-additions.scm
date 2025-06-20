@@ -1,5 +1,6 @@
 (define-module (gnu packages python-additions)
-  #:use-module ((guix licenses) #:prefix license:)
+  #:use-module ((guix licenses)
+                #:prefix license:)
   #:use-module (gnu packages)
   #:use-module (gnu packages algebra)
   #:use-module (gnu packages adns)
@@ -109,7 +110,8 @@
   #:use-module (guix build-system trivial)
   #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-26)
-  #:autoload   (guix git) (git-checkout))
+  #:autoload (guix git)
+  (git-checkout))
 
 (define-public python-pyudorandom
   (package
@@ -123,10 +125,11 @@
         (base32 "0mbpqgl8klq68vfcddr8ancxwpqg3zvjksw7gyf5zhbh04x0j2pk"))))
     (build-system python-build-system)
     (arguments
-     (list #:tests? #f
-           #:phases
-           #~(modify-phases %standard-phases
-               (delete 'sanity-check))))
+     (list
+      #:tests? #f
+      #:phases
+      #~(modify-phases %standard-phases
+          (delete 'sanity-check))))
     (home-page "UNKNOWN")
     (synopsis "Generate pseudorandom numbers by using algebra")
     (description "Generate pseudorandom numbers by using algebra")
@@ -163,11 +166,8 @@
         (base32 "03jd6skj12063w2kwclhss6014bc7d749na3dxw62iq2mj5zrvwd"))))
     (build-system python-build-system)
     (propagated-inputs (list python-accumulation-tree python-pyudorandom))
-    (native-inputs
-     (list python-numpy
-           python-pytest
-           python-pytest-cov
-           python-pytest-timeout))
+    (native-inputs (list python-numpy python-pytest python-pytest-cov
+                         python-pytest-timeout))
     (home-page "https://github.com/CamDavidsonPilon/tdigest")
     (synopsis "T-Digest data structure")
     (description "T-Digest data structure")
@@ -198,13 +198,14 @@
        (method url-fetch)
        (uri (pypi-uri "sphinxcontrib-autoyaml" version))
        (sha256
-	(base32 "1il2d1725x5z19yggdspzz1j2d8gxpbxl83x00h7p0g1ybjwxs3v"))))
+        (base32 "1il2d1725x5z19yggdspzz1j2d8gxpbxl83x00h7p0g1ybjwxs3v"))))
     (build-system python-build-system)
     (arguments
-     (list #:tests? #f
-           #:phases
-           #~(modify-phases %standard-phases
-	       (delete 'sanity-check))))
+     (list
+      #:tests? #f
+      #:phases
+      #~(modify-phases %standard-phases
+          (delete 'sanity-check))))
     (native-inputs (list python-ruamel.yaml python-sphinx))
     (propagated-inputs (list python-ruamel.yaml))
     (home-page "https://github.com/Jakski/sphinxcontrib-autoyaml")
@@ -236,29 +237,24 @@ Properties of Water and Steam")
 
 (define-public python-sphinx-autodoc-defaultargs
   (package
-   (name "python-sphinx-autodoc-defaultargs")
-   (version "0.1.2")
-   (source
-    (origin
-     (method url-fetch)
-     (uri (pypi-uri "sphinx-autodoc-defaultargs" version))
-     (sha256
-	  (base32 "1qsvpv9xrx47k6vprrmr5jyf5fz6f2ink51zk8g1y32i8fndj75i"))))
-   (build-system python-build-system)
-   (propagated-inputs (list python-sphinx))
-   (native-inputs
-    (list
-     python-setuptools-scm
-     python-pytest
-     python-sphinx
-     python-sphobjinv
-     python-typing-extensions))
-   (home-page "https://github.com/zwang123/sphinx-autodoc-defaultargs")
-   (synopsis
-    "Automatic generation of default arguments for the Sphinx autodoc extension.")
-   (description
-    "Automatic generation of default arguments for the Sphinx autodoc extension.")
-   (license license:expat)))
+    (name "python-sphinx-autodoc-defaultargs")
+    (version "0.1.2")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (pypi-uri "sphinx-autodoc-defaultargs" version))
+       (sha256
+        (base32 "1qsvpv9xrx47k6vprrmr5jyf5fz6f2ink51zk8g1y32i8fndj75i"))))
+    (build-system python-build-system)
+    (propagated-inputs (list python-sphinx))
+    (native-inputs (list python-setuptools-scm python-pytest python-sphinx
+                         python-sphobjinv python-typing-extensions))
+    (home-page "https://github.com/zwang123/sphinx-autodoc-defaultargs")
+    (synopsis
+     "Automatic generation of default arguments for the Sphinx autodoc extension.")
+    (description
+     "Automatic generation of default arguments for the Sphinx autodoc extension.")
+    (license license:expat)))
 
 (define-public python-questionary
   (package
@@ -269,20 +265,20 @@ Properties of Water and Steam")
        (method url-fetch)
        (uri (pypi-uri "questionary" version))
        (sha256
-	(base32 "143dji1lyb193vfvcfjcjdzw4jvfnvykdsgfjy6x89nfxkpkl3b0"))))
+        (base32 "143dji1lyb193vfvcfjcjdzw4jvfnvykdsgfjy6x89nfxkpkl3b0"))))
     (build-system python-build-system)
     (arguments
-     (list #:tests? #f
-           #:phases
-           #~(modify-phases %standard-phases
-	       (delete 'sanity-check))))
-    (native-inputs
-     (list python-prompt-toolkit
-	   python-sphinx
-	   python-sphinx-autobuild
-	   python-sphinx-autodoc-typehints
-	   python-sphinx-copybutton
-	   python-sphinx-rtd-theme))
+     (list
+      #:tests? #f
+      #:phases
+      #~(modify-phases %standard-phases
+          (delete 'sanity-check))))
+    (native-inputs (list python-prompt-toolkit
+                         python-sphinx
+                         python-sphinx-autobuild
+                         python-sphinx-autodoc-typehints
+                         python-sphinx-copybutton
+                         python-sphinx-rtd-theme))
     (home-page "https://github.com/tmbo/questionary")
     (synopsis "Python library to build pretty command line user prompts ⭐️")
     (description "Python library to build pretty command line user prompts ⭐️")
@@ -297,7 +293,7 @@ Properties of Water and Steam")
        (method url-fetch)
        (uri (pypi-uri "decli" version))
        (sha256
-	(base32 "1bb3simdyr842sci5hj2iicz44n68jl5axhccff82p576i8fbkgj"))))
+        (base32 "1bb3simdyr842sci5hj2iicz44n68jl5axhccff82p576i8fbkgj"))))
     (build-system python-build-system)
     (home-page "")
     (synopsis "Minimal, easy-to-use, declarative cli tool")
@@ -313,25 +309,25 @@ Properties of Water and Steam")
        (method url-fetch)
        (uri (pypi-uri "commitizen" version))
        (sha256
-	(base32 "0z7hqkwmjckpx6z8am0aarrbcbv086v8q0ic8b9d7lkrsvcsizb4"))))
+        (base32 "0z7hqkwmjckpx6z8am0aarrbcbv086v8q0ic8b9d7lkrsvcsizb4"))))
     (build-system python-build-system)
     (arguments
-     (list #:tests? #f
-           #:phases
-           #~(modify-phases %standard-phases
-	       (delete 'sanity-check))))
-    (propagated-inputs
-     (list python-argcomplete
-	   python-colorama
-	   python-decli
-	   python-jinja2
-	   python-packaging
-	   python-prompt-toolkit
-	   python-pyyaml
-	   python-questionary
-	   python-termcolor
-	   python-tomlkit
-	   python-typing-extensions))
+     (list
+      #:tests? #f
+      #:phases
+      #~(modify-phases %standard-phases
+          (delete 'sanity-check))))
+    (propagated-inputs (list python-argcomplete
+                             python-colorama
+                             python-decli
+                             python-jinja2
+                             python-packaging
+                             python-prompt-toolkit
+                             python-pyyaml
+                             python-questionary
+                             python-termcolor
+                             python-tomlkit
+                             python-typing-extensions))
     (home-page "https://github.com/commitizen-tools/commitizen")
     (synopsis "Python commitizen client tool")
     (description "Python commitizen client tool")
@@ -343,33 +339,30 @@ Properties of Water and Steam")
     (name "python-pyarrow")
     (build-system python-build-system)
     (arguments
-     '(#:tests? #f          ; XXX There are no tests in the "python" directory
-       #:phases
-       (modify-phases %standard-phases
-	 (delete 'build) ; XXX the build is performed again during the install phase
-	 (add-after 'unpack 'enter-source-directory
-	   (lambda _ (chdir "python")))
-	 (add-after 'unpack 'make-git-checkout-writable
-	   (lambda _
-	     (for-each make-file-writable (find-files "."))))
-	 (add-before 'install 'set-PYARROW_WITH_PARQUET
-	   (lambda _
-	     (setenv "PYARROW_BUNDLE_ARROW_CPP_HEADERS" "0")
-	     (setenv "PYARROW_WITH_PARQUET" "1")
-	     (setenv "PYARROW_WITH_DATASET" "1"))))))
-    (propagated-inputs
-     (list (list apache-arrow "lib")
-           (list apache-arrow "include")
-           python-numpy
-           python-pandas
-           python-six))
-    (native-inputs
-     (list cmake-minimal
-           pkg-config
-           python-cython
-           python-pytest
-           python-pytest-runner
-           python-setuptools-scm))
+     '(#:tests? #f ;XXX There are no tests in the "python" directory
+       #:phases (modify-phases %standard-phases
+                  (delete 'build) ;XXX the build is performed again during the install phase
+                  (add-after 'unpack 'enter-source-directory
+                    (lambda _
+                      (chdir "python")))
+                  (add-after 'unpack 'make-git-checkout-writable
+                    (lambda _
+                      (for-each make-file-writable
+                                (find-files "."))))
+                  (add-before 'install 'set-PYARROW_WITH_PARQUET
+                    (lambda _
+                      (setenv "PYARROW_BUNDLE_ARROW_CPP_HEADERS" "0")
+                      (setenv "PYARROW_WITH_PARQUET" "1")
+                      (setenv "PYARROW_WITH_DATASET" "1"))))))
+    (propagated-inputs (list (list apache-arrow "lib")
+                             (list apache-arrow "include") python-numpy
+                             python-pandas python-six))
+    (native-inputs (list cmake-minimal
+                         pkg-config
+                         python-cython
+                         python-pytest
+                         python-pytest-runner
+                         python-setuptools-scm))
     (outputs '("out"))
     (home-page "https://arrow.apache.org/docs/python/")
     (synopsis "Python bindings for Apache Arrow")
@@ -383,12 +376,12 @@ other traditional Python scientific computing packages.")
   (package
     (name "python-numpy-stl")
     (version "2.17.1")
-    (source (origin
-              (method url-fetch)
-              (uri (pypi-uri "numpy-stl" version))
-              (sha256
-               (base32
-		"0yjb74vjglgs5sn36fji8x6jgad5vndn4qqs15zxapa45wcj1j9n"))))
+    (source
+     (origin
+       (method url-fetch)
+       (uri (pypi-uri "numpy-stl" version))
+       (sha256
+        (base32 "0yjb74vjglgs5sn36fji8x6jgad5vndn4qqs15zxapa45wcj1j9n"))))
     (build-system python-build-system)
     (arguments
      '(#:tests? #f))
@@ -401,51 +394,48 @@ other traditional Python scientific computing packages.")
 easy.")
     (license license:bsd-3)))
 
-
 (define-public python-type-enforced
   (package
-   (name "python-type-enforced")
-   (version "0.0.15")
-   (source (origin
-            (method url-fetch)
-            (uri (pypi-uri "type_enforced" version))
-            (sha256
-             (base32
-	      "1zdk6grq0q0ipqgmhpdd8b9bd4f06kdyn9ipvx5dqm7qjc00amnp"))))
-   (build-system pyproject-build-system)
-   (home-page "https://github.com/connor-makowski/type_enforced")
-   (synopsis
-    "Enforce types in python functions.")
-   (description
-    "type_enforcer contains a basic Enforcer wrapper that can be used to enforce most basic python typing hints.
+    (name "python-type-enforced")
+    (version "0.0.15")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (pypi-uri "type_enforced" version))
+       (sha256
+        (base32 "1zdk6grq0q0ipqgmhpdd8b9bd4f06kdyn9ipvx5dqm7qjc00amnp"))))
+    (build-system pyproject-build-system)
+    (home-page "https://github.com/connor-makowski/type_enforced")
+    (synopsis "Enforce types in python functions.")
+    (description
+     "type_enforcer contains a basic Enforcer wrapper that can be used to enforce most basic python typing hints.
 
 type_enforcer currently supports all single level python types, single level class instances and classes themselves. For example, you can force an input to be an int or an instance of the self defined MyClass, but not a vector of the format list(int). In this case, when using type_enforcer, you would only pass the format list and would not validate that the content of the list was indeed integers.")
-   (license license:bsd-3)))
+    (license license:bsd-3)))
 
 (define-public python-drawsvg
   (package
-   (name "python-drawsvg")
-   (version "2.3.0")
-   (source
-    (origin
-     (method url-fetch)
-     (uri (string-append
-           "https://github.com/cduck/drawsvg/archive/tags/"
-           version
-           ".tar.gz"))
-     (sha256
-      (base32
-       "07z5rfbgr4pfmbn65bhhn5km35r244p9rpkmgx1cy575pqpcryay"))))
-   (build-system pyproject-build-system)
-   (arguments (list #:tests? #f))
-   (native-inputs (list cairo python-ipywidgets))
-   (home-page "https://github.com/cduck/drawsvg")
-   (synopsis
-    "Programmatically generate SVG (vector) images, animations, and interactive Jupyter widgets")
-   (description
-    "A Python 3 library for programmatically generating SVG images and animations that can render and display your drawings in a Jupyter notebook or Jupyter lab.
+    (name "python-drawsvg")
+    (version "2.3.0")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append "https://github.com/cduck/drawsvg/archive/tags/"
+                           version ".tar.gz"))
+       (sha256
+        (base32 "07z5rfbgr4pfmbn65bhhn5km35r244p9rpkmgx1cy575pqpcryay"))))
+    (build-system pyproject-build-system)
+    (arguments
+     (list
+      #:tests? #f))
+    (native-inputs (list cairo python-ipywidgets))
+    (home-page "https://github.com/cduck/drawsvg")
+    (synopsis
+     "Programmatically generate SVG (vector) images, animations, and interactive Jupyter widgets")
+    (description
+     "A Python 3 library for programmatically generating SVG images and animations that can render and display your drawings in a Jupyter notebook or Jupyter lab.
 
 Most common SVG tags are supported and others can easily be added by writing a small subclass of DrawableBasicElement or DrawableParentElement. Nearly all SVG attributes are supported via keyword args (e.g. Python keyword argument fill_opacity=0.5 becomes SVG attribute fill-opacity=\"0.5\").
 
 An interactive Jupyter notebook widget, drawsvg.widgets.DrawingWidget, is included that can update drawings based on mouse events. The widget does not yet work in Jupyter lab.")
-   (license license:asl2.0)))
+    (license license:asl2.0)))
