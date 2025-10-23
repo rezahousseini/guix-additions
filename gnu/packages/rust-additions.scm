@@ -18,7 +18,6 @@
   #:use-module (gnu packages gtk)
   #:use-module (gnu packages ibus)
   #:use-module (gnu packages jemalloc)
-  #:use-module (gnu packages kde)
   #:use-module (gnu packages linux)
   #:use-module (gnu packages networking)
   #:use-module (gnu packages ssh)
