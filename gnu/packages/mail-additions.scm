@@ -2,7 +2,7 @@
   #:use-module (gnu packages)
   #:use-module (gnu packages autotools)
   #:use-module (gnu packages compression)
-  #:use-module (gnu packages cyrus-sasl-additions)
+  #:use-module (gnu packages cyrus-sasl)
   #:use-module (gnu packages dbm)
   #:use-module (gnu packages kerberos)
   #:use-module (gnu packages mail)
@@ -18,6 +18,6 @@
     (inherit isync)
     (name "isync-with-xoauth2")
     (inputs
-     (list bdb cyrus-sasl-with-search-path cyrus-sasl-xoauth2 openssl zlib))))
+     (list bdb cyrus-sasl cyrus-sasl-xoauth2 openssl zlib))))
 
 isync-with-xoauth2
