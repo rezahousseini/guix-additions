@@ -395,19 +395,22 @@ type_enforcer currently supports all single level python types, single level cla
 (define-public python-drawsvg
   (package
     (name "python-drawsvg")
-    (version "2.3.0")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (string-append "https://github.com/cduck/drawsvg/archive/tags/"
-                           version ".tar.gz"))
-       (sha256
-        (base32 "07z5rfbgr4pfmbn65bhhn5km35r244p9rpkmgx1cy575pqpcryay"))))
+    (version "2.4.0")
+    (source (origin
+              (method git-fetch)
+              (uri (git-reference                     
+                     (url "https://github.com/cduck/drawsvg")
+                     (commit version)))
+              (file-name (git-file-name name version))
+              (sha256
+               (base32
+                "16zzingh2nhwd2dgrr25iqn5srqah3d9r65paj4i1v81n7lywbi4"))))
     (build-system pyproject-build-system)
     (arguments
      (list
       #:tests? #f))
-    (native-inputs (list cairo python-ipywidgets))
+    (native-inputs (list python-setuptools python-wheel))
+    (inputs (list cairo python-ipywidgets))
     (home-page "https://github.com/cduck/drawsvg")
     (synopsis
      "Programmatically generate SVG (vector) images, animations, and interactive Jupyter widgets")
@@ -418,3 +421,5 @@ Most common SVG tags are supported and others can easily be added by writing a s
 
 An interactive Jupyter notebook widget, drawsvg.widgets.DrawingWidget, is included that can update drawings based on mouse events. The widget does not yet work in Jupyter lab.")
     (license license:asl2.0)))
+
+python-drawsvg
