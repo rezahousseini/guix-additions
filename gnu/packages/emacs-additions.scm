@@ -112,45 +112,25 @@
 
 (define-public emacs-native-complete
   (package
-   (name "emacs-native-complete")
-   (version "157bd9c23508c4b0b8636c9a6d9b6ecc6209d4f0")
-   (source (origin
-            (method git-fetch)
-            (uri (git-reference
-                  (url "https://github.com/CeleritasCelery/emacs-native-shell-complete.git")
-                  (commit version)))
-            (sha256
-             (base32
-              "1396il9646d4wkyc8bbl2baqq4vwaqp7la9s085g9qbk41g619lp"))))
-   (build-system emacs-build-system)
-   (propagated-inputs (list emacs-company))
-   (arguments
-    '(#:include '("^company-native-complete.el$"
-		          "^native-complete-test.el$"
-		          "^native-complete.el$")
-      #:exclude '()))
-   (home-page "https://github.com/CeleritasCelery/emacs-native-shell-complete")
-   (synopsis "Completion in shell buffers using native mechanisms")
-   (description
-    "Completion in shell buffers using native mechanisms.")
-   (license license:lgpl3)))
-
-(define-public emacs-consult-recoll
-  (package
-    (name "emacs-consult-recoll")
-    (version "1.0.0")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (string-append "https://elpa.gnu.org/packages/consult-recoll-"
-                           version ".tar"))
-       (sha256
-        (base32 "1fjc5s1xn15vglmaqywnrpqnjb46w15xysk7n18ifqapcya5g0x0"))))
+    (name "emacs-native-complete")
+    (version "157bd9c23508c4b0b8636c9a6d9b6ecc6209d4f0")
+    (source (origin
+              (method git-fetch)
+              (uri (git-reference
+                     (url "https://github.com/CeleritasCelery/emacs-native-shell-complete.git")
+                     (commit version)))
+              (sha256
+               (base32
+                "1396il9646d4wkyc8bbl2baqq4vwaqp7la9s085g9qbk41g619lp"))))
     (build-system emacs-build-system)
-    (propagated-inputs (list emacs-consult))
-    (home-page "https://codeberg.org/jao/consult-recoll")
-    (synopsis "Recoll queries using consult")
-    (description "Recoll queries using consult.")
-    (license license:gpl3+)))
-
-emacs-consult-recoll
+    (propagated-inputs (list emacs-company))
+    (arguments
+     '(#:include '("^company-native-complete.el$"
+		           "^native-complete-test.el$"
+		           "^native-complete.el$")
+       #:exclude '()))
+    (home-page "https://github.com/CeleritasCelery/emacs-native-shell-complete")
+    (synopsis "Completion in shell buffers using native mechanisms")
+    (description
+     "Completion in shell buffers using native mechanisms.")
+    (license license:lgpl3)))
