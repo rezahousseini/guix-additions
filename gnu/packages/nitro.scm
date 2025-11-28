@@ -1,4 +1,4 @@
-(define-module (gnu packages python-additions)
+(define-module (gnu packages nitro)
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (gnu packages)
   #:use-module (gnu packages algebra)
