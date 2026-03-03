@@ -1,4 +1,4 @@
-(define-module (gnu packages python-additions)
+(define-module (rhou packages python-additions)
   #:use-module ((guix licenses)
                 #:prefix license:)
   #:use-module (gnu packages)

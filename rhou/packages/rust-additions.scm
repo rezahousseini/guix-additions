@@ -1,4 +1,4 @@
-(define-module (gnu packages rust-additions)
+(define-module (rhou packages rust-additions)
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (guix build-system cargo)
   #:use-module (guix download)

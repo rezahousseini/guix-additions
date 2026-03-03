@@ -1,4 +1,4 @@
-(define-module (gnu packages haskell-additions)
+(define-module (rhou packages haskell-additions)
   #:use-module (gnu packages)
   #:use-module (gnu packages curl)
   #:use-module (gnu packages cyrus-sasl)

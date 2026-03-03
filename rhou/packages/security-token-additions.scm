@@ -1,4 +1,4 @@
-(define-module (gnu packages security-token-additions)
+(define-module (rhou packages security-token-additions)
   #:use-module (gnu packages)
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (guix packages)

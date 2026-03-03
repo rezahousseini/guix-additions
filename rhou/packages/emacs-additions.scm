@@ -1,4 +1,4 @@
-(define-module (gnu packages emacs-additions)
+(define-module (rhou packages emacs-additions)
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (guix packages)
   #:use-module (guix cvs-download)
