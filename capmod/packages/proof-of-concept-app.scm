@@ -3,7 +3,7 @@
   #:use-module (gnu packages base)
   ; #:use-module (gnu packages commencement)
   #:use-module (gnu packages haskell)
-  #:use-module (gnu packages haskell-additions)
+  #:use-module (rhou packages haskell-additions)
   #:use-module (gnu packages haskell-apps)
   #:use-module (gnu packages haskell-web)
   #:use-module (gnu packages haskell-xyz)
