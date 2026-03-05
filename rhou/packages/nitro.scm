@@ -283,6 +283,7 @@
     (build-system pyproject-build-system)
     (native-inputs (list python-poetry-core
                          python-pytest))
+    (inputs (list libnitrokey))
     (propagated-inputs (list python-cffi
                              python-click-8.3
                              python-cryptography
